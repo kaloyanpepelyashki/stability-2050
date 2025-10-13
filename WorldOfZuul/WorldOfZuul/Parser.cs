@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace WorldOfZuul
 {
+    /// <summary>
+    /// The Parser class is responsible for interpreting player input.
+    /// It breaks the player's text command into words and creates a Command object if valid.
+    /// </summary>
     public class Parser
     {
         private readonly CommandWords commandWords = new();
-
+        /// <summary>
+        ///Parses the player's input and converts it into a Command object.
+        /// Returns null if the input is invalid or unrecognized.
+        /// </summary>
         public Command? GetCommand(string inputLine)
         {
             string[] words = inputLine.Split();

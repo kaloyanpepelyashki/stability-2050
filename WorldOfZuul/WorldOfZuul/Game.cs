@@ -43,6 +43,7 @@
         // Main method that runs the gameplay loop
         public void Play()
         {
+            //Instantiating the parser class
             Parser parser = new(); // Responsible for interpreting player input
 
             PrintWelcome(); //Prints the welcome message to the console
@@ -63,7 +64,7 @@
                 // Checks for input validity and Handles empty input
                 if (string.IsNullOrEmpty(input))
                 {   
-                    
+                   //Prompts the player to enter a command 
                     Console.WriteLine("Please enter a command.");
                     continue;
                 }
@@ -126,7 +127,14 @@
             }
         }
 
-
+        /// <summary>
+        /// Displays the welcome message shown at the start of the game.
+        /// </summary>
+        /// <remarks>
+        /// This method introduces the player to the game and provides an initial
+        /// description of what the game is about. It also calls <see cref="PrintHelp"/>
+        /// to show the list of available commands immediately after the greeting.
+        /// </remarks>
         private static void PrintWelcome()
         {
             Console.WriteLine("Welcome to the World of Zuul!");
@@ -134,7 +142,15 @@
             PrintHelp();
             Console.WriteLine();
         }
-
+        
+        /// <summary>
+        /// Displays a list of available player commands and general guidance.
+        /// </summary>
+        /// <remarks>
+        /// This method explains how the player can navigate through the game,
+        /// view detailed room descriptions, go back to previous rooms,
+        /// and quit the game.
+        /// </remarks>
         private static void PrintHelp()
         {
             Console.WriteLine("You are lost. You are alone. You wander");

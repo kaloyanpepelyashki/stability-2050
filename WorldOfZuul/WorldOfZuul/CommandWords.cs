@@ -5,11 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WorldOfZuul
-{
+{   
+    
+    /// <summary>
+    /// The CommandWords class defines all valid commands the player can use
+    /// and provides a method to check if a given command word is recognized.
+    /// </summary>
     public class CommandWords
     {
         public List<string> ValidCommands { get; } = new List<string> { "north", "east", "south", "west", "look", "back", "quit" };
-
+        
+        /// <summary>
+        ///  Checks if the provided string is a valid command.
+        /// Returns true if it exists in the ValidCommands list, otherwise false.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns>boolean</returns>
         public bool IsValidCommand(string command)
         {
             return ValidCommands.Contains(command);
