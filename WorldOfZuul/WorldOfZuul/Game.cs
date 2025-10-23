@@ -3,13 +3,16 @@
     public class Game
     {
         // Tracks the room the player is currently in
-        private Room? currentRoom;
+        private Region? currentRegion;
         // Stores the previous room, used when the player types 'back'
-        private Room? previousRoom;
+        private Region? previousRegion;
+
+        private TurnCounter turnCounter;
         
         // Constructor - initializes the game world when a new Game object is created
         public Game()
-        {
+        {   
+            turnCounter = TurnCounter.GetInstance();
             CreateRooms(); // Build all rooms and set up exits
         }
         
@@ -18,13 +21,14 @@
         {
             
             // Create each room with a name and a detailed description
-            Room? outside = new("Outside", "You are standing outside the main entrance of the university. To the east is a large building, to the south is a computing lab, and to the west is the campus pub.");
-            Room? theatre = new("Theatre", "You find yourself inside a large lecture theatre. Rows of seats ascend up to the back, and there's a podium at the front. It's quite dark and quiet.");
-            Room? pub = new("Pub", "You've entered the campus pub. It's a cozy place, with a few students chatting over drinks. There's a bar near you and some pool tables at the far end.");
-            Room? lab = new("Lab", "You're in a computing lab. Desks with computers line the walls, and there's an office to the east. The hum of machines fills the room.");
-            Room? office = new("Office", "You've entered what seems to be an administration office. There's a large desk with a computer on it, and some bookshelves lining one wall.");
+            //! Here, the application should fetch data from a JSON file, about each region and each state, so we don't write everything manually
+            Region? outside = new("Outside", "You are standing outside the main entrance of the university. To the east is a large building, to the south is a computing lab, and to the west is the campus pub.", "", "");
+            Region? theatre = new("Theatre", "You find yourself inside a large lecture theatre. Rows of seats ascend up to the back, and there's a podium at the front. It's quite dark and quiet.", "", "");
+            Region? pub = new("Pub", "You've entered the campus pub. It's a cozy place, with a few students chatting over drinks. There's a bar near you and some pool tables at the far end.", " ", " ");
+            Region? lab = new("Lab", "You're in a computing lab. Desks with computers line the walls, and there's an office to the east. The hum of machines fills the room.", " ", "");
+            Region? office = new("Office", "You've entered what seems to be an administration office. There's a large desk with a computer on it, and some bookshelves lining one wall.", " " , "");
             
-            // Define exits between rooms (north, east, south, west)
+            // Define exits between regions (north, east, south, west)
             outside.SetExits(null, theatre, lab, pub); // North, East, South, West
 
             theatre.SetExit("west", outside);
@@ -37,7 +41,7 @@
             
             //Sets the initial room to "outside"
             // Player starts the game outside
-            currentRoom = outside;
+            currentRegion = outside;
         }
         
         // Main method that runs the gameplay loop
@@ -55,7 +59,7 @@
             while (continuePlaying)
             {   
                 // Display current room's short description - the descirption associated with each of the rooms
-                Console.WriteLine(currentRoom?.ShortDescription);
+                Console.WriteLine(currentRegion?.RegionName);
                 Console.Write("> ");
                 
                 //Gets the user command line input
@@ -80,14 +84,14 @@
                 switch(command.Name)
                 {
                     case "look":
-                        Console.WriteLine(currentRoom?.LongDescription);
+                        Console.WriteLine(currentRegion?.RegionDescription);
                         break;
 
                     case "back":
-                        if (previousRoom == null)
+                        if (previousRegion == null)
                             Console.WriteLine("You can't go back from here!");
                         else
-                            currentRoom = previousRoom;
+                            currentRegion = previousRegion;
                         break;
 
                     case "north":
@@ -116,10 +120,10 @@
 
         private void Move(string direction)
         {
-            if (currentRoom?.Exits.ContainsKey(direction) == true)
+            if (currentRegion?.Exits.ContainsKey(direction) == true)
             {
-                previousRoom = currentRoom;
-                currentRoom = currentRoom?.Exits[direction];
+                previousRegion = currentRegion;
+                currentRegion = currentRegion?.Exits[direction];
             }
             else
             {
