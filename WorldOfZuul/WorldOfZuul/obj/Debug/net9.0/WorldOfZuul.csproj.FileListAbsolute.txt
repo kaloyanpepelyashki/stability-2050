@@ -13,3 +13,4 @@ C:\Users\kaloy\Desktop\projects\university\semester-project\stability-2050\World
 C:\Users\kaloy\Desktop\projects\university\semester-project\stability-2050\WorldOfZuul\WorldOfZuul\obj\Debug\net9.0\WorldOfZuul.pdb
 C:\Users\kaloy\Desktop\projects\university\semester-project\stability-2050\WorldOfZuul\WorldOfZuul\obj\Debug\net9.0\WorldOfZuul.genruntimeconfig.cache
 C:\Users\kaloy\Desktop\projects\university\semester-project\stability-2050\WorldOfZuul\WorldOfZuul\obj\Debug\net9.0\ref\WorldOfZuul.dll
+C:\Users\kaloy\Desktop\projects\university\semester-project\stability-2050\WorldOfZuul\WorldOfZuul\bin\Debug\net9.0\region-data.json
