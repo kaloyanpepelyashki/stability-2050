@@ -1,7 +1,8 @@
 ﻿namespace WorldOfZuul
 {
     public class Game
-    {
+    {   
+        private RegionDataParser regionDataParser;
         // Tracks the room the player is currently in
         private Region? currentRegion;
         // Stores the previous room, used when the player types 'back'
@@ -12,6 +13,7 @@
         // Constructor - initializes the game world when a new Game object is created
         public Game()
         {   
+            regionDataParser = new RegionDataParser();
             turnCounter = TurnCounter.GetInstance();
             CreateRooms(); // Build all rooms and set up exits
         }
@@ -19,29 +21,49 @@
         // Creates all rooms and defines how they connect to each other
         private void CreateRooms()
         {
-            
-            // Create each room with a name and a detailed description
-            //! Here, the application should fetch data from a JSON file, about each region and each state, so we don't write everything manually
-            Region? outside = new("Outside", "You are standing outside the main entrance of the university. To the east is a large building, to the south is a computing lab, and to the west is the campus pub.", "", "");
-            Region? theatre = new("Theatre", "You find yourself inside a large lecture theatre. Rows of seats ascend up to the back, and there's a podium at the front. It's quite dark and quiet.", "", "");
-            Region? pub = new("Pub", "You've entered the campus pub. It's a cozy place, with a few students chatting over drinks. There's a bar near you and some pool tables at the far end.", " ", " ");
-            Region? lab = new("Lab", "You're in a computing lab. Desks with computers line the walls, and there's an office to the east. The hum of machines fills the room.", " ", "");
-            Region? office = new("Office", "You've entered what seems to be an administration office. There's a large desk with a computer on it, and some bookshelves lining one wall.", " " , "");
-            
-            // Define exits between regions (north, east, south, west)
-            outside.SetExits(null, theatre, lab, pub); // North, East, South, West
+            try
+            {
+                List<Region> regions = regionDataParser.DeserializeRegionData();
 
-            theatre.SetExit("west", outside);
+                Console.WriteLine(regions.Count);
 
-            pub.SetExit("east", outside);
+                // Create each room with a name and a detailed description
+                //! Here, the application should fetch data from a JSON file, about each region and each state, so we don't write everything manually
+                Region? outside = new("Outside",
+                    "You are standing outside the main entrance of the university. To the east is a large building, to the south is a computing lab, and to the west is the campus pub.", 0.0,
+                    "", "");
+                Region? theatre = new("Theatre",
+                    "You find yourself inside a large lecture theatre. Rows of seats ascend up to the back, and there's a podium at the front. It's quite dark and quiet.",  0.0,
+                    "", "");
+                Region? pub = new("Pub",
+                    "You've entered the campus pub. It's a cozy place, with a few students chatting over drinks. There's a bar near you and some pool tables at the far end.", 0.0,
+                    " ", " ");
+                Region? lab = new("Lab",
+                    "You're in a computing lab. Desks with computers line the walls, and there's an office to the east. The hum of machines fills the room.", 0.0,
+                    " ", "");
+                Region? office = new("Office",
+                    "You've entered what seems to be an administration office. There's a large desk with a computer on it, and some bookshelves lining one wall.", 0.0,
+                    " ", "");
 
-            lab.SetExits(outside, office, null, null);
+                // Define exits between regions (north, east, south, west)
+                outside.SetExits(null, theatre, lab, pub); // North, East, South, West
 
-            office.SetExit("west", lab);
-            
-            //Sets the initial room to "outside"
-            // Player starts the game outside
-            currentRegion = outside;
+                theatre.SetExit("west", outside);
+
+                pub.SetExit("east", outside);
+
+                lab.SetExits(outside, office, null, null);
+
+                office.SetExit("west", lab);
+
+                //Sets the initial room to "outside"
+                // Player starts the game outside
+                currentRegion = outside;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
         
         // Main method that runs the gameplay loop

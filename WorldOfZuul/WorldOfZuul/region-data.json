@@ -1,0 +1,93 @@
+﻿
+[
+  {
+    "region_name": "North Africa",
+    "region_description": "",
+    "cpi": 50.0,
+    "state": {
+      "state_name": "Egypt",
+      "state_description": ""
+    }
+  },
+  {
+    "region_name": "South Africa",
+    "region_description": "",
+    "cpi": 50.0,
+    "state": {
+      "state_name": "South Africa",
+      "state_description": ""
+    }
+  },
+  {
+    "region_name": "Central Europe",
+    "region_description": "",
+    "cpi": 50.0,
+    "state": {
+      "state_name": "Germany",
+      "state_description": ""
+    }
+  },
+  {
+    "region_name": "Scandinavians",
+    "region_description": "",
+    "cpi": 50.0,
+    "state": {
+      "state_name": "Sweden",
+      "state_description": ""
+    }
+  },
+  {
+    "region_name": "Eastern Europe",
+    "region_description": "",
+    "cpi": 50.0,
+    "state": {
+      "state_name": "Ukraine",
+      "state_description": ""
+    }
+  },
+  {
+    "region_name": "Middle East",
+    "region_description": "",
+    "cpi": 50.0,
+    "state": {
+      "state_name": "Israel",
+      "state_description": ""
+    }
+  },
+  {
+    "region_name": "Central Asia",
+    "region_description": "",
+    "cpi": 50.0,
+    "state": {
+      "state_name": "Kazakhstan",
+      "state_description": ""
+    }
+  },
+  {
+    "region_name": "Eastern Asia",
+    "region_description": "",
+    "cpi": 50.0,
+    "state": {
+      "state_name": "China",
+      "state_description": ""
+    }
+  },
+  {
+    "region_name": "North America",
+    "region_description": "",
+    "cpi": 50.0,
+    "state": {
+      "state_name": "United States",
+      "state_description": ""
+    }
+  },
+  {
+    "region_name": "South America",
+    "region_description": "",
+    "cpi": 50.0,
+    "state": {
+      "state_name": "Brazil",
+      "state_description": ""
+    }
+  }
+]

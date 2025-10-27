@@ -26,17 +26,20 @@
         /// <summary>
         /// The index of the corruption preception in a given region
         /// </summary>
-        public float RegionCPI { get; private set; }
+        public double RegionCPI { get; private set; }
         
         /// <summary>
         /// Initializes a new instance of the <see cref="Region"/> class with the specified short and long descriptions.
         /// </summary>
         /// <param name="regionName">The name of the region.</param>
         /// <param name="regionDesc">The brief description of the region, gives an overview of the region and the situation in the region.</param>
-        public Region(string regionName, string regionDesc, string stateName, string stateDescription)
+        /// <param name="regionCpi"> The CPI of the region</param>
+        /// <param name="stateProps"> A tuple holding the data needed for initialising the state in a specific region</param>
+        public Region(string regionName, string regionDesc, double regionCpi, string stateName, string stateDescription)
         {
             RegionName = regionName;
             RegionDescription = regionDesc;
+            RegionCPI = regionCpi;
             RegionState = new State(stateName, stateDescription);
         }
         
