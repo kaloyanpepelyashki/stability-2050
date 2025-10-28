@@ -9,6 +9,8 @@
         private Region? previousRegion;
 
         private TurnCounter turnCounter;
+
+        private Menutext Welcome;
         
         // Constructor - initializes the game world when a new Game object is created
         public Game()
@@ -16,6 +18,33 @@
             regionDataParser = new RegionDataParser();
             turnCounter = TurnCounter.GetInstance();
             CreateRooms(); // Build all rooms and set up exits
+
+            //instantiating the welcome menu
+            Welcome = new Menutext("WELCOME TO STABILITY 2050",
+                "Stabilty 2050 is a text based strategic game.\n" +
+                "You are in a position of a diplomat,\n" +
+                "who is trying to fight corruption.\n" +
+                "Every action changes CPI - the measure of global trust.\n" +
+                "Your goal is to lead humanity to corruption-free world by 2050.\n \n " +
+                "YOUR MISSION:\n" +
+                "Reduce corruption and strengthen institutions worldwide.\n" +
+                "Every year represents one turn and you have 25 years to raise the Global CPI\n" +
+                "to 80 or higher before 2050.\n" +
+                "Your actions will affect both regional and global CPI levels.\n \n " +
+                "HOW IT WORKS:\n" +
+                "- You start with 4 regions, each with its own CPI value.\n" +
+                "- Every turn, you’ll face a corruption-related question.\n" +
+                "- Your actions can increase or decrease the CPI.\n" +
+                "- The Global CPI is the average of all regional CPIs.\n" +
+                "- If it drops below 20, the world enters a corruption crisis.\n " +
+                "You’ll have 5 turns to recover, or the world collapses.\n" +
+                "- If you reach CPI of 80 or more, you win immediately."+
+                "AVAILABLE COMMANDS:\n" +
+                "- Type a number to choose an action.\n" +
+                "- Type 'west','east','north' or 'south' to travel to another region.\n" +
+                "- Type 'help' for assistance.\n" +
+                "- Type 'quit' to end the simulation.",
+                "begin");
         }
         
         // Creates all rooms and defines how they connect to each other
@@ -24,8 +53,8 @@
             try
             {
                 List<Region> regions = regionDataParser.DeserializeRegionData();
-
-                Console.WriteLine(regions.Count);
+                
+                Console.WriteLine("regions: "+regions.Count);
 
                 // Create each room with a name and a detailed description
                 //! Here, the application should fetch data from a JSON file, about each region and each state, so we don't write everything manually
@@ -71,8 +100,9 @@
         {
             //Instantiating the parser class
             Parser parser = new(); // Responsible for interpreting player input
-
-            PrintWelcome(); //Prints the welcome message to the console
+            
+            //displaying the welcome screen
+            Welcome.display();
             
             //Loop control variable 
             bool continuePlaying = true; //Tracks if the player has requested a stop of the game
@@ -80,7 +110,8 @@
             // Main game loop - runs until player quits. 
             while (continuePlaying)
             {   
-                // Display current room's short description - the descirption associated with each of the rooms
+                // Display current room's short description - the description associated with each of the rooms
+                //will run after every command
                 Console.WriteLine(currentRegion?.RegionName);
                 Console.Write("> ");
                 
