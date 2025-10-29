@@ -12,11 +12,29 @@ namespace WorldOfZuul;
 /// </remarks>
 public class CpiTracker
 {
+    /// <summary>
+    /// The instance of the CpiTracker class.
+    /// </summary>
     private static CpiTracker? _instance = null;
-    private int CorrectAnswer = 6; // For the right decision +6 point to regional CPI
-    private int WrongAnswer = 9; // // For the wrong decision +6 point to regional CPI
+    /// <summary>
+    /// The number of points awarded for the right decision.
+    /// </summary>
+    private int CorrectAnswer = 6; // For the right decision +6 point to regional CPI.
+    /// <summary>
+    /// The number of points subtracted for the wrong decision.
+    /// </summary>
+    private int WrongAnswer = 9; // // For the wrong decision +6 point to regional CPI.
+    /// <summary>
+    /// The globalCPI calculated by getting an average of all the regional CPIs.
+    /// </summary>
     public double GlobalCpi => CpiValues.Values.Any() ? CpiValues.Values.Average() : 0.0 ;
+    /// <summary>
+    /// A dictionary containing each region and their respective CPIs, used for the calculation of GlobalCpi.
+    /// </summary>
     private static Dictionary<Region, double> CpiValues { get; } = new();
+    /// <summary>
+    /// Initialization of the CpiTracker instance.
+    /// </summary>
     private CpiTracker(List<Region> regions)
     {
         foreach (var region in regions)
@@ -41,14 +59,14 @@ public class CpiTracker
     }
     
     /// <summary>
-    /// Return the singleton instance of the CpiTracker if initialized.
+    /// Returns the singleton instance of the CpiTracker if initialized.
     /// Throws an exception if not yet initialized.
     /// </summary>
     public static CpiTracker Instance => _instance ?? throw new CpiTrackerNotInitializedException();
 
     /// <summary>
-    /// This method is used to increase the CPI of a certain region.
-    /// Increases the global CPI by 1.5%.
+    /// The method is used to increase the CPI of a certain region.
+    /// Increases the global CPI by 1.5%(for 4 regions).
     /// <param name="region">The region that will have its CPI increased.</param>
     /// </summary>
     public void IncreaseCpi(Region region)
@@ -59,7 +77,7 @@ public class CpiTracker
 
     /// <summary>
     /// This method is used to decrease the CPI of a certain region.
-    /// Decreases the global CPI by 2.25%.
+    /// Decreases the global CPI by 2.25%(for 4 regions).
     /// <param name="region">The region that will have its CPI decreased.</param>
     /// </summary>
     public void DecreaseCpi(Region region)
