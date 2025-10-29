@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kaloy\\Desktop\\projects\\university\\semester-project\\stability-2050\\WorldOfZuul\\WorldOfZuul\\WorldOfZuul.csproj": {}
+    "C:\\Users\\Max\\Desktop\\stability-2050\\WorldOfZuul\\WorldOfZuul\\WorldOfZuul.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kaloy\\Desktop\\projects\\university\\semester-project\\stability-2050\\WorldOfZuul\\WorldOfZuul\\WorldOfZuul.csproj": {
+    "C:\\Users\\Max\\Desktop\\stability-2050\\WorldOfZuul\\WorldOfZuul\\WorldOfZuul.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kaloy\\Desktop\\projects\\university\\semester-project\\stability-2050\\WorldOfZuul\\WorldOfZuul\\WorldOfZuul.csproj",
+        "projectUniqueName": "C:\\Users\\Max\\Desktop\\stability-2050\\WorldOfZuul\\WorldOfZuul\\WorldOfZuul.csproj",
         "projectName": "WorldOfZuul",
-        "projectPath": "C:\\Users\\kaloy\\Desktop\\projects\\university\\semester-project\\stability-2050\\WorldOfZuul\\WorldOfZuul\\WorldOfZuul.csproj",
-        "packagesPath": "C:\\Users\\kaloy\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kaloy\\Desktop\\projects\\university\\semester-project\\stability-2050\\WorldOfZuul\\WorldOfZuul\\obj\\",
+        "projectPath": "C:\\Users\\Max\\Desktop\\stability-2050\\WorldOfZuul\\WorldOfZuul\\WorldOfZuul.csproj",
+        "packagesPath": "C:\\Users\\Max\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Max\\Desktop\\stability-2050\\WorldOfZuul\\WorldOfZuul\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\kaloy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Max\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -25,8 +25,7 @@
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
         },
         "frameworks": {
           "net9.0": {
@@ -44,7 +43,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -65,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

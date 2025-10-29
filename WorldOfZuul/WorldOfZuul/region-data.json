@@ -1,9 +1,8 @@
-﻿
-[
+﻿[
   {
     "region_name": "North Africa",
     "region_description": "",
-    "cpi": 50.0,
+    "cpi": 37.0,
     "state": {
       "state_name": "Egypt",
       "state_description": ""
@@ -48,7 +47,7 @@
   {
     "region_name": "Middle East",
     "region_description": "",
-    "cpi": 50.0,
+    "cpi": 38.0,
     "state": {
       "state_name": "Israel",
       "state_description": ""
@@ -66,7 +65,7 @@
   {
     "region_name": "Eastern Asia",
     "region_description": "",
-    "cpi": 50.0,
+    "cpi": 71.0,
     "state": {
       "state_name": "China",
       "state_description": ""
@@ -75,7 +74,7 @@
   {
     "region_name": "North America",
     "region_description": "",
-    "cpi": 50.0,
+    "cpi": 54.0,
     "state": {
       "state_name": "United States",
       "state_description": ""

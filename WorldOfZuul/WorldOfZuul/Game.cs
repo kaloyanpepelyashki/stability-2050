@@ -9,6 +9,7 @@
         private Region? previousRegion;
 
         private TurnCounter turnCounter;
+        private CpiTracker cpiTracker;
         
         // Constructor - initializes the game world when a new Game object is created
         public Game()
@@ -55,7 +56,11 @@
                 lab.SetExits(outside, office, null, null);
 
                 office.SetExit("west", lab);
-
+                
+                // Initialize CpiTracker 
+                // TODO: To be uncommented after regions list will be parsed correctly
+                // cpiTracker = CpiTracker.GetInstance(regions);
+                
                 //Sets the initial room to "outside"
                 // Player starts the game outside
                 currentRegion = outside;
@@ -71,7 +76,7 @@
         {
             //Instantiating the parser class
             Parser parser = new(); // Responsible for interpreting player input
-
+            
             PrintWelcome(); //Prints the welcome message to the console
             
             //Loop control variable 

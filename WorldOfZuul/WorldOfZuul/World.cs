@@ -15,13 +15,13 @@ public class World
     /// The stability index of the world changes, as the player commits to different choices throughout the game.
     /// Default value is 60
     /// </summary>
-    public int stabilityIndex { get; private set; } = 60;
-    
+    //public int stabilityIndex { get; private set; } = 60;
+
     /// <summary>
     /// The CPI , taken globally - meaning the overall average CPI of the entire world (all regions taken together)
     /// The global CPI is influenced by player's choices, as the player changes the average of the differet regions, that also influences the global index
     /// </summary>
-    public float globalCPI { get; private set; }
+    public double globalCPI = CpiTracker.Instance.GlobalCpi;
     
     private World() {}
 
