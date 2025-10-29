@@ -33,9 +33,9 @@
         /// </summary>
         /// <param name="regionName">The name of the region.</param>
         /// <param name="regionDesc">The brief description of the region, gives an overview of the region and the situation in the region.</param>
-        /// <param name="regionCpi"> The CPI of the region</param>
-        /// <param name="stateName"></param>
-        /// <param name="stateDescription"></param>
+        /// <param name="regionCpi">The CPI of the region</param>
+        /// <param name="stateName">The name of the state in the region</param>
+        /// <param name="stateDescription">The description of the state in the region</param>
         public Region(string regionName, string regionDesc, double regionCpi, string stateName, string stateDescription)
         {
             RegionName = regionName;
