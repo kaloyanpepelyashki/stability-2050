@@ -18,4 +18,7 @@ public class RegionDTO
     
     [JsonPropertyName("state")]
     public StateDTO State { get; set; }
+    
+    [JsonPropertyName("exits")] 
+    public ExitsDTO Exits { get; set; }
 }

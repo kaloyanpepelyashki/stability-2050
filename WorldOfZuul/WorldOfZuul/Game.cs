@@ -9,11 +9,17 @@
         private Region? previousRegion;
 
         private TurnCounter turnCounter;
+
+        private RegionsService _regionService;
+
+        private List<Region> regions;
         
         // Constructor - initializes the game world when a new Game object is created
         public Game()
         {   
-            regionDataParser = new RegionDataParser();
+            //TODO, change, the region service must be dependency injected
+            _regionService = new RegionsService();
+            
             turnCounter = TurnCounter.GetInstance();
             CreateRooms(); // Build all rooms and set up exits
         }
@@ -23,9 +29,9 @@
         {
             try
             {
-                List<Region> regions = regionDataParser.DeserializeRegionData();
-
-                Console.WriteLine(regions.Count);
+                regions = _regionService.InitialiseRegions();
+                
+               
 
                 // Create each room with a name and a detailed description
                 //! Here, the application should fetch data from a JSON file, about each region and each state, so we don't write everything manually
