@@ -39,8 +39,6 @@ public class CpiTracker
     {
         foreach (var region in regions)
         {
-            Console.WriteLine(region.RegionName);
-            Console.ReadKey();
             CpiValues.Add(region, region.RegionCpi);
         }
     }
