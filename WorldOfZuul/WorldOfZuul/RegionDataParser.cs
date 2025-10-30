@@ -4,7 +4,7 @@ using WorldOfZuul.Exceptions;
 
 namespace WorldOfZuul;
 
-public class RegionDataParser
+public class RegionDataParser : IRegionDataParser
 {
     private FileReader fileReader;
     private string fileName;

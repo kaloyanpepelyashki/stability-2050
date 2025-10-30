@@ -10,17 +10,17 @@
 
         private TurnCounter turnCounter;
 
-        private RegionsService _regionService;
+        private IRegionsService _regionService;
 
         private Dictionary<string, Region> regions;
         
         // Constructor - initializes the game world when a new Game object is created
-        public Game()
+        public Game(IRegionsService regionsService, TurnCounter turnCounter)
         {   
             //TODO, change, the region service must be dependency injected
-            _regionService = new RegionsService();
+            _regionService =  regionsService;
             
-            turnCounter = TurnCounter.GetInstance();
+            turnCounter = turnCounter;
             CreateRooms(); // Build all rooms and set up exits
         }
         

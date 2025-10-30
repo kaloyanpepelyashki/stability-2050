@@ -5,14 +5,14 @@ namespace WorldOfZuul;
 /// <summary>
 /// In charge of handling all tasks related to regions, their initialisation, mutation etc.
 /// </summary>
-public class RegionsService
+public class RegionsService : IRegionsService
 {   
-    //TODO - has to be changed, it must be passed as a DI at runtime through the constructor
-    private RegionDataParser regionDataParser = new RegionDataParser();
+ 
+    private RegionDataParser regionDataParser;
     
-    public RegionsService()
+    public RegionsService(RegionDataParser regionDataParser)
     {
-        
+       regionDataParser = regionDataParser;
     }
     
     /// <summary>
