@@ -14,6 +14,8 @@
 
         private Dictionary<string, Region> regions;
         
+        private Menutext Welcome;
+        
         // Constructor - initializes the game world when a new Game object is created
         public Game(IRegionsService regionsService, TurnCounter turnCounter)
         {   
@@ -22,6 +24,33 @@
             
             turnCounter = turnCounter;
             CreateRooms(); // Build all rooms and set up exits
+            
+            Welcome = new Menutext("WELCOME TO STABILITY 2050",
+                "Stabilty 2050 is a text based strategic game.\n" +
+                "You are in a position of a diplomat,\n" +
+                "who is trying to fight corruption.\n" +
+                "Every action changes CPI - the measure of global trust.\n" +
+                "Your goal is to lead humanity to corruption-free world by 2050.\n \n " +
+                "YOUR MISSION:\n" +
+                "Reduce corruption and strengthen institutions worldwide.\n" +
+                "Every year represents one turn and you have 25 years to raise the Global CPI\n" +
+                "to 80 or higher before 2050.\n" +
+                "Your actions will affect both regional and global CPI levels.\n \n " +
+                "HOW IT WORKS:\n" +
+                "- You start with 4 regions, each with its own CPI value.\n" +
+                "- Every turn, you’ll face a corruption-related question.\n" +
+                "- Your actions can increase or decrease the CPI.\n" +
+                "- The Global CPI is the average of all regional CPIs.\n" +
+                "- If it drops below 20, the world enters a corruption crisis.\n " +
+                "You’ll have 5 turns to recover, or the world collapses.\n" +
+                "- If you reach CPI of 80 or more, you win immediately."+
+                "AVAILABLE COMMANDS:\n" +
+                "- Type a number to choose an action.\n" +
+                "- Type 'west','east','north' or 'south' to travel to another region.\n" +
+                "- Type 'help' for assistance.\n" +
+                "- Type 'quit' to end the simulation.",
+                "begin","welcome");
+            
         }
         
         // Creates all rooms and defines how they connect to each other
@@ -50,7 +79,7 @@
             //Instantiating the parser class
             Parser parser = new(); // Responsible for interpreting player input
 
-            PrintWelcome(); //Prints the welcome message to the console
+            Welcome.display(); //Prints the welcome message to the console
             
             //Loop control variable 
             bool continuePlaying = true; //Tracks if the player has requested a stop of the game
