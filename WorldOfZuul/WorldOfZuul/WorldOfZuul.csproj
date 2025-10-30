@@ -7,6 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
     <ItemGroup>
-        <Content Include="region-data.json" CopyToOutputDirectory="Always" />
+        <Content Include="region-data-limited.json" CopyToOutputDirectory="Always" />
+        <Content Update="region-data.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 </Project>
