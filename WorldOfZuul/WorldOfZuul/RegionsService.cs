@@ -12,7 +12,7 @@ public class RegionsService : IRegionsService
     
     public RegionsService(RegionDataParser regionDataParser)
     {
-       regionDataParser = regionDataParser;
+       this.regionDataParser = regionDataParser;
     }
     
     /// <summary>
