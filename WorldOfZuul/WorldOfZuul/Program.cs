@@ -82,7 +82,12 @@ namespace WorldOfZuul
     {
         public static void Main()
         {
-            Game game = new();
+            //Initialising dependencies needed
+            RegionDataParser regionDataParser = new RegionDataParser();
+            IRegionsService regionsService = new RegionsService(regionDataParser);
+            TurnCounter turnCounterInstance = TurnCounter.GetInstance();
+            
+            Game game = new(regionsService, turnCounterInstance);
             game.Play();
         }
     }

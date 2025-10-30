@@ -7,6 +7,12 @@
     "state": {
       "state_name": "Egypt",
       "state_description": ""
+    },
+    "exits": {
+      "north": "",
+      "east": "",
+      "south": "South Africa",
+      "west": ""
     }
   },
   {
@@ -16,6 +22,12 @@
     "state": {
       "state_name": "South Africa",
       "state_description": ""
+    },
+    "exits": {
+      "north": "",
+      "east": "",
+      "south": "",
+      "west": ""
     }
   },
   {
@@ -25,6 +37,12 @@
     "state": {
       "state_name": "Germany",
       "state_description": ""
+    },
+    "exits": {
+      "north": "Scandinavians",
+      "east": "Eastern Europe",
+      "south": "South Africa",
+      "west": ""
     }
   },
   {
@@ -34,6 +52,12 @@
     "state": {
       "state_name": "Sweden",
       "state_description": ""
+    },
+    "exits": {
+      "north": "",
+      "east": "",
+      "south": "Central Europe",
+      "west": ""
     }
   },
   {
@@ -43,6 +67,12 @@
     "state": {
       "state_name": "Ukraine",
       "state_description": ""
+    },
+    "exits": {
+      "north": "",
+      "east": "Middle East",
+      "south": "",
+      "west": "Central Europe"
     }
   },
   {
@@ -52,6 +82,12 @@
     "state": {
       "state_name": "Israel",
       "state_description": ""
+    },
+    "exits": {
+      "north": "",
+      "east": "",
+      "south": "",
+      "west": "Eastern Europe"
     }
   },
   {
@@ -61,6 +97,12 @@
     "state": {
       "state_name": "Kazakhstan",
       "state_description": ""
+    },
+    "exits": {
+      "north": "",
+      "east": "",
+      "south": "",
+      "west": ""
     }
   },
   {
@@ -70,6 +112,12 @@
     "state": {
       "state_name": "China",
       "state_description": ""
+    },
+    "exits": {
+      "north": "",
+      "east": "",
+      "south": "",
+      "west": ""
     }
   },
   {
@@ -79,6 +127,12 @@
     "state": {
       "state_name": "United States",
       "state_description": ""
+    },
+    "exits": {
+      "north": "",
+      "east": "",
+      "south": "",
+      "west": ""
     }
   },
   {
@@ -88,6 +142,12 @@
     "state": {
       "state_name": "Brazil",
       "state_description": ""
+    },
+    "exits": {
+      "north": "",
+      "east": "",
+      "south": "",
+      "west": ""
     }
   }
 ]

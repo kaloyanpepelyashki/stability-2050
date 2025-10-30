@@ -1,5 +1,9 @@
 ﻿namespace WorldOfZuul
 {
+    public class RegionExits
+    {
+        
+    }
     /// <summary>
     /// Represents a location (region) within the game.
     /// Each room has a short and long description, and can connect to other rooms through exits.
@@ -55,10 +59,11 @@
         /// </remarks>
         public void SetExits(Region? north, Region? east, Region? south, Region? west)
         {
-            SetExit("north", north);
-            SetExit("east", east);
-            SetExit("south", south);
-            SetExit("west", west);
+            //Checks for each exit, if a parameter is assigned, and if it is, sets an exit for it
+            if (north != null) SetExit("north", north);
+            if (east != null) SetExit("east", east);
+            if(south != null) SetExit("south", south);
+            if(west != null) SetExit("west", west);
         }
         
         /// <summary>

@@ -9,12 +9,18 @@
         private Region? previousRegion;
 
         private TurnCounter turnCounter;
+
+        private IRegionsService _regionService;
+
+        private Dictionary<string, Region> regions;
         
         // Constructor - initializes the game world when a new Game object is created
-        public Game()
+        public Game(IRegionsService regionsService, TurnCounter turnCounter)
         {   
-            regionDataParser = new RegionDataParser();
-            turnCounter = TurnCounter.GetInstance();
+            //TODO, change, the region service must be dependency injected
+            _regionService =  regionsService;
+            
+            turnCounter = turnCounter;
             CreateRooms(); // Build all rooms and set up exits
         }
         
@@ -23,42 +29,14 @@
         {
             try
             {
-                List<Region> regions = regionDataParser.DeserializeRegionData();
+                regions = _regionService.InitialiseRegions();
+                
+               
 
-                Console.WriteLine(regions.Count);
-
-                // Create each room with a name and a detailed description
-                //! Here, the application should fetch data from a JSON file, about each region and each state, so we don't write everything manually
-                Region? outside = new("Outside",
-                    "You are standing outside the main entrance of the university. To the east is a large building, to the south is a computing lab, and to the west is the campus pub.", 0.0,
-                    "", "");
-                Region? theatre = new("Theatre",
-                    "You find yourself inside a large lecture theatre. Rows of seats ascend up to the back, and there's a podium at the front. It's quite dark and quiet.",  0.0,
-                    "", "");
-                Region? pub = new("Pub",
-                    "You've entered the campus pub. It's a cozy place, with a few students chatting over drinks. There's a bar near you and some pool tables at the far end.", 0.0,
-                    " ", " ");
-                Region? lab = new("Lab",
-                    "You're in a computing lab. Desks with computers line the walls, and there's an office to the east. The hum of machines fills the room.", 0.0,
-                    " ", "");
-                Region? office = new("Office",
-                    "You've entered what seems to be an administration office. There's a large desk with a computer on it, and some bookshelves lining one wall.", 0.0,
-                    " ", "");
-
-                // Define exits between regions (north, east, south, west)
-                outside.SetExits(null, theatre, lab, pub); // North, East, South, West
-
-                theatre.SetExit("west", outside);
-
-                pub.SetExit("east", outside);
-
-                lab.SetExits(outside, office, null, null);
-
-                office.SetExit("west", lab);
-
+ 
                 //Sets the initial room to "outside"
                 // Player starts the game outside
-                currentRegion = outside;
+                currentRegion = regions["Central Europe"];
             }
             catch (Exception e)
             {
@@ -149,7 +127,7 @@
             }
             else
             {
-                Console.WriteLine($"You can't go {direction}!");
+                Console.WriteLine($"You have come too far {direction}! Nowhere more to go in this direction.");
             }
         }
 

@@ -4,7 +4,7 @@ using WorldOfZuul.Exceptions;
 
 namespace WorldOfZuul;
 
-public class RegionDataParser
+public class RegionDataParser : IRegionDataParser
 {
     private FileReader fileReader;
     private string fileName;
@@ -14,8 +14,13 @@ public class RegionDataParser
         this.fileName = "region-data.json";
         this.fileReader = new FileReader();
     }
-
-    public List<Region> DeserializeRegionData()
+    
+    /// <summary>
+    /// This method is in charge of reading the data from the JSON file storing the Regions information and deserialising the JSON string
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public List<RegionDTO> DeserializeRegionData()
     {
         try
         {
@@ -27,22 +32,7 @@ public class RegionDataParser
                 throw new Exception("Error parsing data to DTO. Region data could not be parsed. Data equals to null");
             }
 
-            List<Region> regions = regionDtos.Select(dto =>
-                new Region(
-                    dto.RegionName,
-                    dto.RegionDescription,
-                    dto.RegionCPI,
-                    dto.State.StateName,
-                    dto.State.StateDescription
-                )
-            ).ToList();
-
-            if (regions == null)
-            {
-                throw new Exception("Error parsing DTO to class.");
-            }
-            
-            return regions;
+            return regionDtos;
         }
         catch (FileReadException e)
         {
@@ -56,6 +46,6 @@ public class RegionDataParser
         }
         
         //Default Fallback 
-        return new List<Region>();
+        return new List<RegionDTO>();
     }
 }
