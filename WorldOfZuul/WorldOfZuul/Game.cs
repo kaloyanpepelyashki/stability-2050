@@ -1,4 +1,6 @@
-﻿namespace WorldOfZuul
+﻿using WorldOfZuul.Interfaces;
+
+namespace WorldOfZuul
 {
     public class Game
     {   
@@ -11,16 +13,17 @@
         private TurnCounter turnCounter;
 
         private IRegionsService _regionService;
+        private CpiTracker cpiTracker;
 
         private Dictionary<string, Region> regions;
         
         // Constructor - initializes the game world when a new Game object is created
-        public Game(IRegionsService regionsService, TurnCounter turnCounter)
+        public Game(IRegionsService regionsService, TurnCounter turnCounter, CpiTracker cpiTracker)
         {   
             //TODO, change, the region service must be dependency injected
             _regionService =  regionsService;
-            
-            turnCounter = turnCounter;
+            this.cpiTracker= cpiTracker;
+            this.turnCounter = turnCounter;
             CreateRooms(); // Build all rooms and set up exits
         }
         
@@ -50,17 +53,22 @@
             //Instantiating the parser class
             Parser parser = new(); // Responsible for interpreting player input
 
+            
             PrintWelcome(); //Prints the welcome message to the console
             
             //Loop control variable 
             bool continuePlaying = true; //Tracks if the player has requested a stop of the game
-            
+
             // Main game loop - runs until player quits. 
             while (continuePlaying)
             {   
-                // Display current room's short description - the descirption associated with each of the rooms
+                // Display current room's short description - the description associated with each of the rooms
                 Console.WriteLine(currentRegion?.RegionName);
                 Console.Write("> ");
+                Console.WriteLine($"The global CPI is {cpiTracker.GlobalCpi}");
+                
+                // TODO: Uncomment after implemented crisis system
+                // cpiTracker.CheckCrisisCondition();
                 
                 //Gets the user command line input
                 string? input = Console.ReadLine();
