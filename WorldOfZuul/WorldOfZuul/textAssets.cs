@@ -9,7 +9,6 @@ public class textAssets
         
         Console.ReadLine();
         Console.Clear();
-
     }
 
     public static Menutext subMenuChooser(Menutext[] submenus, string description)
@@ -20,11 +19,15 @@ public class textAssets
 
         while (!inputCorrect)
         {
-            Console.WriteLine(description);
             for (int i = 0; i < submenus.Length; i++)
             {
-                Console.WriteLine("["+i+"]"+submenus[i].ToString());
+                if (submenus[i] != null)
+                {
+                    Console.WriteLine("["+i+"]"+submenus[i]);
+                }
             }
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine(description);
             string input = Console.ReadLine();
 
             if (input == "")

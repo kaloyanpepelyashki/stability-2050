@@ -14,7 +14,13 @@
 
         private Dictionary<string, Region> regions;
         
-        private Menutext Welcome;
+        private static Menutext Welcome;
+        private static Menutext Help;
+        private static Menutext CPI;
+        private static Menutext Goal;
+        private static Menutext BasicCommands;
+        private static Menutext GameStructure;
+        private static Menutext ProTip;
         
         // Constructor - initializes the game world when a new Game object is created
         public Game(IRegionsService regionsService, TurnCounter turnCounter)
@@ -24,33 +30,27 @@
             
             turnCounter = turnCounter;
             CreateRooms(); // Build all rooms and set up exits
+
+            ProTip = new Menutext("help[4] - Pro tip",
+                "Pro tip:\nCorruption spreads fast. Honesty takes time.\nChoose actions that build long-term integrity, not quick wins.",
+                "return to help menu", "Pro Tip");
             
-            Welcome = new Menutext("WELCOME TO STABILITY 2050",
-                "Stabilty 2050 is a text based strategic game.\n" +
-                "You are in a position of a diplomat,\n" +
-                "who is trying to fight corruption.\n" +
-                "Every action changes CPI - the measure of global trust.\n" +
-                "Your goal is to lead humanity to corruption-free world by 2050.\n \n " +
-                "YOUR MISSION:\n" +
-                "Reduce corruption and strengthen institutions worldwide.\n" +
-                "Every year represents one turn and you have 25 years to raise the Global CPI\n" +
-                "to 80 or higher before 2050.\n" +
-                "Your actions will affect both regional and global CPI levels.\n \n " +
-                "HOW IT WORKS:\n" +
-                "- You start with 4 regions, each with its own CPI value.\n" +
-                "- Every turn, you’ll face a corruption-related question.\n" +
-                "- Your actions can increase or decrease the CPI.\n" +
-                "- The Global CPI is the average of all regional CPIs.\n" +
-                "- If it drops below 20, the world enters a corruption crisis.\n " +
-                "You’ll have 5 turns to recover, or the world collapses.\n" +
-                "- If you reach CPI of 80 or more, you win immediately."+
-                "AVAILABLE COMMANDS:\n" +
-                "- Type a number to choose an action.\n" +
-                "- Type 'west','east','north' or 'south' to travel to another region.\n" +
-                "- Type 'help' for assistance.\n" +
-                "- Type 'quit' to end the simulation.",
-                "begin","welcome");
+            GameStructure = new Menutext("help[3] - Game Structure","GAME STRUCTURE:\n- Each turn represents one year.\n- Each region’s CPI changes based on your decision.\n- The Global CPI is the average of all four regions.\n- A higher CPI means lower corruption.","return to help menu","Game Structure");
             
+            CPI = new Menutext("Help[0] - CPI ",
+                "CPI (Corruption Perception Index):\n- Represents how clean a region is.\n- Range: 0 = totally corrupt, 100 = fully transparent.",
+                "return to the help menu", "CPI");
+            
+            Goal = new Menutext("help[1] - goal","GOAL:\n- Reach a global CPI of 80 before the year 2050.\n- If global CPI falls below 20, a corruption crisis begins.\n You’ll have 5 turns to recover","return to help menu", "Goal");
+            
+            BasicCommands = new Menutext("help[2] - Basic Commands","BASIC COMMANDS:\n- [number] → choose your response to a dilemma.\n- 'north','west','east' or 'south' → travel to another region.\n- help → show this help menu.\n- quit → exit the simulation.","return to help menu", "Basic Commands");
+
+            Help = new Menutext("HELP MENU", null,null, "help",new Menutext[]{CPI,Goal,BasicCommands,GameStructure,ProTip},"Choose a number to read more:");
+
+            Welcome = new Menutext("STABILITY 2050",
+                "Stabilty 2050 is a text based strategic game.\nYou are in a position of a diplomat,\nwho is trying to fight corruption.\nEvery action changes CPI - the measure of global trust.\nYour goal is to lead humanity to corruption-free world by 2050.\n",
+                null, null,new Menutext[] {Help}, "Type '0' to learn how to play or press ENTER to continue.");
+
         }
         
         // Creates all rooms and defines how they connect to each other
@@ -186,14 +186,7 @@
         /// </remarks>
         private static void PrintHelp()
         {
-            Console.WriteLine("You are lost. You are alone. You wander");
-            Console.WriteLine("around the university.");
-            Console.WriteLine();
-            Console.WriteLine("Navigate by typing 'north', 'south', 'east', or 'west'.");
-            Console.WriteLine("Type 'look' for more details.");
-            Console.WriteLine("Type 'back' to go to the previous room.");
-            Console.WriteLine("Type 'help' to print this message again.");
-            Console.WriteLine("Type 'quit' to exit the game.");
+            Help.display();
         }
     }
 }

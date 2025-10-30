@@ -32,7 +32,7 @@ public class Menutext
         this.enterPromptAction = enterPromptAction;
     }
     
-    public Menutext(string header, string textBody, string enterPromptAction, string? menuName, Menutext[] submenus,string subMenuDescription)
+    public Menutext(string header, string? textBody, string? enterPromptAction, string? menuName, Menutext[] submenus,string subMenuDescription)
     {
         this.subMenuDesc = subMenuDescription;
         this.menuName = menuName;
@@ -45,16 +45,30 @@ public class Menutext
 
     public void display()
     {
-        textAssets.Header(header);
-        Console.WriteLine(textBody);
+        
         if (!hasSubmenus)
         {
+            textAssets.Header(header);
+            Console.WriteLine(textBody);
             textAssets.EnterPrompt(enterPromptAction);
         }
         else
         {
-            Menutext menu = textAssets.subMenuChooser(submenus,subMenuDesc);
-            menu.display();
+            while (true)
+            {
+                textAssets.Header(header);
+                if (textBody != null)
+                {
+                    Console.WriteLine(textBody);
+                }
+                Menutext menu = textAssets.subMenuChooser(submenus,subMenuDesc);
+                if (menu == null)
+                {
+                    break;
+                }
+                menu.display();
+            }
+            
         }
         
     }
