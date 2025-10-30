@@ -44,7 +44,7 @@
                 "- Type 'west','east','north' or 'south' to travel to another region.\n" +
                 "- Type 'help' for assistance.\n" +
                 "- Type 'quit' to end the simulation.",
-                "begin");
+                "begin",null);
         }
         
         // Creates all rooms and defines how they connect to each other
