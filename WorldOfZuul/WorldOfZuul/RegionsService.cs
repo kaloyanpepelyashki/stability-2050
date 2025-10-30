@@ -19,13 +19,13 @@ public class RegionsService
     /// In charge of initialsing the regions, their states and their exits
     /// </summary>
     /// <returns>Returns a list of regions</returns>
-    public List<Region> InitialiseRegions()
+    public Dictionary<string, Region> InitialiseRegions()
     {
         try
         {
             List<RegionDTO> regionDTOs = regionDataParser.DeserializeRegionData();
-            
-            List<Region> regions = regionDTOs.Select(dto => 
+
+            Dictionary<string, Region> regionsDict = ConvertListToDictionary(regionDTOs.Select(dto =>
                 new Region(
                     dto.RegionName,
                     dto.RegionDescription,
@@ -33,14 +33,12 @@ public class RegionsService
                     dto.State.StateName,
                     dto.State.StateDescription
                 )
-            ).ToList();
-
-            Dictionary<string, Region> regionsDict = ConvertListToDictionary(regions);
+            ).ToList());
             
             // Iterates over the regions and together with that iterates over the regionDTOs to assign the exits (present in the regionDTOs) to the regions
-            for (int i = 0; i < regions.Count; i++)
+            foreach(KeyValuePair<string, Region> regionPair in regionsDict)
             {
-                string currentRegionTitle = regions[i].RegionName;
+                string currentRegionTitle = regionPair.Value.RegionName;
                 
                 for (int j = 0; j < regionDTOs.Count; j++)
                 {
@@ -54,27 +52,21 @@ public class RegionsService
                         Region? westExit = (!string.IsNullOrEmpty(currentRegionDto.Exits.West)) ? regionsDict[currentRegionDto.Exits.West] : null;
                         
                         //Assigns the (sets) the exits to the region, currently itereated over.
-                        regions[i].SetExits(northExit, eastExit, southExit, westExit); 
+                        regionPair.Value.SetExits(northExit, eastExit, southExit, westExit); 
                     }
                 } 
             }
-            
-            
-            // TODO REMOVE THE VOLLOWING CODE BLOCK, IT'S JUST FOR TESTING PURPOSES
-            Console.WriteLine("====== Regions and the exits to them: ");
 
-            for (var i = 0; i < regions.Count; i++)
+            foreach (KeyValuePair<string, Region> regionPair in regionsDict)
             {   
-                Console.WriteLine($"Exits for {regions[i].RegionName} :");
-                foreach (KeyValuePair<string, Region> exit in regions[i].Exits)
+                Console.WriteLine(regionPair.Value.RegionName);
+                foreach (KeyValuePair<string, Region> exit in regionPair.Value.Exits)
                 {
-                    Console.WriteLine($"   -{exit.Key} exit {exit.Value.RegionName}");
+                    Console.WriteLine($"{exit.Key} exit : {exit.Value.RegionName}");
                 }
-            }    
+            }
             
-            // CODE BLOCK ENDS HERE
-            
-            return regions;
+            return regionsDict;
             
         }
         catch (Exception e)
@@ -82,7 +74,7 @@ public class RegionsService
             Console.WriteLine(e); 
         }
 
-        return new List<Region>();
+        return new Dictionary<string, Region>();
     }
 
     private Dictionary<string, Region> ConvertListToDictionary(List<Region> regions)
