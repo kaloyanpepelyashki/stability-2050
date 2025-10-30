@@ -30,7 +30,7 @@
         /// <summary>
         /// The index of the corruption preception in a given region
         /// </summary>
-        public double RegionCPI { get; private set; }
+        public double RegionCpi { get; set; }
         
         /// <summary>
         /// Initializes a new instance of the <see cref="Region"/> class with the specified short and long descriptions.
@@ -43,7 +43,7 @@
         {
             RegionName = regionName;
             RegionDescription = regionDesc;
-            RegionCPI = regionCpi;
+            RegionCpi = regionCpi;
             RegionState = new State(stateName, stateDescription);
         }
         

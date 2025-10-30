@@ -7,25 +7,24 @@ namespace WorldOfZuul;
 /// </summary>
 public class RegionsService : IRegionsService
 {   
- 
     private RegionDataParser regionDataParser;
     
     public RegionsService(RegionDataParser regionDataParser)
     {
-       regionDataParser = regionDataParser;
+       this.regionDataParser = regionDataParser;
     }
     
     /// <summary>
-    /// In charge of initialsing the regions, their states and their exits
+    /// In charge of initialising the regions, their states and their exits
     /// </summary>
     /// <returns>Returns a list of regions</returns>
     public Dictionary<string, Region> InitialiseRegions()
     {
         try
         {
-            List<RegionDTO> regionDTOs = regionDataParser.DeserializeRegionData();
+            List<RegionDTO> regionDtOs = regionDataParser.DeserializeRegionData();
 
-            Dictionary<string, Region> regionsDict = ConvertListToDictionary(regionDTOs.Select(dto =>
+            Dictionary<string, Region> regionsDict = ConvertListToDictionary(regionDtOs.Select(dto =>
                 new Region(
                     dto.RegionName,
                     dto.RegionDescription,
@@ -40,11 +39,11 @@ public class RegionsService : IRegionsService
             {
                 string currentRegionTitle = regionPair.Value.RegionName;
                 
-                for (int j = 0; j < regionDTOs.Count; j++)
+                for (int j = 0; j < regionDtOs.Count; j++)
                 {
-                    if (regionDTOs[j].RegionName ==  currentRegionTitle)
+                    if (regionDtOs[j].RegionName ==  currentRegionTitle)
                     { 
-                        RegionDTO currentRegionDto =  regionDTOs[j];
+                        RegionDTO currentRegionDto =  regionDtOs[j];
                         //Before assigning each of the exits from the DTO, it's checked if the exit is not an empty string, to avoid breaking it and throwing an exception that his key doesn't exist in the dictionary
                         Region? northExit = (!string.IsNullOrEmpty(currentRegionDto.Exits.North)) ? regionsDict[currentRegionDto.Exits.North] : null;
                         Region? eastExit = (!string.IsNullOrEmpty(currentRegionDto.Exits.East)) ? regionsDict[currentRegionDto.Exits.East] : null;
@@ -88,8 +87,32 @@ public class RegionsService : IRegionsService
         catch (Exception e)
         {
             Console.WriteLine("Error converting list of regions to a dictionary");
-            throw e; 
+            throw; 
         }
     }
-    
+
+    public List<Region> GetRegions()
+    {
+        try
+        {
+            List<Region> regions = regionDataParser.DeserializeRegionData().Select(dto =>
+                new Region(
+                    dto.RegionName,
+                    dto.RegionDescription,
+                    dto.RegionCPI,
+                    dto.State.StateName,
+                    dto.State.StateDescription
+                )
+            ).ToList();
+            
+            return regions;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+        return [];
+    }
 }

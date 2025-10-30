@@ -1,0 +1,62 @@
+﻿[
+  {
+    "region_name": "North Africa",
+    "region_description": "",
+    "cpi": 37.0,
+    "state": {
+      "state_name": "Egypt",
+      "state_description": ""
+    },
+    "exits": {
+      "north": "",
+      "east": "Middle East",
+      "south": "South Africa",
+      "west": "North America"
+    }
+  },
+  {
+    "region_name": "Middle East",
+    "region_description": "",
+    "cpi": 38.0,
+    "state": {
+      "state_name": "Israel",
+      "state_description": ""
+    },
+    "exits": {
+      "north": "",
+      "east": "Eastern Asia",
+      "south": "",
+      "west": "North Africa"
+    }
+  },
+  {
+    "region_name": "Eastern Asia",
+    "region_description": "",
+    "cpi": 71.0,
+    "state": {
+      "state_name": "Japan",
+      "state_description": ""
+    },
+    "exits": {
+      "north": "",
+      "east": "Middle East",
+      "south": "",
+      "west": ""
+    }
+  },
+  {
+    "region_name": "North America",
+    "region_description": "",
+    "cpi": 54.0,
+    "state": {
+      "state_name": "United States",
+      "state_description": ""
+    },
+    "exits": {
+      "north": "",
+      "east": "North Africa",
+      "south": "",
+      "west": ""
+    }
+  }
+]
