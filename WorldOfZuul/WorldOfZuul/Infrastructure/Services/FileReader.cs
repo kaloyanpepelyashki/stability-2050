@@ -1,6 +1,8 @@
-﻿namespace WorldOfZuul;
+﻿using WorldOfZuul.Interfaces;
 
-public class FileReader
+namespace WorldOfZuul;
+
+public class FileReader: IFileReader
 {
 
     public FileReader(){}
