@@ -9,10 +9,18 @@ public class GameScreen
     private int barPercent = 5; //how many percent one bar represents
     
     private Menutext movement;
+
+    private Menutext main;
+
+    private Menutext region;
     
     Region? currentRegion;
     
     Region? lastRegion;
+
+    private bool hasMoved = true;
+
+    private bool left;
 
     public GameScreen(TurnCounter turnCounter,CpiTracker cpiTracker,Region? currentRegion,Region? lastRegion)
     {
@@ -34,8 +42,18 @@ public class GameScreen
             currentRegionName = currentRegion.RegionName;
             regionalCpi = currentRegion.RegionCpi;
         }
+
+        region = new Menutext("year: " + (2025 + turnCounter.currentTurn - 1) + "   |   " + "turn: " +
+                              turnCounter.currentTurn + "/25\n" +
+                              "Global cpi:\n" + percentBar(cpiTracker.GlobalCpi) + "\n \n" +
+                              "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
+                              percentBar(regionalCpi),regionInfo(currentRegion),null,"region");
         
-        
+        main = new Menutext("year: " + (2025 + turnCounter.currentTurn-1)+"   |   "+"turn: "+turnCounter.currentTurn+"/25\n"+
+                            "Global cpi:\n"+percentBar(cpiTracker.GlobalCpi)+"\n \n"+
+     
+                            "Region: "+currentRegionName+"\n"+"Regional cpi: \n"+
+                            percentBar(regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region", null,"gameScreen");
         
         movement = new Menutext("year: " + (2025 + turnCounter.currentTurn-1)+"   |   "+"turn: "+turnCounter.currentTurn+"/25\n"+
         "Global cpi:\n"+percentBar(cpiTracker.GlobalCpi)+"\n \n"+
@@ -43,14 +61,76 @@ public class GameScreen
             percentBar(regionalCpi), exits(), null,"gameScreen");
     }
 
+    public string regionInfo(Region region)
+    {
+        
+        string txt = "region description: "+region.RegionDescription;
+
+        txt += "\nto acces the regions quiz type 'placeholder' ";
+
+        return txt;
+
+    }
+
     public void display()
     {
-        Console.Clear();
-        movement.display();
+        
+        if (hasMoved)
+        {
+            Console.Clear();
+
+            if (left)
+            {
+                movement.display();
+                return;
+            }
+            
+            main.display();
+            bool validInput = false;
+            while (!validInput) 
+            {
+                string input = Console.ReadLine();
+                switch (input) 
+                {
+                    case "stay": 
+                        Console.Clear(); 
+                        region.display();
+                        validInput = true;
+                        hasMoved = false;
+                        break;
+            
+                    case "leave": 
+                        Console.Clear();
+                        movement.display();
+                        left = true;
+                        validInput = true;
+                        break;
+                    default:
+                        Console.Write("please choose whether to stay or leave\n");
+                        break;
+                } 
+            }
+            
+        }
+        else
+        {
+            left = false;
+            Console.Clear();
+            region.display();
+        }
+        
+        
+
     }
 
     public void update(Region currentRegion, Region lastRegion)
     {
+        if (lastRegion == this.currentRegion||this.lastRegion == currentRegion)
+        {
+            hasMoved = true;
+            left = false;
+        }
+        
         this.currentRegion = currentRegion;
         this.lastRegion = lastRegion;
         
@@ -68,10 +148,22 @@ public class GameScreen
             regionalCpi = currentRegion.RegionCpi;
         }
         
+        region = new Menutext("year: " + (2025 + currentTurn.currentTurn - 1) + "   |   " + "turn: " +
+                              currentTurn.currentTurn + "/25\n" +
+                              "Global cpi:\n" + percentBar(cpiTracker.GlobalCpi) + "\n \n" +
+                              "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
+                              percentBar(regionalCpi),regionInfo(currentRegion),null,"region");
+        
         movement = new Menutext("year: " + (2025 + currentTurn.currentTurn)+"   |   "+"turn: "+currentTurn.currentTurn+"/25\n"+
                                 "Global cpi:\n"+percentBar(cpiTracker.GlobalCpi)+"\n \n"+
                                 "Region: "+currentRegionName+"\n"+"Regional cpi: \n"+
                                 percentBar(regionalCpi), exits(), null,"gameScreen");
+        
+        main = new Menutext("year: " + (2025 + currentTurn.currentTurn-1)+"   |   "+"turn: "+currentTurn.currentTurn+"/25\n"+
+                            "Global cpi:\n"+percentBar(cpiTracker.GlobalCpi)+"\n \n"+
+     
+                            "Region: "+currentRegionName+"\n"+"Regional cpi: \n"+
+                            percentBar(regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,"gameScreen");
         
     }
 
@@ -88,7 +180,7 @@ public class GameScreen
         try
         {
             string north = currentRegion.Exits["north"].RegionName;
-            exits += "[north] : " + north+"\n";
+            exits += "type 'north' to go to " + north+"\n";
         }
         catch (KeyNotFoundException)
         {
@@ -98,7 +190,7 @@ public class GameScreen
         try
         {
             string south = currentRegion.Exits["south"].RegionName;
-            exits += "[south] : "+ south+"\n";
+            exits += "type 'south' to go to "+ south+"\n";
         }
         catch (KeyNotFoundException)
         {
@@ -108,7 +200,7 @@ public class GameScreen
         try
         {
             string east = currentRegion.Exits["east"].RegionName;
-            exits += "[east] : "+ east+"\n";
+            exits += "type 'east' to go to "+ east+"\n";
         }
         catch (KeyNotFoundException)
         {
@@ -118,7 +210,7 @@ public class GameScreen
         try
         {
             string west = currentRegion.Exits["west"].RegionName;
-            exits += "[west] : "+ west+"\n";
+            exits += "type 'west' to go to "+ west+"\n";
         }
         catch (KeyNotFoundException)
         {
