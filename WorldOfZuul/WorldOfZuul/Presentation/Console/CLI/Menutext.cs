@@ -7,7 +7,7 @@
 
 public class Menutext
 {
-    private string enterPromptAction;
+    private string? enterPromptAction;
     private string header;
     private string textBody;
     private string? menuName;
@@ -24,7 +24,7 @@ public class Menutext
         return "this menu has no name";
     }
 
-    public Menutext(string header, string textBody, string enterPromptAction, string? menuName)
+    public Menutext(string header, string textBody, string? enterPromptAction, string? menuName)
     {
         this.menuName = menuName;
         this.header = header;
@@ -50,7 +50,11 @@ public class Menutext
         {
             textAssets.Header(header);
             Console.WriteLine(textBody);
-            textAssets.EnterPrompt(enterPromptAction);
+            if (enterPromptAction != null)
+            {
+                textAssets.EnterPrompt(enterPromptAction);
+            }
+            
         }
         else
         {
