@@ -10,9 +10,33 @@
     "exits": {
       "north": "",
       "east": "Middle East",
-      "south": "South Africa",
+      "south": "",
       "west": "North America"
-    }
+    },
+    "questions": [
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      },
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      }
+    ]
   },
   {
     "region_name": "Middle East",
@@ -27,7 +51,31 @@
       "east": "Eastern Asia",
       "south": "",
       "west": "North Africa"
-    }
+    },
+    "questions": [
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      },
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      }
+    ]
   },
   {
     "region_name": "Eastern Asia",
@@ -42,7 +90,31 @@
       "east": "Middle East",
       "south": "",
       "west": ""
-    }
+    },
+    "questions": [
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      },
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      }
+    ]
   },
   {
     "region_name": "North America",
@@ -57,6 +129,30 @@
       "east": "North Africa",
       "south": "",
       "west": ""
-    }
+    },
+    "questions": [
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      },
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      }
+    ]
   }
 ]

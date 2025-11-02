@@ -32,7 +32,7 @@ namespace WorldOfZuul
             _regionService =  regionsService;
             this.cpiTracker= cpiTracker;
             this.turnCounter = turnCounter;
-            CreateRooms(); // Build all rooms and set up exits
+            CreateRooms(); // Builds all regions 
 
             ProTip = new Menutext("help[4] - Pro tip",
                 "Pro tip:\nCorruption spreads fast. Honesty takes time.\nChoose actions that build long-term integrity, not quick wins.",
@@ -65,10 +65,16 @@ namespace WorldOfZuul
             try
             {
                 regions = _regionService.InitialiseRegions();
+
+                foreach (KeyValuePair<string, Region> region in regions )
+                {
+                    Console.WriteLine(region.Key);
+                }
+                
                 
                 //Sets the initial room to "outside"
                 // Player starts the game outside
-                currentRegion = regions["Central Europe"];
+                currentRegion = regions["North Africa"];
             }
             catch (Exception e)
             {

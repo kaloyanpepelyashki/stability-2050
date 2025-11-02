@@ -31,6 +31,8 @@
         /// The index of the corruption preception in a given region
         /// </summary>
         public double RegionCpi { get; set; }
+
+        public List<Question> Questions { get; private set; } = new();
         
         /// <summary>
         /// Initializes a new instance of the <see cref="Region"/> class with the specified short and long descriptions.
@@ -39,12 +41,14 @@
         /// <param name="regionDesc">The brief description of the region, gives an overview of the region and the situation in the region.</param>
         /// <param name="regionCpi"> The CPI of the region</param>
         /// <param name="stateProps"> A tuple holding the data needed for initialising the state in a specific region</param>
-        public Region(string regionName, string regionDesc, double regionCpi, string stateName, string stateDescription)
+        /// <param name="questions"> A list of questions (Question objects) belonging to the region class</param>
+        public Region(string regionName, string regionDesc, double regionCpi, string stateName, string stateDescription, List<Question> questions)
         {
             RegionName = regionName;
             RegionDescription = regionDesc;
             RegionCpi = regionCpi;
             RegionState = new State(stateName, stateDescription);
+            Questions = questions;
         }
         
         /// <summary>
