@@ -17,12 +17,12 @@ namespace WorldOfZuul
 
         private Dictionary<string, Region> regions;
 
-        private static ConsoleHandler CLI;
+       private static ConsoleHandlerService CLI;
         
         private static GameScreen gameScreen;
         
         // Constructor - initializes the game world when a new Game object is created
-        public Game(IRegionsService regionsService, TurnCounter turnCounter, CpiTracker cpiTracker)
+        public Game(ConsoleHandlerService consoleHandler, IRegionsService regionsService, TurnCounter turnCounter, CpiTracker cpiTracker)
         {   
             //TODO, change, the region service must be dependency injected
             _regionService =  regionsService;
@@ -30,7 +30,7 @@ namespace WorldOfZuul
             this.turnCounter = turnCounter;
             CreateRooms(); // Builds all regions 
 
-            CLI = new ConsoleHandler();
+            CLI = consoleHandler;
             
             gameScreen = new GameScreen(turnCounter, cpiTracker,currentRegion,null);
 
