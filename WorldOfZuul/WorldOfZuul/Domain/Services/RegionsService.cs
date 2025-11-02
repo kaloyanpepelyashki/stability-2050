@@ -23,38 +23,46 @@ public class RegionsService : IRegionsService
         try
         {
             List<RegionDTO> regionDtOs = regionDataParser.DeserializeRegionData();
+            List<Region> regions = GetRegions();
 
-            Dictionary<string, Region> regionsDict = ConvertListToDictionary(regionDtOs.Select(dto =>
-                new Region(
-                    dto.RegionName,
-                    dto.RegionDescription,
-                    dto.RegionCPI,
-                    dto.State.StateName,
-                    dto.State.StateDescription
-                )
-            ).ToList());
+            Dictionary<string, Region> regionsDict = ConvertListToDictionary(regions);
             
             // Iterates over the regions and together with that iterates over the regionDTOs to assign the exits (present in the regionDTOs) to the regions
             foreach(KeyValuePair<string, Region> regionPair in regionsDict)
             {
-                string currentRegionTitle = regionPair.Value.RegionName;
-                
-                for (int j = 0; j < regionDtOs.Count; j++)
+                try
                 {
-                    if (regionDtOs[j].RegionName ==  currentRegionTitle)
-                    { 
-                        RegionDTO currentRegionDto =  regionDtOs[j];
-                        //Before assigning each of the exits from the DTO, it's checked if the exit is not an empty string, to avoid breaking it and throwing an exception that his key doesn't exist in the dictionary
-                        Region? northExit = (!string.IsNullOrEmpty(currentRegionDto.Exits.North)) ? regionsDict[currentRegionDto.Exits.North] : null;
-                        Region? eastExit = (!string.IsNullOrEmpty(currentRegionDto.Exits.East)) ? regionsDict[currentRegionDto.Exits.East] : null;
-                        Region? southExit = (!string.IsNullOrEmpty(currentRegionDto.Exits.South)) ? regionsDict[currentRegionDto.Exits.South] : null;
-                        Region? westExit = (!string.IsNullOrEmpty(currentRegionDto.Exits.West)) ? regionsDict[currentRegionDto.Exits.West] : null;
-                        
-                        //Assigns the (sets) the exits to the region, currently itereated over.
-                        regionPair.Value.SetExits(northExit, eastExit, southExit, westExit); 
+                    string currentRegionTitle = regionPair.Value.RegionName;
+
+                    for (int j = 0; j < regionDtOs.Count; j++)
+                    {
+                        if (regionDtOs[j].RegionName == currentRegionTitle)
+                        {
+                            RegionDTO currentRegionDto = regionDtOs[j];
+                            //Before assigning each of the exits from the DTO, it's checked if the exit is not an empty string, to avoid breaking it and throwing an exception that his key doesn't exist in the dictionary
+                            Region? northExit = (!string.IsNullOrEmpty(currentRegionDto.Exits.North))
+                                ? regionsDict[currentRegionDto.Exits.North]
+                                : null;
+                            Region? eastExit = (!string.IsNullOrEmpty(currentRegionDto.Exits.East))
+                                ? regionsDict[currentRegionDto.Exits.East]
+                                : null;
+                            Region? southExit = (!string.IsNullOrEmpty(currentRegionDto.Exits.South))
+                                ? regionsDict[currentRegionDto.Exits.South]
+                                : null;
+                            Region? westExit = (!string.IsNullOrEmpty(currentRegionDto.Exits.West))
+                                ? regionsDict[currentRegionDto.Exits.West]
+                                : null;
+
+                            //Assigns the (sets) the exits to the region, currently itereated over.
+                            regionPair.Value.SetExits(northExit, eastExit, southExit, westExit);
+                        }
                     }
-                } 
-            }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error assigning exits to regions. {e.Message}");
+                }
+            } 
 
             foreach (KeyValuePair<string, Region> regionPair in regionsDict)
             {   
@@ -90,29 +98,42 @@ public class RegionsService : IRegionsService
             throw; 
         }
     }
-
+    
+    /// <summary>
+    /// Gets the regions from the JSON file. The uses the DeserializeRegionData method from the regionDataParser class.
+    /// </summary>
+    /// <returns>List<Region> - a list of all regions</returns>
     public List<Region> GetRegions()
     {
         try
         {
             List<Region> regions = regionDataParser.DeserializeRegionData().Select(dto =>
-                new Region(
-                    dto.RegionName,
-                    dto.RegionDescription,
-                    dto.RegionCPI,
-                    dto.State.StateName,
-                    dto.State.StateDescription
-                )
+                {
+                    List<Question> _questions = new List<Question>();
+                    
+                    foreach (QuestionDTO questionDTO in dto.Questions)
+                    {
+                        Question question = new Question(questionDTO.QuestionText, questionDTO.Answers.PossibleAnswers, questionDTO.Answers.RightAnswer);
+                        _questions.Add(question);
+                    }
+                    
+                    return new Region(
+                        dto.RegionName,
+                        dto.RegionDescription,
+                        dto.RegionCPI,
+                        dto.State.StateName,
+                        dto.State.StateDescription,
+                        _questions
+                    );
+                }
             ).ToList();
             
             return regions;
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            Console.WriteLine($"Error getting regions: {e.Message}");
+            throw e;
         }
-
-        return [];
     }
 }

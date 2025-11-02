@@ -21,4 +21,7 @@ public class RegionDTO
     
     [JsonPropertyName("exits")] 
     public ExitsDTO Exits { get; set; }
+    
+    [JsonPropertyName("questions")]
+    public List<QuestionDTO> Questions { get; set; } 
 }

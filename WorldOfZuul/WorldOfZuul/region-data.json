@@ -13,7 +13,31 @@
       "east": "",
       "south": "South Africa",
       "west": ""
-    }
+    },
+    "questions": [
+      {
+        "question_text": "The text of the question", 
+         "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+           "right_answer": "Answer 2+"
+        }
+      },
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      }
+    ]
   },
   {
     "region_name": "South Africa",
@@ -28,7 +52,30 @@
       "east": "",
       "south": "",
       "west": ""
+    }, "questions": [
+    {
+      "question_text": "The text of the question",
+      "answers":  {
+        "possible_answers" : [
+          "Answer 1",
+          "Answer 2",
+          "Answer 3"
+        ],
+        "right_answer": "Answer 2+"
+      }
+    },
+    {
+      "question_text": "The text of the question",
+      "answers":  {
+        "possible_answers" : [
+          "Answer 1",
+          "Answer 2",
+          "Answer 3"
+        ],
+        "right_answer": "Answer 2+"
+      }
     }
+  ]
   },
   {
     "region_name": "Central Europe",
@@ -43,7 +90,31 @@
       "east": "Eastern Europe",
       "south": "South Africa",
       "west": ""
+    }, 
+    "questions": [
+    {
+      "question_text": "The text of the question",
+      "answers":  {
+        "possible_answers" : [
+          "Answer 1",
+          "Answer 2",
+          "Answer 3"
+        ],
+        "right_answer": "Answer 2+"
+      }
+    },
+    {
+      "question_text": "The text of the question",
+      "answers":  {
+        "possible_answers" : [
+          "Answer 1",
+          "Answer 2",
+          "Answer 3"
+        ],
+        "right_answer": "Answer 2+"
+      }
     }
+  ]
   },
   {
     "region_name": "Scandinavians",
@@ -58,7 +129,31 @@
       "east": "",
       "south": "Central Europe",
       "west": ""
-    }
+    },
+    "questions": [
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      },
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      }
+    ]
   },
   {
     "region_name": "Eastern Europe",
@@ -73,7 +168,31 @@
       "east": "Middle East",
       "south": "",
       "west": "Central Europe"
-    }
+    },
+    "questions": [
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      },
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      }
+    ]
   },
   {
     "region_name": "Middle East",
@@ -88,7 +207,31 @@
       "east": "",
       "south": "",
       "west": "Eastern Europe"
-    }
+    },
+    "questions": [
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      },
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      }
+    ]
   },
   {
     "region_name": "Central Asia",
@@ -103,7 +246,31 @@
       "east": "",
       "south": "",
       "west": ""
-    }
+    },
+    "questions": [
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      },
+      {
+        "question_text": "The text of the question",
+        "answers":  {
+          "possible_answers" : [
+            "Answer 1",
+            "Answer 2",
+            "Answer 3"
+          ],
+          "right_answer": "Answer 2+"
+        }
+      }
+    ]
   },
   {
     "region_name": "Eastern Asia",
