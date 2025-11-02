@@ -1,4 +1,6 @@
-﻿namespace WorldOfZuul;
+﻿using WorldOfZuul.Domain.Services.Interfaces;
+
+namespace WorldOfZuul;
 
 /// <summary>
 /// The class responsible for keeping track of the turns in the game. Keeps track of the current turn the player is playing
@@ -8,11 +10,12 @@
 /// The class is a singleton class, meaning it cannot be instantiated. The class a single instance.
 /// To get the instance of the class, the GetTurnCounter method must be used
 /// </remarks>
-public class TurnCounter
+public class TurnCounter : ITurnCounter
 {
     private static TurnCounter _instance = null;
     public int currentTurn { get; private set; } = 1;
     public int maxTurn { get; private set; } = 25;
+    public bool OutOfTurns = false;
 
     private TurnCounter()
     {
@@ -39,6 +42,17 @@ public class TurnCounter
     /// </summary>
     public void IncrementTurn()
     {
-        currentTurn++;
+        if (!OutOfTurns)
+        {
+            currentTurn++;
+        }
+    }
+
+    public void CheckOutOfTurns()
+    {
+        if(currentTurn == maxTurn)
+        {
+            OutOfTurns = true; 
+        }
     }
 }

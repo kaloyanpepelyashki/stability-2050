@@ -3,36 +3,59 @@
 namespace WorldOfZuul
 {
     public class Game
-    {   
+    {
+        /// <summary>
+        /// Keeps track of the game state. Has the game ended.
+        /// If the value is set to true, the game automatically ends.
+        /// </summary>
+        private bool _gameHasEnded = false;
+        
+        /// <summary>
+        /// Keeps track of whether the player lost or won the game
+        /// It is used for when the game is about to end - both when the player has run out of turns, when the player has reached a crisis or when the player has fulfiled the winning condition of the game
+        /// </summary>
+        private bool _playerWonGame = false;
+        
+        /// <summary>
+        /// Tracks if the player has requested end of the game
+        /// </summary>
+        /// <remarks>
+        /// Loop control variable
+        /// </remarks>
+        bool _continuePlaying = true;
+        
         private RegionDataParser regionDataParser;
         // Tracks the room the player is currently in
-        private Region? currentRegion;
+        private Region? _currentRegion;
         // Stores the previous room, used when the player types 'back'
-        private Region? previousRegion;
-
-        private TurnCounter turnCounter;
+        private Region? _previousRegion;
+        
+        /// <summary>
+        /// The turn counter instance. The turn counter is responsible for keeping up with how many turns the user has taken and how many turns are left, until the game is over.
+        /// </summary>
+        private TurnCounter _turnCounter;
 
         private IRegionsService _regionService;
-        private CpiTracker cpiTracker;
+        
+        private CpiTracker _cpiTracker;
 
-        private Dictionary<string, Region> regions;
+        private Dictionary<string, Region> _regions;
 
-       private static ConsoleHandlerService CLI;
+        private static ConsoleHandlerService _cli;
         
         private static GameScreen gameScreen;
         
         // Constructor - initializes the game world when a new Game object is created
         public Game(ConsoleHandlerService consoleHandler, IRegionsService regionsService, TurnCounter turnCounter, CpiTracker cpiTracker)
         {   
-            //TODO, change, the region service must be dependency injected
-            _regionService =  regionsService;
-            this.cpiTracker= cpiTracker;
-            this.turnCounter = turnCounter;
-            CreateRooms(); // Builds all regions 
-
-            CLI = consoleHandler;
             
-            gameScreen = new GameScreen(turnCounter, cpiTracker,currentRegion,null);
+            _regionService =  regionsService;
+            this._cpiTracker= cpiTracker;
+            this._turnCounter = turnCounter;
+            _cli = consoleHandler;
+            
+            CreateRegions(); // Builds all regions 
+            gameScreen = new GameScreen(this._turnCounter, this._cpiTracker, this._currentRegion,null);
 
         }
         
@@ -40,25 +63,48 @@ namespace WorldOfZuul
         /// The method is in charge of initialising all regions in the game, handles internally (with the use of another method), the read from JSON file, the object instantiation of each region and assignment of exits.
         /// The method also sets the initial region, where the player stars their journey
         /// </summary>
-        private void CreateRooms()
+        private void CreateRegions()
         {
             try
             {
-                regions = _regionService.InitialiseRegions();
+                _regions = _regionService.InitialiseRegions();
 
-                foreach (KeyValuePair<string, Region> region in regions )
+                foreach (KeyValuePair<string, Region> region in _regions )
                 {
                     Console.WriteLine(region.Key);
                 }
                 
                 
-                //Sets the initial room to "outside"
-                // Player starts the game outside
-                currentRegion = regions["North Africa"];
+                //Sets the initial region to "North Africa"
+                // Player starts the game in North Africa
+                _currentRegion = _regions["North Africa"];
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+            }
+        }
+
+        private void CheckEndGame()
+        {
+            bool isPlayerOutOfTurns = _turnCounter.OutOfTurns;
+
+            if (isPlayerOutOfTurns)
+            {
+                _gameHasEnded = true;
+                _playerWonGame = false;
+            }
+        }
+
+        private void HandleEndGame()
+        {
+            if (_gameHasEnded)
+            {
+                Console.WriteLine("Game Over. Out of turns. Better Luck Next time");
+                
+            } else if (!_continuePlaying)
+            {
+                Console.WriteLine("Thank you for playing World of Zuul!");
             }
         }
         
@@ -69,20 +115,18 @@ namespace WorldOfZuul
             Parser parser = new(); // Responsible for interpreting player input
 
              //Prints the welcome message to the console
-            PrintWelcome();
-            //Loop control variable 
-            bool continuePlaying = true; //Tracks if the player has requested a stop of the game
+             PrintWelcome();
             
             // Main game loop - runs until player quits. 
-            while (continuePlaying)
+            while (_continuePlaying && !_gameHasEnded && !_playerWonGame)
             {   
                 
                 // Display current room's short description - the description associated with each of the rooms
-                Console.WriteLine(currentRegion?.RegionName);
+                Console.WriteLine(_currentRegion?.RegionName);
                 Console.Write("> ");
-                Console.WriteLine($"The global CPI is {cpiTracker.GlobalCpi}");
+                Console.WriteLine($"The global CPI is {_cpiTracker.GlobalCpi}");
                 
-                gameScreen.update(currentRegion,previousRegion);
+                gameScreen.update(_currentRegion, _previousRegion);
                 gameScreen.display();
                 
                 // TODO: Uncomment after implemented crisis system
@@ -110,14 +154,14 @@ namespace WorldOfZuul
                 switch(command.Name)
                 {
                     case "look":
-                        Console.WriteLine(currentRegion?.RegionDescription);
+                        Console.WriteLine(_currentRegion?.RegionDescription);
                         break;
 
                     case "back":
-                        if (previousRegion == null)
+                        if (_previousRegion == null)
                             Console.WriteLine("You can't go back from here!");
                         else
-                            currentRegion = previousRegion;
+                            _currentRegion = _previousRegion;
                         break;
 
                     case "north":
@@ -128,7 +172,7 @@ namespace WorldOfZuul
                         break;
 
                     case "quit":
-                        continuePlaying = false;
+                        _continuePlaying = false;
                         break;
 
                     case "help":
@@ -140,16 +184,17 @@ namespace WorldOfZuul
                         break;
                 }
             }
+            
+            HandleEndGame();
 
-            Console.WriteLine("Thank you for playing World of Zuul!");
         }
 
         private void Move(string direction)
         {
-            if (currentRegion?.Exits.ContainsKey(direction) == true)
+            if (_currentRegion?.Exits.ContainsKey(direction) == true)
             {
-                previousRegion = currentRegion;
-                currentRegion = currentRegion?.Exits[direction];
+                _previousRegion = _currentRegion;
+                _currentRegion = _currentRegion?.Exits[direction];
             }
             else
             {
@@ -167,7 +212,7 @@ namespace WorldOfZuul
         /// </remarks>
         private static void PrintWelcome()
         {
-            CLI.display("welcome");
+            _cli.display("welcome");
         }
         
         /// <summary>
@@ -180,7 +225,7 @@ namespace WorldOfZuul
         /// </remarks>
         private static void PrintHelp()
         {
-            CLI.display("help");
+            _cli.display("help");
         }
     }
 }
