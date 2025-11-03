@@ -82,8 +82,8 @@ namespace WorldOfZuul
                 Console.Write("> ");
                 Console.WriteLine($"The global CPI is {cpiTracker.GlobalCpi}");
                 
-                gameScreen.update(currentRegion,previousRegion);
-                gameScreen.display();
+                gameScreen.Update(currentRegion,previousRegion);
+                gameScreen.Display();
                 
                 // TODO: Uncomment after implemented crisis system
                 // cpiTracker.CheckCrisisCondition();
@@ -167,7 +167,7 @@ namespace WorldOfZuul
         /// </remarks>
         private static void PrintWelcome()
         {
-            CLI.display("welcome");
+            CLI.Display("welcome");
         }
         
         /// <summary>
@@ -180,7 +180,7 @@ namespace WorldOfZuul
         /// </remarks>
         private static void PrintHelp()
         {
-            CLI.display("help");
+            CLI.Display("help");
         }
     }
 }

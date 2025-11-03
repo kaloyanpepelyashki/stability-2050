@@ -8,11 +8,11 @@ public class GameScreen
     
     private int barPercent = 5; //how many percent one bar represents
     
-    private Menutext movement;
+    private MenuText movement;
 
-    private Menutext main;
+    private MenuText main;
 
-    private Menutext region;
+    private MenuText region;
     
     Region? currentRegion;
     
@@ -43,25 +43,25 @@ public class GameScreen
             regionalCpi = currentRegion.RegionCpi;
         }
 
-        region = new Menutext("year: " + (2025 + turnCounter.currentTurn - 1) + "   |   " + "turn: " +
+        region = new MenuText("year: " + (2025 + turnCounter.currentTurn - 1) + "   |   " + "turn: " +
                               turnCounter.currentTurn + "/25\n" +
-                              "Global cpi:\n" + percentBar(cpiTracker.GlobalCpi) + "\n \n" +
+                              "Global cpi:\n" + PercentBar(cpiTracker.GlobalCpi) + "\n \n" +
                               "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
-                              percentBar(regionalCpi),regionInfo(currentRegion),null,"region");
+                              PercentBar(regionalCpi),RegionInfo(currentRegion),null,"region");
         
-        main = new Menutext("year: " + (2025 + turnCounter.currentTurn-1)+"   |   "+"turn: "+turnCounter.currentTurn+"/25\n"+
-                            "Global cpi:\n"+percentBar(cpiTracker.GlobalCpi)+"\n \n"+
+        main = new MenuText("year: " + (2025 + turnCounter.currentTurn-1)+"   |   "+"turn: "+turnCounter.currentTurn+"/25\n"+
+                            "Global cpi:\n"+PercentBar(cpiTracker.GlobalCpi)+"\n \n"+
      
                             "Region: "+currentRegionName+"\n"+"Regional cpi: \n"+
-                            percentBar(regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region", null,"gameScreen");
+                            PercentBar(regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region", null,"gameScreen");
         
-        movement = new Menutext("year: " + (2025 + turnCounter.currentTurn-1)+"   |   "+"turn: "+turnCounter.currentTurn+"/25\n"+
-        "Global cpi:\n"+percentBar(cpiTracker.GlobalCpi)+"\n \n"+
+        movement = new MenuText("year: " + (2025 + turnCounter.currentTurn-1)+"   |   "+"turn: "+turnCounter.currentTurn+"/25\n"+
+        "Global cpi:\n"+PercentBar(cpiTracker.GlobalCpi)+"\n \n"+
             "Region: "+currentRegionName+"\n"+"Regional cpi: \n"+
-            percentBar(regionalCpi), exits(), null,"gameScreen");
+            PercentBar(regionalCpi), Exits(), null,"gameScreen");
     }
 
-    public string regionInfo(Region region)
+    public string RegionInfo(Region region)
     {
         
         string txt = "region description: "+region.RegionDescription;
@@ -72,7 +72,7 @@ public class GameScreen
 
     }
 
-    public void display()
+    public void Display()
     {
         
         if (hasMoved)
@@ -81,11 +81,11 @@ public class GameScreen
 
             if (left)
             {
-                movement.display();
+                movement.Display();
                 return;
             }
             
-            main.display();
+            main.Display();
             bool validInput = false;
             while (!validInput) 
             {
@@ -94,14 +94,14 @@ public class GameScreen
                 {
                     case "stay": 
                         Console.Clear(); 
-                        region.display();
+                        region.Display();
                         validInput = true;
                         hasMoved = false;
                         break;
             
                     case "leave": 
                         Console.Clear();
-                        movement.display();
+                        movement.Display();
                         left = true;
                         validInput = true;
                         break;
@@ -116,14 +116,14 @@ public class GameScreen
         {
             left = false;
             Console.Clear();
-            region.display();
+            region.Display();
         }
         
         
 
     }
 
-    public void update(Region currentRegion, Region lastRegion)
+    public void Update(Region currentRegion, Region lastRegion)
     {
         if (lastRegion == this.currentRegion||this.lastRegion == currentRegion)
         {
@@ -148,26 +148,26 @@ public class GameScreen
             regionalCpi = currentRegion.RegionCpi;
         }
         
-        region = new Menutext("year: " + (2025 + currentTurn.currentTurn - 1) + "   |   " + "turn: " +
+        region = new MenuText("year: " + (2025 + currentTurn.currentTurn - 1) + "   |   " + "turn: " +
                               currentTurn.currentTurn + "/25\n" +
-                              "Global cpi:\n" + percentBar(cpiTracker.GlobalCpi) + "\n \n" +
+                              "Global cpi:\n" + PercentBar(cpiTracker.GlobalCpi) + "\n \n" +
                               "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
-                              percentBar(regionalCpi),regionInfo(currentRegion),null,"region");
+                              PercentBar(regionalCpi),RegionInfo(currentRegion),null,"region");
         
-        movement = new Menutext("year: " + (2025 + currentTurn.currentTurn)+"   |   "+"turn: "+currentTurn.currentTurn+"/25\n"+
-                                "Global cpi:\n"+percentBar(cpiTracker.GlobalCpi)+"\n \n"+
+        movement = new MenuText("year: " + (2025 + currentTurn.currentTurn)+"   |   "+"turn: "+currentTurn.currentTurn+"/25\n"+
+                                "Global cpi:\n"+PercentBar(cpiTracker.GlobalCpi)+"\n \n"+
                                 "Region: "+currentRegionName+"\n"+"Regional cpi: \n"+
-                                percentBar(regionalCpi), exits(), null,"gameScreen");
+                                PercentBar(regionalCpi), Exits(), null,"gameScreen");
         
-        main = new Menutext("year: " + (2025 + currentTurn.currentTurn-1)+"   |   "+"turn: "+currentTurn.currentTurn+"/25\n"+
-                            "Global cpi:\n"+percentBar(cpiTracker.GlobalCpi)+"\n \n"+
+        main = new MenuText("year: " + (2025 + currentTurn.currentTurn-1)+"   |   "+"turn: "+currentTurn.currentTurn+"/25\n"+
+                            "Global cpi:\n"+PercentBar(cpiTracker.GlobalCpi)+"\n \n"+
      
                             "Region: "+currentRegionName+"\n"+"Regional cpi: \n"+
-                            percentBar(regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,"gameScreen");
+                            PercentBar(regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,"gameScreen");
         
     }
 
-    public string exits()
+    public string Exits()
     {
         if (currentRegion == null)
         {
@@ -226,7 +226,7 @@ public class GameScreen
 
     }
 
-    public string percentBar(double cpi)
+    public string PercentBar(double cpi)
     {
         if (cpi < 0)
         {

@@ -1,6 +1,6 @@
 ﻿namespace WorldOfZuul;
 
-public class textAssets
+public class TextAssets
 {
     public static void EnterPrompt(string action)
     {
@@ -11,7 +11,7 @@ public class textAssets
         Console.Clear();
     }
 
-    public static Menutext subMenuChooser(Menutext[] submenus, string description)
+    public static MenuText subMenuChooser(MenuText[] submenus, string description)
     {
         //parses input to return a submenu
         Boolean inputCorrect = false;
