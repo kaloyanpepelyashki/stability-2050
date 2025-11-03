@@ -4,7 +4,7 @@
 
 public class ConsoleHandler
 {
-    public Dictionary <string,Menutext> menus = new Dictionary <string,Menutext> ();
+    public Dictionary <string,MenuText> menus = new Dictionary <string,MenuText> ();
 
     public ConsoleHandler()
     {
@@ -37,20 +37,20 @@ public class ConsoleHandler
     public void display(string key)
     {
         Console.Clear();
-        Menutext menu = menus[key];
-        menu.display();
+        MenuText menu = menus[key];
+        menu.Display();
     }
 
     public void addMenu(string header, string textBody, string enterPromptAction, string? menuName)
     {
-        Menutext menu = new Menutext(header,textBody,enterPromptAction,menuName);
+        MenuText menu = new MenuText(header,textBody,enterPromptAction,menuName);
         
         menus.Add(menu.ToString(),menu);
     }
     
     public void addMenu(string header, string? textBody, string? enterPromptAction, string? menuName, string[] submenus,string subMenuDescription)
     {
-        Menutext[] trueMenus = new Menutext [submenus.Length];
+        MenuText[] trueMenus = new MenuText [submenus.Length];
 
         try
         {
@@ -65,7 +65,7 @@ public class ConsoleHandler
         }
         
         
-        Menutext menu = new Menutext(header,textBody,enterPromptAction,menuName,trueMenus,subMenuDescription);
+        MenuText menu = new MenuText(header,textBody,enterPromptAction,menuName,trueMenus,subMenuDescription);
         menus.Add(menu.ToString(),menu);
     }
     

@@ -8,11 +8,11 @@ public class GameScreen
     
     private int barPercent = 5; //how many percent one bar represents
     
-    private Menutext movement;
+    private MenuText movement;
 
-    private Menutext main;
+    private MenuText main;
 
-    private Menutext region;
+    private MenuText region;
     
     Region? currentRegion;
     
@@ -43,14 +43,14 @@ public class GameScreen
             regionalCpi = currentRegion.RegionCpi;
         }
 
-        region = new Menutext(standardHeader(currentTurn,currentRegionName,regionalCpi),regionInfo(currentRegion),null,"region");
+        region = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi),regionInfo(currentRegion),null,"region");
         
-        main = new Menutext(standardHeader(currentTurn,currentRegionName,regionalCpi),
+        main = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi),
             "you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region",
             null,
             "gameScreen");
         
-        movement = new Menutext(standardHeader(currentTurn,currentRegionName,regionalCpi), exits(), null,"gameScreen");
+        movement = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi), exits(), null,"gameScreen");
     }
 
     private string standardHeader(TurnCounter turnCounter,string currentRegionName,double regionalCpi)
@@ -84,11 +84,11 @@ public class GameScreen
 
             if (left)
             {
-                movement.display();
+                movement.Display();
                 return;
             }
             
-            main.display();
+            main.Display();
             bool validInput = false;
             while (!validInput) 
             {
@@ -97,14 +97,14 @@ public class GameScreen
                 {
                     case "stay": 
                         Console.Clear(); 
-                        region.display();
+                        region.Display();
                         validInput = true;
                         hasMoved = false;
                         break;
             
                     case "leave": 
                         Console.Clear();
-                        movement.display();
+                        movement.Display();
                         left = true;
                         validInput = true;
                         break;
@@ -119,7 +119,7 @@ public class GameScreen
         {
             left = false;
             Console.Clear();
-            region.display();
+            region.Display();
         }
 
     }
@@ -153,11 +153,11 @@ public class GameScreen
             regionalCpi = currentRegion.RegionCpi;
         }
         
-        region = new Menutext(standardHeader(currentTurn,currentRegionName,regionalCpi),regionInfo(currentRegion),null,"region");
+        region = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi),regionInfo(currentRegion),null,"region");
         
-        movement = new Menutext(standardHeader(currentTurn,currentRegionName,regionalCpi), exits(), null,"gameScreen");
+        movement = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi), exits(), null,"gameScreen");
         
-        main = new Menutext(standardHeader(currentTurn,currentRegionName,regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,"gameScreen");
+        main = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,"gameScreen");
         
     }
 
