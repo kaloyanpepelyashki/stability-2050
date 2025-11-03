@@ -3,6 +3,8 @@ namespace WorldOfZuul;
 public class GameScreen
 {
     CpiTracker cpiTracker;
+
+    private World _world = null;
     
     TurnCounter currentTurn;
     
@@ -14,33 +16,47 @@ public class GameScreen
     
     Region? lastRegion;
 
-    public GameScreen(TurnCounter turnCounter,CpiTracker cpiTracker,Region? currentRegion,Region? lastRegion)
+    public GameScreen(TurnCounter turnCounter, CpiTracker? cpiTracker, Region? currentRegion, Region? lastRegion, World? world)
     {
-        this.cpiTracker = cpiTracker;
-        this.currentTurn = turnCounter;
-        
-        this.currentRegion =  currentRegion;
-        this.lastRegion = lastRegion;
-        double regionalCpi;
+        try
+        {
+            if (world == null | cpiTracker == null)
+            {
+                throw new Exception("World or cpiTracker not set. Equal to zero");
+            }
 
-        string currentRegionName;
-        if (currentRegion == null)
-        {
-            currentRegionName = "region not found";
-            regionalCpi = -1;
+            this.cpiTracker = cpiTracker;
+            this._world = world;
+            this.currentTurn = turnCounter;
+
+            this.currentRegion = currentRegion;
+            this.lastRegion = lastRegion;
+            double regionalCpi;
+
+            string currentRegionName;
+            if (currentRegion == null)
+            {
+                currentRegionName = "region not found";
+                regionalCpi = -1;
+            }
+            else
+            {
+                currentRegionName = currentRegion.RegionName;
+                regionalCpi = currentRegion.RegionCpi;
+            }
+
+
+
+            movement = new Menutext("year: " + (_world.Year) + "   |   " + "turn: " +
+                                    turnCounter.currentTurn + "/25\n" +
+                                    "Global cpi:\n" + percentBar(cpiTracker.GlobalCpi) + "\n \n" +
+                                    "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
+                                    percentBar(regionalCpi), exits(), null, "gameScreen");
         }
-        else
+        catch (Exception e)
         {
-            currentRegionName = currentRegion.RegionName;
-            regionalCpi = currentRegion.RegionCpi;
+            Console.WriteLine($"Error instantiating GameScreen: {e.Message}");
         }
-        
-        
-        
-        movement = new Menutext("year: " + (2025 + turnCounter.currentTurn-1)+"   |   "+"turn: "+turnCounter.currentTurn+"/25\n"+
-        "Global cpi:\n"+percentBar(cpiTracker.GlobalCpi)+"\n \n"+
-            "Region: "+currentRegionName+"\n"+"Regional cpi: \n"+
-            percentBar(regionalCpi), exits(), null,"gameScreen");
     }
 
     public void display()
@@ -68,7 +84,7 @@ public class GameScreen
             regionalCpi = currentRegion.RegionCpi;
         }
         
-        movement = new Menutext("year: " + (2025 + currentTurn.currentTurn)+"   |   "+"turn: "+currentTurn.currentTurn+"/25\n"+
+        movement = new Menutext("year: " + (_world.Year)+"   |   "+"turn: "+currentTurn.currentTurn+"/25\n"+
                                 "Global cpi:\n"+percentBar(cpiTracker.GlobalCpi)+"\n \n"+
                                 "Region: "+currentRegionName+"\n"+"Regional cpi: \n"+
                                 percentBar(regionalCpi), exits(), null,"gameScreen");

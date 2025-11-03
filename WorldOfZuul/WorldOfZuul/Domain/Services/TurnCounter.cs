@@ -16,6 +16,7 @@ public class TurnCounter : ITurnCounter
     public int currentTurn { get; private set; } = 1;
     public int maxTurn { get; private set; } = 25;
     public bool OutOfTurns = false;
+    private World? _world = null;
 
     private TurnCounter()
     {
@@ -36,15 +37,33 @@ public class TurnCounter : ITurnCounter
         
         return _instance;
     }
+
+    public void AssignWorld(World world)
+    {
+        _world = world;
+    }
     
     /// <summary>
     /// This method is used to increment the current turn number. 
     /// </summary>
     public void IncrementTurn()
     {
-        if (!OutOfTurns)
+        try
         {
-            currentTurn++;
+            if (_world == null)
+            {
+                throw new Exception("Error! World has to be assigned to TurnCounter.");
+            }
+
+            if (!OutOfTurns)
+            {
+                currentTurn++;
+                _world.IncrementYear();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error incrementing turn: {e.Message}");
         }
     }
 

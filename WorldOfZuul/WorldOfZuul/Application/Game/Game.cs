@@ -33,7 +33,10 @@ namespace WorldOfZuul
         /// <summary>
         /// The turn counter instance. The turn counter is responsible for keeping up with how many turns the user has taken and how many turns are left, until the game is over.
         /// </summary>
-        private TurnCounter _turnCounter;
+        /// <remarks>
+        /// The variable is readonly. 
+        /// </remarks>
+        private readonly TurnCounter _turnCounter;
 
         private IRegionsService _regionService;
         
@@ -42,20 +45,25 @@ namespace WorldOfZuul
         private Dictionary<string, Region> _regions;
 
         private static ConsoleHandlerService _cli;
+
+        private World? _world = null;
         
         private static GameScreen gameScreen;
         
         // Constructor - initializes the game world when a new Game object is created
-        public Game(ConsoleHandlerService consoleHandler, IRegionsService regionsService, TurnCounter turnCounter, CpiTracker cpiTracker)
+        public Game(ConsoleHandlerService consoleHandler, IRegionsService regionsService, TurnCounter turnCounter, CpiTracker cpiTracker,World world)
         {   
             
             _regionService =  regionsService;
             this._cpiTracker= cpiTracker;
             this._turnCounter = turnCounter;
             _cli = consoleHandler;
+            _world = world;
             
+            
+            gameScreen = new GameScreen(this._turnCounter, this._cpiTracker, this._currentRegion,null, world);
+            _turnCounter.AssignWorld(_world);
             CreateRegions(); // Builds all regions 
-            gameScreen = new GameScreen(this._turnCounter, this._cpiTracker, this._currentRegion,null);
 
         }
         
@@ -94,6 +102,14 @@ namespace WorldOfZuul
                 _gameHasEnded = true;
                 _playerWonGame = false;
             }
+        }
+        
+        /// <summary>
+        /// A method encapsulating the logic for incrementing a turn and a year after a move has been made
+        /// </summary>
+        private void HandleMove()
+        {
+            _turnCounter.IncrementTurn();
         }
 
         private void HandleEndGame()
@@ -188,17 +204,31 @@ namespace WorldOfZuul
             HandleEndGame();
 
         }
-
+        
+        /// <summary>
+        /// The method is in charge of handling a move action initiated by the player
+        /// THe method sets the _previousRegion to the current region and moves the _currentRegion to the direction chosen by the player
+        /// The method also calls the HandleMove method, incrementing the year and the amount of taken turns
+        /// </summary>
+        /// <param name="direction">The direction the player chooses to move to</param>
         private void Move(string direction)
         {
-            if (_currentRegion?.Exits.ContainsKey(direction) == true)
+            try
             {
-                _previousRegion = _currentRegion;
-                _currentRegion = _currentRegion?.Exits[direction];
+                if (_currentRegion?.Exits.ContainsKey(direction) == true)
+                {
+                    _previousRegion = _currentRegion;
+                    _currentRegion = _currentRegion?.Exits[direction];
+                    HandleMove();
+                }
+                else
+                {
+                    Console.WriteLine($"You have come too far {direction}! Nowhere more to go in this direction.");
+                }
             }
-            else
+            catch (Exception e)
             {
-                Console.WriteLine($"You have come too far {direction}! Nowhere more to go in this direction.");
+                Console.WriteLine(e.Message);
             }
         }
 
