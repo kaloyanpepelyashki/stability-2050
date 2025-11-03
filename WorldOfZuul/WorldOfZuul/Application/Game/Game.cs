@@ -8,7 +8,9 @@ namespace WorldOfZuul
         /// Keeps track of the game state. Has the game ended.
         /// If the value is set to true, the game automatically ends.
         /// </summary>
-        private bool _gameHasEnded = false;
+        private bool _outOfTurns = false;
+
+        private bool _globalCrisis = false;
         
         /// <summary>
         /// Keeps track of whether the player lost or won the game
@@ -99,7 +101,13 @@ namespace WorldOfZuul
 
             if (isPlayerOutOfTurns)
             {
-                _gameHasEnded = true;
+                _outOfTurns = true;
+
+                bool playerWinCondition = _cpiTracker.CheckWinCondition();
+                if (playerWinCondition)
+                {
+                    _playerWonGame = true;
+                }
                 _playerWonGame = false;
             }
         }
@@ -114,14 +122,18 @@ namespace WorldOfZuul
 
         private void HandleEndGame()
         {
-            if (_gameHasEnded)
+            if (_outOfTurns)
             {
                 Console.WriteLine("Game Over. Out of turns. Better Luck Next time");
+                
+            } else if (_globalCrisis)
+            {
+                Console.WriteLine("Game Over. Global Crisis has set in. Better Luck Next time");
                 
             } else if (!_continuePlaying)
             {
                 Console.WriteLine("Thank you for playing World of Zuul!");
-            }
+            } 
         }
         
         // Main method that runs the gameplay loop
@@ -134,8 +146,9 @@ namespace WorldOfZuul
              PrintWelcome();
             
             // Main game loop - runs until player quits. 
-            while (_continuePlaying && !_gameHasEnded && !_playerWonGame)
-            {   
+            while (_continuePlaying && !_outOfTurns && !_playerWonGame)
+            { 
+                CheckEndGame();
                 
                 // Display current room's short description - the description associated with each of the rooms
                 Console.WriteLine(_currentRegion?.RegionName);
@@ -196,7 +209,7 @@ namespace WorldOfZuul
                         break;
 
                     default:
-                        Console.WriteLine("I don't know what command.");
+                        Console.WriteLine("Command unknown. Choose from available commands.");
                         break;
                 }
             }
