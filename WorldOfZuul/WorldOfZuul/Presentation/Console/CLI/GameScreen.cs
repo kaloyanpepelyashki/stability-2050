@@ -18,9 +18,9 @@ public class GameScreen
     
     Region? lastRegion;
 
-    private bool hasMoved = true;
+    public bool hasMoved = true;
 
-    private bool left;
+    public bool left;
 
     public GameScreen(TurnCounter turnCounter,CpiTracker cpiTracker,Region? currentRegion,Region? lastRegion)
     {
@@ -43,25 +43,28 @@ public class GameScreen
             regionalCpi = currentRegion.RegionCpi;
         }
 
-        region = new Menutext("year: " + (2025 + turnCounter.currentTurn - 1) + "   |   " + "turn: " +
-                              turnCounter.currentTurn + "/25\n" +
-                              "Global cpi:\n" + percentBar(cpiTracker.GlobalCpi) + "\n \n" +
-                              "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
-                              percentBar(regionalCpi),regionInfo(currentRegion),null,"region");
+        region = new Menutext(standardHeader(currentTurn,currentRegionName,regionalCpi),regionInfo(currentRegion),null,"region");
         
-        main = new Menutext("year: " + (2025 + turnCounter.currentTurn-1)+"   |   "+"turn: "+turnCounter.currentTurn+"/25\n"+
-                            "Global cpi:\n"+percentBar(cpiTracker.GlobalCpi)+"\n \n"+
-     
-                            "Region: "+currentRegionName+"\n"+"Regional cpi: \n"+
-                            percentBar(regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region", null,"gameScreen");
+        main = new Menutext(standardHeader(currentTurn,currentRegionName,regionalCpi),
+            "you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region",
+            null,
+            "gameScreen");
         
-        movement = new Menutext("year: " + (2025 + turnCounter.currentTurn-1)+"   |   "+"turn: "+turnCounter.currentTurn+"/25\n"+
-        "Global cpi:\n"+percentBar(cpiTracker.GlobalCpi)+"\n \n"+
-            "Region: "+currentRegionName+"\n"+"Regional cpi: \n"+
-            percentBar(regionalCpi), exits(), null,"gameScreen");
+        movement = new Menutext(standardHeader(currentTurn,currentRegionName,regionalCpi), exits(), null,"gameScreen");
     }
 
-    public string regionInfo(Region region)
+    private string standardHeader(TurnCounter turnCounter,string currentRegionName,double regionalCpi)
+    {
+        return "year: " + (2025 + turnCounter.currentTurn - 1) + "   |   " + "turn: " + turnCounter.currentTurn +
+               "/25\n" +
+               "Global cpi:\n" + percentBar(cpiTracker.GlobalCpi) + "\n \n" +
+
+               "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
+               percentBar(regionalCpi);
+
+    }
+
+    private string regionInfo(Region region)
     {
         
         string txt = "region description: "+region.RegionDescription;
@@ -118,15 +121,17 @@ public class GameScreen
             Console.Clear();
             region.display();
         }
-        
-        
 
     }
 
     public void update(Region currentRegion, Region lastRegion)
     {
+        //updates all the menuScreens
+        
         if (lastRegion == this.currentRegion||this.lastRegion == currentRegion)
         {
+            //if you have moved to a new region hasMoved is set to true to trigger the screen that prompt you to either stay or leave,
+            //as well as setting left to false to stop the movement menu to appear
             hasMoved = true;
             left = false;
         }
@@ -148,26 +153,15 @@ public class GameScreen
             regionalCpi = currentRegion.RegionCpi;
         }
         
-        region = new Menutext("year: " + (2025 + currentTurn.currentTurn - 1) + "   |   " + "turn: " +
-                              currentTurn.currentTurn + "/25\n" +
-                              "Global cpi:\n" + percentBar(cpiTracker.GlobalCpi) + "\n \n" +
-                              "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
-                              percentBar(regionalCpi),regionInfo(currentRegion),null,"region");
+        region = new Menutext(standardHeader(currentTurn,currentRegionName,regionalCpi),regionInfo(currentRegion),null,"region");
         
-        movement = new Menutext("year: " + (2025 + currentTurn.currentTurn)+"   |   "+"turn: "+currentTurn.currentTurn+"/25\n"+
-                                "Global cpi:\n"+percentBar(cpiTracker.GlobalCpi)+"\n \n"+
-                                "Region: "+currentRegionName+"\n"+"Regional cpi: \n"+
-                                percentBar(regionalCpi), exits(), null,"gameScreen");
+        movement = new Menutext(standardHeader(currentTurn,currentRegionName,regionalCpi), exits(), null,"gameScreen");
         
-        main = new Menutext("year: " + (2025 + currentTurn.currentTurn-1)+"   |   "+"turn: "+currentTurn.currentTurn+"/25\n"+
-                            "Global cpi:\n"+percentBar(cpiTracker.GlobalCpi)+"\n \n"+
-     
-                            "Region: "+currentRegionName+"\n"+"Regional cpi: \n"+
-                            percentBar(regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,"gameScreen");
+        main = new Menutext(standardHeader(currentTurn,currentRegionName,regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,"gameScreen");
         
     }
 
-    public string exits()
+    private string exits()
     {
         if (currentRegion == null)
         {
@@ -176,47 +170,19 @@ public class GameScreen
         
         string exits = "neighboring regions: \n";
 
+        string[] directions = { "north", "south", "east", "west" };
 
-        try
+        //goes through each direction and checks if the key exists in which case there exists an exit in that direction, and so the template "type {key} to go to {regionname}\n" will be added to the string exits
+        foreach (string key in directions)
         {
-            string north = currentRegion.Exits["north"].RegionName;
-            exits += "type 'north' to go to " + north+"\n";
+            if (currentRegion.Exits.ContainsKey(key))
+            {
+                string dir = currentRegion.Exits[key].RegionName;
+                exits += "type " + key + " to go to " + dir + "\n";
+            }
         }
-        catch (KeyNotFoundException)
-        {
-            
-        }
-
-        try
-        {
-            string south = currentRegion.Exits["south"].RegionName;
-            exits += "type 'south' to go to "+ south+"\n";
-        }
-        catch (KeyNotFoundException)
-        {
-            
-        }
-
-        try
-        {
-            string east = currentRegion.Exits["east"].RegionName;
-            exits += "type 'east' to go to "+ east+"\n";
-        }
-        catch (KeyNotFoundException)
-        {
-            
-        }
-
-        try
-        {
-            string west = currentRegion.Exits["west"].RegionName;
-            exits += "type 'west' to go to "+ west+"\n";
-        }
-        catch (KeyNotFoundException)
-        {
-            
-        }
-
+        
+        //fills out the template "or you can also go back to 'lastRegion.regionName' by typing back" only if the lastRegion field is not null
         if (lastRegion != null)
         {
             exits += "\nor you can also go back to "+lastRegion.RegionName+" by typing back";
@@ -226,27 +192,32 @@ public class GameScreen
 
     }
 
-    public string percentBar(double cpi)
+    private string percentBar(double cpi)
     {
+        //errror handling
         if (cpi < 0)
         {
             return "an error has occured";
         }
         
+        //find out how many '/' should be added
         int bars = (int)Math.Round(cpi / barPercent);
 
         string percentBar ="";
         
+        //adds the appropriate amount of '/'
         for (int i = 0; i < bars; i++)
         {
             percentBar += "/";
         }
         
+        // fills the rest of percentbar with '.'
         for(int i = bars*barPercent;i<100;i+=barPercent)
         {
             percentBar += ".";
         }
         
+        //append the cpi percent at the end of the percentbar
         percentBar += "  " + cpi +"%";
         
         return percentBar;

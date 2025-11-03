@@ -23,7 +23,7 @@ public class ConsoleHandler
         addMenu("help[1] - goal","GOAL:\n- Reach a global CPI of 80 before the year 2050.\n- If global CPI falls below 20, a corruption crisis begins.\n You’ll have 5 turns to recover","return to help menu", "Goal");
 
         addMenu("help[2] - Basic Commands",
-            "BASIC COMMANDS:\n- [number] → choose your response to a dilemma.\n- 'north','west','east' or 'south' → travel to another region.\n- help → show this help menu.\n- quit → exit the simulation.",
+            "BASIC COMMANDS:\n- [number] -> choose your response to a dilemma.\n- 'north','west','east' or 'south' -> travel to another region.\n- help -> show this help menu.\n- quit -> exit the simulation. \n- leave -> shows possible exits out of a region",
             "return to help menu", "BasicCommands");
         
         addMenu("HELP MENU", null,null, "help",new String[]{"CPI","Goal","BasicCommands","GameStructure","ProTip"},"Choose a number to read more or press enter to exit the help menu");

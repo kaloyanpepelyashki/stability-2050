@@ -77,11 +77,6 @@ namespace WorldOfZuul
             while (continuePlaying)
             {   
                 
-                // Display current room's short description - the description associated with each of the rooms
-                Console.WriteLine(currentRegion?.RegionName);
-                Console.Write("> ");
-                Console.WriteLine($"The global CPI is {cpiTracker.GlobalCpi}");
-                
                 gameScreen.update(currentRegion,previousRegion);
                 gameScreen.display();
                 
@@ -134,7 +129,13 @@ namespace WorldOfZuul
                     case "help":
                         PrintHelp();
                         break;
-
+                    
+                    case "leave":
+                        gameScreen.update(currentRegion,previousRegion);
+                        gameScreen.hasMoved = true;
+                        gameScreen.left = true;
+                        break;
+                        
                     default:
                         Console.WriteLine("I don't know what command.");
                         break;
