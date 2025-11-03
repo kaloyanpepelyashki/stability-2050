@@ -168,7 +168,7 @@ namespace WorldOfZuul
         /// </remarks>
         private static void PrintWelcome()
         {
-            CLI.display("welcome");
+            CLI.Display("welcome");
         }
         
         /// <summary>
@@ -181,7 +181,7 @@ namespace WorldOfZuul
         /// </remarks>
         private static void PrintHelp()
         {
-            CLI.display("help");
+            CLI.Display("help");
         }
     }
 }
