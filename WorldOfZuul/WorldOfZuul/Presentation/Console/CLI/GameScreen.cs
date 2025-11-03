@@ -1,4 +1,4 @@
-namespace WorldOfZuul;
+namespace WorldOfZuul.Presentation.Console.CLI;
 
 public class GameScreen
 {
@@ -18,9 +18,9 @@ public class GameScreen
     
     Region? lastRegion;
 
-    public bool hasMoved = true;
+    public bool HasMoved = true;
 
-    public bool left;
+    public bool Left;
 
     public GameScreen(TurnCounter turnCounter,CpiTracker cpiTracker,Region? currentRegion,Region? lastRegion)
     {
@@ -43,17 +43,19 @@ public class GameScreen
             regionalCpi = currentRegion.RegionCpi;
         }
 
-        region = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi),regionInfo(currentRegion),null,"region");
-        
-        main = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi),
+        if (currentRegion != null)
+            region = new MenuText(StandardHeader(currentTurn, currentRegionName, regionalCpi),
+                RegionInfo(currentRegion), null, "region");
+
+        main = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi),
             "you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region",
             null,
             "gameScreen");
         
-        movement = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi), exits(), null,"gameScreen");
+        movement = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi), Exits(), null,"gameScreen");
     }
 
-    private string standardHeader(TurnCounter turnCounter,string currentRegionName,double regionalCpi)
+    private string StandardHeader(TurnCounter turnCounter,string currentRegionName,double regionalCpi)
     {
         return "year: " + (2025 + turnCounter.currentTurn - 1) + "   |   " + "turn: " + turnCounter.currentTurn +
                "/25\n" +
@@ -64,25 +66,25 @@ public class GameScreen
 
     }
 
-    private string regionInfo(Region region)
+    private string RegionInfo(Region region)
     {
         
-        string txt = "region description: "+region.RegionDescription;
+        string txt = "Region description: "+region.RegionDescription;
 
-        txt += "\nto acces the regions quiz type 'placeholder' ";
+        txt += "\nto access the regions quiz type 'placeholder' ";
 
         return txt;
 
     }
 
-    public void display()
+    public void Display()
     {
         
-        if (hasMoved)
+        if (HasMoved)
         {
-            Console.Clear();
+            System.Console.Clear();
 
-            if (left)
+            if (Left)
             {
                 movement.Display();
                 return;
@@ -92,24 +94,24 @@ public class GameScreen
             bool validInput = false;
             while (!validInput) 
             {
-                string input = Console.ReadLine();
+                string? input = System.Console.ReadLine();
                 switch (input) 
                 {
                     case "stay": 
-                        Console.Clear(); 
+                        System.Console.Clear(); 
                         region.Display();
                         validInput = true;
-                        hasMoved = false;
+                        HasMoved = false;
                         break;
             
                     case "leave": 
-                        Console.Clear();
+                        System.Console.Clear();
                         movement.Display();
-                        left = true;
+                        Left = true;
                         validInput = true;
                         break;
                     default:
-                        Console.Write("please choose whether to stay or leave\n");
+                        System.Console.Write("please choose whether to stay or leave\n");
                         break;
                 } 
             }
@@ -117,51 +119,40 @@ public class GameScreen
         }
         else
         {
-            left = false;
-            Console.Clear();
+            Left = false;
+            System.Console.Clear();
             region.Display();
         }
 
     }
 
-    public void update(Region currentRegion, Region lastRegion)
+    public void Update(Region currentRegion, Region lastRegion)
     {
         //updates all the menuScreens
         
         if (lastRegion == this.currentRegion||this.lastRegion == currentRegion)
         {
-            //if you have moved to a new region hasMoved is set to true to trigger the screen that prompt you to either stay or leave,
-            //as well as setting left to false to stop the movement menu to appear
-            hasMoved = true;
-            left = false;
+            // if you have moved to a new region hasMoved is set to true to trigger the screen that prompt you to either stay or leave,
+            // as well as setting left as false to stop the movement menu to appear
+            HasMoved = true;
+            Left = false;
         }
         
         this.currentRegion = currentRegion;
         this.lastRegion = lastRegion;
-        
-        double regionalCpi;
 
-        string currentRegionName;
-        if (currentRegion == null)
-        {
-            currentRegionName = "region not found";
-            regionalCpi = -1;
-        }
-        else
-        {
-            currentRegionName = currentRegion.RegionName;
-            regionalCpi = currentRegion.RegionCpi;
-        }
+        var currentRegionName = currentRegion.RegionName;
+        var regionalCpi = currentRegion.RegionCpi;
+
+        region = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi),RegionInfo(currentRegion),null,"region");
         
-        region = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi),regionInfo(currentRegion),null,"region");
+        movement = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi), Exits(), null,"gameScreen");
         
-        movement = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi), exits(), null,"gameScreen");
-        
-        main = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,"gameScreen");
+        main = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,"gameScreen");
         
     }
 
-    private string exits()
+    private string Exits()
     {
         if (currentRegion == null)
         {

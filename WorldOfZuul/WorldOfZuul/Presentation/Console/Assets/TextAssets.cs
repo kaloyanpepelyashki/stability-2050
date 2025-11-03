@@ -1,4 +1,6 @@
-﻿namespace WorldOfZuul;
+﻿using WorldOfZuul.Presentation.Console.CLI;
+
+namespace WorldOfZuul;
 
 public class TextAssets
 {
@@ -11,7 +13,7 @@ public class TextAssets
         Console.Clear();
     }
 
-    public static MenuText subMenuChooser(MenuText[] submenus, string description)
+    public static MenuText? SubMenuChooser(MenuText[] submenus, string description)
     {
         //parses input to return a submenu
         Boolean inputCorrect = false;
@@ -21,14 +23,11 @@ public class TextAssets
         {
             for (int i = 0; i < submenus.Length; i++)
             {
-                if (submenus[i] != null)
-                {
-                    Console.WriteLine("["+i+"]"+submenus[i]);
-                }
+                Console.WriteLine("["+i+"]"+submenus[i]);
             }
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine(description);
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
 
             if (input == "")
             {
@@ -51,13 +50,12 @@ public class TextAssets
                 
             }
             
-            if (result > submenus.Length)
+            if (result >= submenus.Length)
             {
                 inputCorrect = false;
                 Console.WriteLine("Invalid input, number doesnt correspond to any submenus");
-                
             }
-            
+            Console.ReadLine();
             Console.Clear();
         }
 

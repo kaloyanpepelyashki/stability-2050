@@ -1,4 +1,5 @@
 ﻿using WorldOfZuul.Interfaces;
+using WorldOfZuul.Presentation.Console.CLI;
 
 namespace WorldOfZuul
 {
@@ -77,8 +78,8 @@ namespace WorldOfZuul
             while (continuePlaying)
             {   
                 
-                gameScreen.update(currentRegion,previousRegion);
-                gameScreen.display();
+                gameScreen.Update(currentRegion, previousRegion);
+                gameScreen.Display();
                 
                 // TODO: Uncomment after implemented crisis system
                 // cpiTracker.CheckCrisisCondition();
@@ -131,9 +132,9 @@ namespace WorldOfZuul
                         break;
                     
                     case "leave":
-                        gameScreen.update(currentRegion,previousRegion);
-                        gameScreen.hasMoved = true;
-                        gameScreen.left = true;
+                        gameScreen.Update(currentRegion,previousRegion);
+                        gameScreen.HasMoved = true;
+                        gameScreen.Left = true;
                         break;
                         
                     default:
