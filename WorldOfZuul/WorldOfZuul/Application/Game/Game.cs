@@ -21,6 +21,7 @@ namespace WorldOfZuul
         private static ConsoleHandler CLI;
         
         private static GameScreen gameScreen;
+        private static QuizScreen quizScreen;
         
         // Constructor - initializes the game world when a new Game object is created
         public Game(IRegionsService regionsService, TurnCounter turnCounter, CpiTracker cpiTracker)
@@ -34,6 +35,7 @@ namespace WorldOfZuul
             CLI = new ConsoleHandler();
             
             gameScreen = new GameScreen(turnCounter, cpiTracker,currentRegion,null);
+            quizScreen = new QuizScreen(currentRegion,gameScreen);
 
         }
         
@@ -114,6 +116,9 @@ namespace WorldOfZuul
                             Console.WriteLine("You can't go back from here!");
                         else
                             currentRegion = previousRegion;
+                        break;
+                    case "quiz":
+                        quizScreen.start();
                         break;
 
                     case "north":

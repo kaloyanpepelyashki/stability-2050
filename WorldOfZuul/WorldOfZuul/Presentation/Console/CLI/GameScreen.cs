@@ -2,9 +2,9 @@ namespace WorldOfZuul.Presentation.Console.CLI;
 
 public class GameScreen
 {
-    CpiTracker cpiTracker;
+    public CpiTracker cpiTracker;
     
-    TurnCounter currentTurn;
+    public TurnCounter currentTurn;
     
     private int barPercent = 5; //how many percent one bar represents
     
@@ -55,7 +55,7 @@ public class GameScreen
         movement = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi), Exits(), null,"gameScreen");
     }
 
-    private string StandardHeader(TurnCounter turnCounter,string currentRegionName,double regionalCpi)
+    public string StandardHeader(TurnCounter turnCounter,string currentRegionName,double regionalCpi)
     {
         return "year: " + (2025 + turnCounter.currentTurn - 1) + "   |   " + "turn: " + turnCounter.currentTurn +
                "/25\n" +
@@ -71,7 +71,7 @@ public class GameScreen
         
         string txt = "Region description: "+region.RegionDescription;
 
-        txt += "\nto access the regions quiz type 'placeholder' ";
+        txt += "\nto access the regions quiz type 'quiz' ";
 
         return txt;
 

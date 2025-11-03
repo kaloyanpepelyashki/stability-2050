@@ -4,13 +4,14 @@ namespace WorldOfZuul;
 
 public class TextAssets
 {
-    public static void EnterPrompt(string action)
+    public static string EnterPrompt(string action)
     {
         Console.WriteLine("--------------------------------------------");
         Console.Write("Press ENTER to " + action+" ");
         
-        Console.ReadLine();
+        string input = Console.ReadLine();
         Console.Clear();
+        return input;
     }
 
     public static MenuText? SubMenuChooser(MenuText[] submenus, string description)

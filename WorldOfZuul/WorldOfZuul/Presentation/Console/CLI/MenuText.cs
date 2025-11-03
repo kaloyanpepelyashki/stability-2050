@@ -34,15 +34,16 @@
             hasSubmenus = true;
         }
 
-        public void Display()
+        public string Display()
         {
+            System.Console.Clear();
             if (!hasSubmenus)
             {
                 TextAssets.Header(header);
                 if (textBody != null) System.Console.WriteLine(textBody);
                 if (enterPromptAction != null)
                 {
-                    TextAssets.EnterPrompt(enterPromptAction);
+                    return TextAssets.EnterPrompt(enterPromptAction);
                 }
             }
             else
@@ -57,6 +58,8 @@
                     menu.Display();
                 }
             }
+            return "";
         }
+        
     }
 }
