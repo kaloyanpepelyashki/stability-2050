@@ -121,13 +121,13 @@ namespace WorldOfZuul
 
              //Prints the welcome message to the console
              PrintWelcome();
-            
+      
             // Main game loop - runs until player quits. 
-            while (_gameState == GameState.Running | _gameState == GameState.PlayerHasLastChance)
+            while (_gameState == GameState.Running || _gameState == GameState.PlayerHasLastChance)
             { 
                 
                 CheckEndGame();
-                if (_gameState != GameState.Running | _gameState != GameState.PlayerHasLastChance) break;
+               
                 
                 // Display current room's short description - the description associated with each of the rooms
                 Console.WriteLine(_currentRegion?.RegionName);
