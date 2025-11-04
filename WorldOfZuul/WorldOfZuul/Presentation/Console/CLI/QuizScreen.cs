@@ -8,6 +8,7 @@ public class QuizScreen
     private MenuText questionScreen;
     private MenuText quizIntroduction;
     private MenuText status;
+    private MenuText quizAnswered;
 
     private bool quizActive;
 
@@ -25,6 +26,8 @@ public class QuizScreen
         this.turnCounter = turnCounter;
 
         this.currentRegion = currentRegion;
+
+        quizAnswered = new MenuText("       QUIZ", "\nsorry you have done the quiz.\n", "return to continue", "quizDone");
         
         status = new MenuText("status",CpiStatus(),"return to the quiz","status");
 
@@ -68,6 +71,13 @@ public class QuizScreen
 
     public void Start(Region currentRegion)
     {
+
+        if (currentRegion.QuizCompleted)
+        {
+            quizAnswered.Display();
+            return;
+        }
+        
         this.currentRegion = currentRegion;
 
         startCpi = currentRegion.RegionCpi;
@@ -80,7 +90,7 @@ public class QuizScreen
         }
         
         
-        //shuffle the available list so the numbers 0-5 appear in random order
+        //shuffle the available list so the numbers 0-currentRegion.Questions.Count appear in random order
         Random rand =  new Random();
         rand.Shuffle(available);
 
@@ -92,7 +102,6 @@ public class QuizScreen
         
         if (userInput == "cancel")
         {
-            turnCounter.IncrementTurn();
             //exit out of the quiz and return to game class
             return;
         }
@@ -160,27 +169,26 @@ public class QuizScreen
             System.Console.WriteLine("");
             
             questionIndex++;
-            turnCounter.IncrementTurn();
             
             if (questionIndex >= currentRegion.Questions.Count)
             {
                 System.Console.WriteLine("Quiz complete. Total CPI change for " + currentRegion.RegionName+":");
-                
-                //System.Console.WriteLine(currentRegion.RegionCpi);
+
+                System.Console.WriteLine(currentRegion.RegionCpi-startCpi);
                 
                 System.Console.WriteLine("Starting CPI:");
                 
                 System.Console.WriteLine(startCpi);
-                
-                //gameScreen.cpiTracker.IncreaseCpi(currentRegion,currentRegion.RegionCpi - startCpi);
                 
                 System.Console.WriteLine("Ending cpi: ");
                 
                 System.Console.WriteLine(currentRegion.RegionCpi);
                 
                 TextAssets.EnterPrompt("Return to the region menu");
+
+                currentRegion.QuizCompleted = true;
                 
-                //turnCounter.IncrementTurn();
+                turnCounter.IncrementTurn();
                 
                 //end the quiz
                 return;

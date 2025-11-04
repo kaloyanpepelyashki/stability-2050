@@ -11,6 +11,10 @@
     public class Region
     {   
         /// <summary>
+        /// Tracks whether the quiz in the region has been completed
+        /// </summary>
+        public bool QuizCompleted { get; set; }
+        /// <summary>
         /// The name (title) of the region
         /// </summary>
         public string RegionName { get; private set; }
