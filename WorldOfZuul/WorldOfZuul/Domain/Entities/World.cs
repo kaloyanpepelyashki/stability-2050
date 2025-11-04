@@ -16,15 +16,12 @@ public class World
     /// Default value is 60
     /// </summary>
     //public int stabilityIndex { get; private set; } = 60;
-
+    
     /// <summary>
     /// The CPI , taken globally - meaning the overall average CPI of the entire world (all regions taken together)
     /// The global CPI is influenced by player's choices, as the player changes the average of the differet regions, that also influences the global index
-    /// Starting global CPI is 50
     /// </summary>
-    public double globalCpi { get; private set; } = 50;
-
-    public int Year { get; private set; } = 2025;
+    // public double globalCpi { get; private set; }
     
     private World() {}
 
@@ -36,10 +33,5 @@ public class World
         }
         
         return _instance;
-    }
-    
-    public void IncrementYear()
-    {
-        Year++;
     }
 }

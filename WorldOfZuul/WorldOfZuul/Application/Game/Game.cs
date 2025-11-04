@@ -4,80 +4,60 @@ using WorldOfZuul.Presentation.Console.CLI;
 namespace WorldOfZuul
 {
     public class Game
-    {
-        private GameState _gameState = GameState.None;
-        /// <summary>
-        /// Tracks if the player has requested end of the game
-        /// </summary>
-        /// <remarks>
-        /// Loop control variable
-        /// </remarks>
-        bool _continuePlaying = true;
-        
+    {   
         private RegionDataParser regionDataParser;
         // Tracks the room the player is currently in
-        private Region? _currentRegion;
+        private Region? currentRegion;
         // Stores the previous room, used when the player types 'back'
-        private Region? _previousRegion;
-        
-        /// <summary>
-        /// The turn counter instance. The turn counter is responsible for keeping up with how many turns the user has taken and how many turns are left, until the game is over.
-        /// </summary>
-        /// <remarks>
-        /// The variable is readonly. 
-        /// </remarks>
-        private readonly TurnCounter _turnCounter;
+        private Region? previousRegion;
+
+        private TurnCounter turnCounter;
 
         private IRegionsService _regionService;
-        
-        private CpiTracker _cpiTracker;
+        private CpiTracker cpiTracker;
 
-        private Dictionary<string, Region> _regions;
+        private Dictionary<string, Region> regions;
 
-        private static ConsoleHandlerService _cli;
-
-        private World? _world = null;
+        private static ConsoleHandler CLI;
         
         private static GameScreen gameScreen;
         private static QuizScreen quizScreen;
         
         // Constructor - initializes the game world when a new Game object is created
-        public Game(ConsoleHandlerService consoleHandler, IRegionsService regionsService, TurnCounter turnCounter, CpiTracker cpiTracker,World world)
+        public Game(IRegionsService regionsService, TurnCounter turnCounter, CpiTracker cpiTracker)
         {   
-            
+            //TODO, change, the region service must be dependency injected
             _regionService =  regionsService;
-            this._cpiTracker= cpiTracker;
-            this._turnCounter = turnCounter;
-            _cli = consoleHandler;
-            _world = world;
-            
-            
+            this.cpiTracker= cpiTracker;
+            this.turnCounter = turnCounter;
+            CreateRooms(); // Builds all regions 
 
+            CLI = new ConsoleHandler();
+            
+            gameScreen = new GameScreen(turnCounter, cpiTracker,currentRegion,null);
             quizScreen = new QuizScreen(currentRegion, gameScreen, cpiTracker, turnCounter);
-            gameScreen = new GameScreen(this._turnCounter, this._cpiTracker, this._currentRegion,null, world);
-            _turnCounter.AssignWorld(_world);
-            CreateRegions(); // Builds all regions 
+
         }
         
         /// <summary>
         /// The method is in charge of initialising all regions in the game, handles internally (with the use of another method), the read from JSON file, the object instantiation of each region and assignment of exits.
         /// The method also sets the initial region, where the player stars their journey
         /// </summary>
-        private void CreateRegions()
+        private void CreateRooms()
         {
             try
             {
-                _regions = _regionService.InitialiseRegions();
+                regions = _regionService.InitialiseRegions();
 
-                foreach (KeyValuePair<string, Region> region in _regions )
+                foreach (KeyValuePair<string, Region> region in regions )
                 {
                     Console.WriteLine(region.Key);
                 }
                 
                 
-                //Sets the initial region to "North Africa"
-                // Player starts the game in North Africa
-                _currentRegion = _regions["North Africa"];
+                //Sets the initial room to "outside"
+                // Player starts the game outside
+                currentRegion = regions["North Africa"];
             }
             catch (Exception e)
             {
@@ -85,61 +65,23 @@ namespace WorldOfZuul
             }
         }
         
-        /// <summary>
-        /// The method is in charge of checking if the conditions for finalising the game are present
-        /// The method checks if the player is out of turns. 
-        /// </summary>
-        private void CheckEndGame()
-        {
-            if (_cpiTracker.CheckWinCondition())
-            {
-                _gameState = GameState.PlayerWon;
-            }
-
-            if (_cpiTracker.CheckCrisisCondition())
-            {
-                _gameState = GameState.PlayerCausedGlobalCrisis;
-            }
-
-            if (!_continuePlaying)
-            {
-                _gameState = GameState.PlayerQuitGame;
-            }
-        }
-        
-        /// <summary>
-        /// A method encapsulating the logic for incrementing a turn and a year after a move has been made
-        /// </summary>
-        private void HandleMove()
-        {
-            _turnCounter.IncrementTurn();
-        }
-        
         // Main method that runs the gameplay loop
         public void Play()
         {
-            _gameState = GameState.Running;
             //Instantiating the parser class
             Parser parser = new(); // Responsible for interpreting player input
 
              //Prints the welcome message to the console
-             PrintWelcome();
-      
+            PrintWelcome();
+            //Loop control variable 
+            bool continuePlaying = true; //Tracks if the player has requested a stop of the game
+            
             // Main game loop - runs until player quits. 
-            while (_gameState == GameState.Running || _gameState == GameState.PlayerHasLastChance)
-            { 
+            while (continuePlaying)
+            {   
                 
-                CheckEndGame();
-               
-                
-                // Display current room's short description - the description associated with each of the rooms
-                Console.WriteLine(_currentRegion?.RegionName);
-                Console.Write("> ");
-                Console.WriteLine($"The global CPI is {_cpiTracker.GlobalCpi}");
-                
-                gameScreen.Update(_currentRegion, _previousRegion);
+                gameScreen.Update(currentRegion, previousRegion);
                 gameScreen.Display();
-
                 
                 // TODO: Uncomment after implemented crisis system
                 // cpiTracker.CheckCrisisCondition();
@@ -166,14 +108,14 @@ namespace WorldOfZuul
                 switch(command.Name)
                 {
                     case "look":
-                        Console.WriteLine(_currentRegion?.RegionDescription);
+                        Console.WriteLine(currentRegion?.RegionDescription);
                         break;
 
                     case "back":
-                        if (_previousRegion == null)
+                        if (previousRegion == null)
                             Console.WriteLine("You can't go back from here!");
                         else
-                            _currentRegion = _previousRegion;
+                            currentRegion = previousRegion;
                         break;
                     case "quiz":
                         quizScreen.Start(currentRegion);
@@ -188,7 +130,7 @@ namespace WorldOfZuul
                         break;
 
                     case "quit":
-                        _continuePlaying = false;
+                        continuePlaying = false;
                         break;
 
                     case "help":
@@ -202,39 +144,24 @@ namespace WorldOfZuul
                         break;
                         
                     default:
-                        Console.WriteLine("Command unknown. Choose from available commands.");
+                        Console.WriteLine("I don't know what command.");
                         break;
                 }
             }
-            
-            _cli.HandleEndGame(_gameState);
 
+            Console.WriteLine("Thank you for playing World of Zuul!");
         }
-        
-        /// <summary>
-        /// The method is in charge of handling a move action initiated by the player
-        /// THe method sets the _previousRegion to the current region and moves the _currentRegion to the direction chosen by the player
-        /// The method also calls the HandleMove method, incrementing the year and the amount of taken turns
-        /// </summary>
-        /// <param name="direction">The direction the player chooses to move to</param>
+
         private void Move(string direction)
         {
-            try
+            if (currentRegion?.Exits.ContainsKey(direction) == true)
             {
-                if (_currentRegion?.Exits.ContainsKey(direction) == true)
-                {
-                    _previousRegion = _currentRegion;
-                    _currentRegion = _currentRegion?.Exits[direction];
-                    HandleMove();
-                }
-                else
-                {
-                    Console.WriteLine($"You have come too far {direction}! Nowhere more to go in this direction.");
-                }
+                previousRegion = currentRegion;
+                currentRegion = currentRegion?.Exits[direction];
             }
-            catch (Exception e)
+            else
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine($"You have come too far {direction}! Nowhere more to go in this direction.");
             }
         }
 
@@ -248,7 +175,7 @@ namespace WorldOfZuul
         /// </remarks>
         private static void PrintWelcome()
         {
-            _cli.display("welcome");
+            CLI.Display("welcome");
         }
         
         /// <summary>
@@ -261,7 +188,7 @@ namespace WorldOfZuul
         /// </remarks>
         private static void PrintHelp()
         {
-            _cli.display("help");
+            CLI.Display("help");
         }
     }
 }

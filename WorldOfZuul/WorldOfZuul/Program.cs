@@ -83,15 +83,12 @@ namespace WorldOfZuul
         public static void Main()
         {
             //Initialising dependencies needed
-            ConsoleHandlerService consoleHandlerService = new ConsoleHandlerService();
             RegionDataParser regionDataParser = new RegionDataParser();
             IRegionsService regionsService = new RegionsService(regionDataParser);
-            
-            World world = World.GetInstance();
             TurnCounter turnCounterInstance = TurnCounter.GetInstance();
             CpiTracker cpiTrackerInstance = CpiTracker.GetInstance(regionsService.GetRegions());
             
-            Game game = new(consoleHandlerService, regionsService, turnCounterInstance, cpiTrackerInstance, world);
+            Game game = new(regionsService, turnCounterInstance, cpiTrackerInstance);
             game.Play();
         }
     }

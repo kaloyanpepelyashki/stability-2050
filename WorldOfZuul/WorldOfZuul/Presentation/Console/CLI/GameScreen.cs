@@ -2,9 +2,7 @@ namespace WorldOfZuul.Presentation.Console.CLI;
 
 public class GameScreen
 {
-    CpiTracker cpiTracker;
-
-    private World _world = null;
+    public CpiTracker cpiTracker;
     
     public TurnCounter currentTurn;
     
@@ -20,51 +18,29 @@ public class GameScreen
     
     Region? lastRegion;
 
-
     public bool HasMoved = true;
 
     public bool Left;
 
-    public GameScreen(TurnCounter turnCounter, CpiTracker? cpiTracker, Region? currentRegion, Region? lastRegion, World? world)
+    public GameScreen(TurnCounter turnCounter,CpiTracker cpiTracker,Region? currentRegion,Region? lastRegion)
     {
-        try
+        this.cpiTracker = cpiTracker;
+        this.currentTurn = turnCounter;
+        
+        this.currentRegion =  currentRegion;
+        this.lastRegion = lastRegion;
+        double regionalCpi;
+
+        string currentRegionName;
+        if (currentRegion == null)
         {
-            if (world == null | cpiTracker == null)
-            {
-                throw new Exception("World or cpiTracker not set. Equal to zero");
-            }
-
-            this.cpiTracker = cpiTracker;
-            this._world = world;
-            this.currentTurn = turnCounter;
-
-            this.currentRegion = currentRegion;
-            this.lastRegion = lastRegion;
-            double regionalCpi;
-
-            string currentRegionName;
-            if (currentRegion == null)
-            {
-                currentRegionName = "region not found";
-                regionalCpi = -1;
-            }
-            else
-            {
-                currentRegionName = currentRegion.RegionName;
-                regionalCpi = currentRegion.RegionCpi;
-            }
-
-
-
-            movement = new Menutext("year: " + (_world.Year) + "   |   " + "turn: " +
-                                    turnCounter.currentTurn + "/25\n" +
-                                    "Global cpi:\n" + percentBar(cpiTracker.GlobalCpi) + "\n \n" +
-                                    "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
-                                    percentBar(regionalCpi), exits(), null, "gameScreen");
+            currentRegionName = "region not found";
+            regionalCpi = -1;
         }
-        catch (Exception e)
+        else
         {
-            Console.WriteLine($"Error instantiating GameScreen: {e.Message}");
+            currentRegionName = currentRegion.RegionName;
+            regionalCpi = currentRegion.RegionCpi;
         }
 
         if (currentRegion != null)
@@ -237,7 +213,5 @@ public class GameScreen
         return percentBar;
 
     }
-    
-
     
 }
