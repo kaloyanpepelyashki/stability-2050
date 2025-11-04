@@ -16,15 +16,17 @@ public class QuizScreen
     private Region currentRegion;
     private CpiTracker cpiTracker;
     private TurnCounter turnCounter;
-    private GameScreen gameScreen;
+    private readonly GameScreen gameScreen;
     private double startCpi;
-    public QuizScreen (Region currentRegion,GameScreen gameScreen)
+    public QuizScreen (Region currentRegion,GameScreen gameScreen, CpiTracker cpiTracker, TurnCounter turnCounter)
     {
         this.gameScreen = gameScreen;//included so the header from there can be fetched
-        
+        this.cpiTracker = cpiTracker;
+        this.turnCounter = turnCounter;
+
         this.currentRegion = currentRegion;
         
-        status = new MenuText("status",CPIStatus(),"return to the quiz","status");
+        status = new MenuText("status",CpiStatus(),"return to the quiz","status");
 
         questionScreen = new MenuText("", "", "", "");
         
@@ -41,7 +43,7 @@ public class QuizScreen
             ,"continue or type 'cancel' to leave","introduction");
     }
 
-    public string CPIStatus()
+    private string CpiStatus()
     {
         string text = "Regional cpi for " + currentRegion.RegionName+": ";
         text += currentRegion.RegionCpi+"\n";
@@ -51,7 +53,7 @@ public class QuizScreen
         
     }
 
-    public string PossibleAnswers()
+    private string PossibleAnswers()
     {
         string text = question.QuestionText + "\n" + "possible answers:\n";
         
@@ -64,7 +66,7 @@ public class QuizScreen
         
     }
 
-    public void Start(Region currentRegion, TurnCounter turnCounter, CpiTracker cpiTracker)
+    public void Start(Region currentRegion)
     {
         this.currentRegion = currentRegion;
 
@@ -86,9 +88,7 @@ public class QuizScreen
 
         question = currentRegion.Questions[questionNumber];
         
-        string userInput =  quizIntroduction.Display();
-        
-        turnCounter.IncrementTurn();
+        string userInput = quizIntroduction.Display();
         
         if (userInput == "cancel")
         {
@@ -163,7 +163,7 @@ public class QuizScreen
             
             if (questionIndex >= currentRegion.Questions.Count)
             {
-                System.Console.WriteLine("Quiz complete. total CPI change for " + currentRegion.RegionName+":");
+                System.Console.WriteLine("Quiz complete. Total CPI change for " + currentRegion.RegionName+":");
                 
                 //System.Console.WriteLine(currentRegion.RegionCpi);
                 
@@ -175,13 +175,11 @@ public class QuizScreen
                 
                 System.Console.WriteLine("Ending cpi: ");
                 
-                System.Console.WriteLine(currentRegion.RegionCpi); //globalCpi now contains Starting cpi + totalCpi
-                
-                System.Console.WriteLine(gameScreen.cpiTracker.GlobalCpi);
+                System.Console.WriteLine(currentRegion.RegionCpi);
                 
                 TextAssets.EnterPrompt("Return to the region menu");
                 
-                gameScreen.currentTurn.IncrementTurn();
+                turnCounter.IncrementTurn();
                 
                 //end the quiz
                 return;
@@ -193,5 +191,6 @@ public class QuizScreen
         }
         
     }
+
     
 }

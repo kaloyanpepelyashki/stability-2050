@@ -57,7 +57,7 @@ public class GameScreen
 
     public string StandardHeader(TurnCounter turnCounter,string currentRegionName,double regionalCpi)
     {
-        return "year: " + (2025 + turnCounter.currentTurn - 1) + "   |   " + "turn: " + turnCounter.currentTurn +
+        return "Year: " + (2025 + turnCounter.currentTurn - 1) + "   |   " + "Turn: " + turnCounter.currentTurn +
                "/25\n" +
                "Global cpi:\n" + percentBar(cpiTracker.GlobalCpi) + "\n \n" +
 

@@ -35,7 +35,7 @@ namespace WorldOfZuul
             CLI = new ConsoleHandler();
             
             gameScreen = new GameScreen(turnCounter, cpiTracker,currentRegion,null);
-            quizScreen = new QuizScreen(currentRegion,gameScreen);
+            quizScreen = new QuizScreen(currentRegion, gameScreen, cpiTracker, turnCounter);
 
         }
         
@@ -118,7 +118,7 @@ namespace WorldOfZuul
                             currentRegion = previousRegion;
                         break;
                     case "quiz":
-                        quizScreen.Start(currentRegion,turnCounter, cpiTracker);
+                        quizScreen.Start(currentRegion);
                         //turnCounter.IncrementTurn();
                         break;
 
