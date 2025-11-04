@@ -92,7 +92,7 @@ public class QuizScreen
         
         if (userInput == "cancel")
         {
-            //gameScreen.currentTurn.IncrementTurn();
+            turnCounter.IncrementTurn();
             //exit out of the quiz and return to game class
             return;
         }
@@ -160,6 +160,7 @@ public class QuizScreen
             System.Console.WriteLine("");
             
             questionIndex++;
+            turnCounter.IncrementTurn();
             
             if (questionIndex >= currentRegion.Questions.Count)
             {
@@ -179,7 +180,7 @@ public class QuizScreen
                 
                 TextAssets.EnterPrompt("Return to the region menu");
                 
-                turnCounter.IncrementTurn();
+                //turnCounter.IncrementTurn();
                 
                 //end the quiz
                 return;
