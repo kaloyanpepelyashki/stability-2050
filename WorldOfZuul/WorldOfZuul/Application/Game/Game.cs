@@ -186,7 +186,13 @@ namespace WorldOfZuul
                     case "help":
                         PrintHelp();
                         break;
-
+                    
+                    case "leave":
+                        gameScreen.update(currentRegion,previousRegion);
+                        gameScreen.hasMoved = true;
+                        gameScreen.left = true;
+                        break;
+                        
                     default:
                         Console.WriteLine("Command unknown. Choose from available commands.");
                         break;

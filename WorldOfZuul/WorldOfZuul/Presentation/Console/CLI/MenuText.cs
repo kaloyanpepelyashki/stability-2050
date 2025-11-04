@@ -5,13 +5,13 @@
 /// and the prompt displayed after 'press ENTER to'
 /// </summary>
 
-public class Menutext
+public class MenuText
 {
     private string? enterPromptAction;
     private string header;
     private string textBody;
     private string? menuName;
-    private Menutext?[] submenus;
+    private MenuText?[] submenus;
     private bool hasSubmenus = false;
     private string subMenuDesc;
 
@@ -24,7 +24,7 @@ public class Menutext
         return "this menu has no name";
     }
 
-    public Menutext(string header, string textBody, string? enterPromptAction, string? menuName)
+    public MenuText(string header, string textBody, string? enterPromptAction, string? menuName)
     {
         this.menuName = menuName;
         this.header = header;
@@ -32,7 +32,7 @@ public class Menutext
         this.enterPromptAction = enterPromptAction;
     }
     
-    public Menutext(string header, string? textBody, string? enterPromptAction, string? menuName, Menutext[] submenus,string subMenuDescription)
+    public MenuText(string header, string? textBody, string? enterPromptAction, string? menuName, MenuText[] submenus,string subMenuDescription)
     {
         this.subMenuDesc = subMenuDescription;
         this.menuName = menuName;
@@ -43,16 +43,16 @@ public class Menutext
         hasSubmenus = true;
     }
 
-    public void display()
+    public void Display()
     {
         
         if (!hasSubmenus)
         {
-            textAssets.Header(header);
+            TextAssets.Header(header);
             Console.WriteLine(textBody);
             if (enterPromptAction != null)
             {
-                textAssets.EnterPrompt(enterPromptAction);
+                TextAssets.EnterPrompt(enterPromptAction);
             }
             
         }
@@ -60,17 +60,17 @@ public class Menutext
         {
             while (true)
             {
-                textAssets.Header(header);
+                TextAssets.Header(header);
                 if (textBody != null)
                 {
                     Console.WriteLine(textBody);
                 }
-                Menutext menu = textAssets.subMenuChooser(submenus,subMenuDesc);
+                MenuText menu = TextAssets.subMenuChooser(submenus,subMenuDesc);
                 if (menu == null)
                 {
                     break;
                 }
-                menu.display();
+                menu.Display();
             }
             
         }
