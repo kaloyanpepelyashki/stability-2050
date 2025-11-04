@@ -79,7 +79,6 @@ public class GameScreen
 
     public void Display()
     {
-        
         if (HasMoved)
         {
             System.Console.Clear();

@@ -144,7 +144,8 @@ namespace WorldOfZuul
                         break;
                         
                     default:
-                        Console.WriteLine("I don't know what command.");
+                        Console.WriteLine("Invalid command.");
+                        Console.ReadLine();
                         break;
                 }
             }

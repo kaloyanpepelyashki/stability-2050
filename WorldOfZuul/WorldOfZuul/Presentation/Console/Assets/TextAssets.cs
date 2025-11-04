@@ -58,7 +58,7 @@ public class TextAssets
                 inputCorrect = false;
                 Console.WriteLine("Invalid input, number doesnt correspond to any submenus");
             }
-            Console.ReadLine();
+
             Console.Clear();
         }
 
