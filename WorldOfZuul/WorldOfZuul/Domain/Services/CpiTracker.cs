@@ -107,7 +107,7 @@ public class CpiTracker
     /// This method to check if the player has reached a win condition.
     /// </summary>
     /// <returns>True if global is greater than 80.</returns>
-    public bool CheckWinCondition()
+    public bool   CheckWinCondition()
     {
         return GlobalCpi >= 80;
     }
