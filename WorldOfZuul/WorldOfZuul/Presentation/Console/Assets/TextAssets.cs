@@ -7,7 +7,8 @@ public class TextAssets
     public static string EnterPrompt(string action)
     {
         Console.WriteLine("--------------------------------------------");
-        Console.Write("Press ENTER to " + action+" ");
+        Console.WriteLine("Press ENTER to " + action+" ");
+        Console.Write("> ");
         
         string input = Console.ReadLine();
         Console.Clear();
@@ -28,6 +29,7 @@ public class TextAssets
             }
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine(description);
+            Console.Write("> ");
             string? input = Console.ReadLine();
 
             if (input == "")

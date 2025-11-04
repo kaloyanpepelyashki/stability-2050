@@ -118,7 +118,7 @@ namespace WorldOfZuul
                             currentRegion = previousRegion;
                         break;
                     case "quiz":
-                        quizScreen.start();
+                        quizScreen.start(currentRegion);
                         break;
 
                     case "north":

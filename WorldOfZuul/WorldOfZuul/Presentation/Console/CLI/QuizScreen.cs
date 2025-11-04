@@ -4,11 +4,16 @@ namespace WorldOfZuul.Presentation.Console.CLI;
 
 public class QuizScreen
 {
+    
+    private int cpiIncrease = 5;
+    private int totalCpi;
+    
     Question question; // the current question;
     private int questionIndex; //which question are you currently on;
     
     private MenuText questionScreen;
     private MenuText quizIntroduction;
+    private MenuText status;
 
     private bool quizActive;
 
@@ -23,6 +28,8 @@ public class QuizScreen
         this.gameScreen = gameScreen;//included so the header from there can be fetched
         
         this.currentRegion = currentRegion;
+        
+        status = new MenuText("status",CPIStatus(),"return to the quiz","status");
 
         questionScreen = new MenuText("", "", "", "");
         
@@ -39,6 +46,16 @@ public class QuizScreen
             ,"continue or type 'cancel' to leave","introduction");
     }
 
+    public string CPIStatus()
+    {
+        string text = "regional cpi for " + currentRegion.RegionName+": ";
+        text += currentRegion.RegionCpi+"\n";
+        text += "\ntotalCpi: " + gameScreen.cpiTracker.GlobalCpi;
+        
+        return text;
+        
+    }
+
     public string possibleAnswers()
     {
         string text = question.QuestionText + "\n" + "possible answers:\n";
@@ -52,8 +69,13 @@ public class QuizScreen
         
     }
 
-    public void start()
+    public void start(Region currentRegion)
     {
+        
+        this.currentRegion = currentRegion;
+        
+        totalCpi = 0;
+        
         questionIndex = 0;
         available = new int[currentRegion.Questions.Count];
         for (int i = 0; i < currentRegion.Questions.Count; i++)
@@ -74,12 +96,13 @@ public class QuizScreen
 
         if (userInput == "cancel")
         {
+            gameScreen.currentTurn.IncrementTurn();
             //exit out of the quiz and return to game class
             return;
         }
         while (!quizActive)
         {
-            questionScreen = new MenuText("question "+questionNumber,possibleAnswers(),null,"question");
+            questionScreen = new MenuText("question "+(questionNumber+1),possibleAnswers(),null,"question");
             questionScreen.Display();
             
             String input = System.Console.ReadLine();
@@ -107,7 +130,7 @@ public class QuizScreen
                     userAnswer = question.Answers.PossibleAnswers[5];
                     break;
                 case "status":
-                    //show the status screen;
+                    status.Display();
                     continue;
                 default:
                     System.Console.WriteLine("input doesnt match the given answers");
@@ -125,13 +148,15 @@ public class QuizScreen
             if (question.Answers.RightAnswer == userAnswer)
             {
                 System.Console.WriteLine("good choice. you have helped "+currentRegion.RegionName+" become less corrupt. CPI");
-                System.Console.WriteLine("+ 5? cpi");
+                System.Console.WriteLine("+ 6 cpi\n");
+                totalCpi += 6;
                 //logic to add cpi from totalCpi
             }
             else
             {
                 System.Console.WriteLine("poor choice. you have helped "+currentRegion.RegionName+" become more corrupt. CPI");
-                System.Console.WriteLine("- 5? cpi\n");
+                System.Console.WriteLine("- 9 cpi\n");
+                totalCpi -= 9;
                 //logic to subtract cpi from totalCpi
             }
             
@@ -148,19 +173,21 @@ public class QuizScreen
             {
                 System.Console.WriteLine("quiz complete. total CPI change for "+currentRegion.RegionName+":");
                 
-                System.Console.WriteLine(""); //empty string should be replaced with variable holding totalCPI
+                System.Console.WriteLine(totalCpi);
                 
                 System.Console.WriteLine("Starting CPI:");
                 
                 System.Console.WriteLine(currentRegion.RegionCpi);
                 
-                //currentRegion.RegionCpi += totalCPI
+                gameScreen.cpiTracker.IncreaseCpi(currentRegion,totalCpi);
                 
                 System.Console.WriteLine("ending cpi: ");
                 
                 System.Console.WriteLine(currentRegion.RegionCpi);//globalCpi now contains Starting cpi + totalCpi
 
                 TextAssets.EnterPrompt("return to the region menu");
+                
+                gameScreen.currentTurn.IncrementTurn();
                 
                 //end the quiz
                 return;
