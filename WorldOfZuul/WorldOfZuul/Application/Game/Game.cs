@@ -4,20 +4,7 @@ namespace WorldOfZuul
 {
     public class Game
     {
-        /// <summary>
-        /// Keeps track of the game state. Has the game ended.
-        /// If the value is set to true, the game automatically ends.
-        /// </summary>
-        private bool _outOfTurns = false;
-
-        private bool _globalCrisis = false;
-        
-        /// <summary>
-        /// Keeps track of whether the player lost or won the game
-        /// It is used for when the game is about to end - both when the player has run out of turns, when the player has reached a crisis or when the player has fulfiled the winning condition of the game
-        /// </summary>
-        private bool _playerWonGame = false;
-        
+        private GameState _gameState = GameState.None;
         /// <summary>
         /// Tracks if the player has requested end of the game
         /// </summary>
@@ -94,21 +81,26 @@ namespace WorldOfZuul
                 Console.WriteLine(e.Message);
             }
         }
-
+        
+        /// <summary>
+        /// The method is in charge of checking if the conditions for finalising the game are present
+        /// The method checks if the player is out of turns. 
+        /// </summary>
         private void CheckEndGame()
         {
-            bool isPlayerOutOfTurns = _turnCounter.OutOfTurns;
-
-            if (isPlayerOutOfTurns)
+            if (_cpiTracker.CheckWinCondition())
             {
-                _outOfTurns = true;
+                _gameState = GameState.PlayerWon;
+            }
 
-                bool playerWinCondition = _cpiTracker.CheckWinCondition();
-                if (playerWinCondition)
-                {
-                    _playerWonGame = true;
-                }
-                _playerWonGame = false;
+            if (_cpiTracker.CheckCrisisCondition())
+            {
+                _gameState = GameState.PlayerCausedGlobalCrisis;
+            }
+
+            if (!_continuePlaying)
+            {
+                _gameState = GameState.PlayerQuitGame;
             }
         }
         
@@ -119,26 +111,11 @@ namespace WorldOfZuul
         {
             _turnCounter.IncrementTurn();
         }
-
-        private void HandleEndGame()
-        {
-            if (_outOfTurns)
-            {
-                Console.WriteLine("Game Over. Out of turns. Better Luck Next time");
-                
-            } else if (_globalCrisis)
-            {
-                Console.WriteLine("Game Over. Global Crisis has set in. Better Luck Next time");
-                
-            } else if (!_continuePlaying)
-            {
-                Console.WriteLine("Thank you for playing World of Zuul!");
-            } 
-        }
         
         // Main method that runs the gameplay loop
         public void Play()
         {
+            _gameState = GameState.Running;
             //Instantiating the parser class
             Parser parser = new(); // Responsible for interpreting player input
 
@@ -146,9 +123,11 @@ namespace WorldOfZuul
              PrintWelcome();
             
             // Main game loop - runs until player quits. 
-            while (_continuePlaying && !_outOfTurns && !_playerWonGame)
+            while (_gameState == GameState.Running | _gameState == GameState.PlayerHasLastChance)
             { 
+                
                 CheckEndGame();
+                if (_gameState != GameState.Running | _gameState != GameState.PlayerHasLastChance) break;
                 
                 // Display current room's short description - the description associated with each of the rooms
                 Console.WriteLine(_currentRegion?.RegionName);
@@ -214,7 +193,7 @@ namespace WorldOfZuul
                 }
             }
             
-            HandleEndGame();
+            _cli.HandleEndGame(_gameState);
 
         }
         

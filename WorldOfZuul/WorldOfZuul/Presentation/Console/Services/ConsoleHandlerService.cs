@@ -67,4 +67,24 @@ public class ConsoleHandlerService
         menus.Add(menu.ToString(),menu);
     }
     
+    public void HandleEndGame(GameState gameState)
+    {
+        switch (gameState)
+        {
+            case GameState.PlayerWon:
+                Console.WriteLine("Congratulations! You won!");
+                break;
+            case GameState.PlayerCausedGlobalCrisis:
+                Console.WriteLine("Game Over! You caused a global crisis. Try again!");
+                break;
+            case GameState.PlayerOutOfTurns:
+                Console.WriteLine("Game Over! Out of turns. Better luck next time.");
+                break;
+            case GameState.PlayerQuitGame:
+                Console.WriteLine("Thank you for playing Stability2050");
+                break;
+                
+        }
+    }
+    
 }
