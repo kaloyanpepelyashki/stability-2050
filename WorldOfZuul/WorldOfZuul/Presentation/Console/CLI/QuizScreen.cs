@@ -1,13 +1,7 @@
-using System.Reflection.Emit;
-
 namespace WorldOfZuul.Presentation.Console.CLI;
 
 public class QuizScreen
 {
-    
-    private int cpiIncrease = 5;
-    private int totalCpi;
-    
     Question question; // the current question;
     private int questionIndex; //which question are you currently on;
     
@@ -21,8 +15,9 @@ public class QuizScreen
     
     private Region currentRegion;
     
-    GameScreen gameScreen;
-    
+    private GameScreen gameScreen;
+    private TurnCounter turnCounter;
+    private double startCpi;
     public QuizScreen (Region currentRegion,GameScreen gameScreen)
     {
         this.gameScreen = gameScreen;//included so the header from there can be fetched
@@ -48,15 +43,15 @@ public class QuizScreen
 
     public string CPIStatus()
     {
-        string text = "regional cpi for " + currentRegion.RegionName+": ";
+        string text = "Regional cpi for " + currentRegion.RegionName+": ";
         text += currentRegion.RegionCpi+"\n";
-        text += "\ntotalCpi: " + gameScreen.cpiTracker.GlobalCpi;
+        text += "\nTotalCpi: " + gameScreen.cpiTracker.GlobalCpi;
         
         return text;
         
     }
 
-    public string possibleAnswers()
+    public string PossibleAnswers()
     {
         string text = question.QuestionText + "\n" + "possible answers:\n";
         
@@ -69,12 +64,12 @@ public class QuizScreen
         
     }
 
-    public void start(Region currentRegion)
+    public void Start(Region currentRegion, TurnCounter turnCounter)
     {
-        
         this.currentRegion = currentRegion;
-        
-        totalCpi = 0;
+        this.turnCounter = turnCounter;
+
+        startCpi = currentRegion.RegionCpi;
         
         questionIndex = 0;
         available = new int[currentRegion.Questions.Count];
@@ -93,22 +88,27 @@ public class QuizScreen
         question = currentRegion.Questions[questionNumber];
         
         string userInput =  quizIntroduction.Display();
-
+        
+        turnCounter.IncrementTurn();
+        
         if (userInput == "cancel")
         {
-            gameScreen.currentTurn.IncrementTurn();
+            //gameScreen.currentTurn.IncrementTurn();
             //exit out of the quiz and return to game class
             return;
         }
         while (!quizActive)
         {
-            questionScreen = new MenuText("question "+(questionNumber+1),possibleAnswers(),null,"question");
+            questionScreen = new MenuText("Question "+(questionNumber+1),PossibleAnswers(),null,"question");
             questionScreen.Display();
             
-            String input = System.Console.ReadLine();
-
+            string? input = System.Console.ReadLine();
+            
+            if (input == null) return;
+            
             String userAnswer = "";
-
+            
+            
             switch (input)
             {
                 case "1":
@@ -123,47 +123,40 @@ public class QuizScreen
                 case "4":
                     userAnswer = question.Answers.PossibleAnswers[3];
                     break;
-                case "5":
-                    userAnswer = question.Answers.PossibleAnswers[4];
-                    break;
-                case "6":
-                    userAnswer = question.Answers.PossibleAnswers[5];
-                    break;
                 case "status":
                     status.Display();
                     continue;
                 default:
-                    System.Console.WriteLine("input doesnt match the given answers");
+                    System.Console.WriteLine("Input doesnt match the given answers");
+                    System.Console.ReadKey();
                     continue;
             }
             
             if (!question.Answers.PossibleAnswers.Contains(userAnswer))
             {
-                System.Console.WriteLine("input doesnt match the given answers");
+                System.Console.WriteLine("Input doesnt match the given answers");
                 continue;
             }
 
-            userAnswer += "+";//added so the userAnswer can match the right answer since the right answer for some reason has a plus added to the end
-
+            userAnswer += "+"; //added so the userAnswer can match the right answer since the right answer for some reason has a plus added to the end
+            
             if (question.Answers.RightAnswer == userAnswer)
             {
-                System.Console.WriteLine("good choice. you have helped "+currentRegion.RegionName+" become less corrupt. CPI");
-                System.Console.WriteLine("+ 6 cpi\n");
-                totalCpi += 6;
+                System.Console.WriteLine("Good choice. You have helped "+currentRegion.RegionName+" become less corrupt.");
                 //logic to add cpi from totalCpi
+                gameScreen.cpiTracker.IncreaseCpi(currentRegion);
             }
             else
             {
-                System.Console.WriteLine("poor choice. you have helped "+currentRegion.RegionName+" become more corrupt. CPI");
-                System.Console.WriteLine("- 9 cpi\n");
-                totalCpi -= 9;
+                System.Console.WriteLine("Poor choice. You actions lowered "+currentRegion.RegionName+"'s CPI");
                 //logic to subtract cpi from totalCpi
+                gameScreen.cpiTracker.DecreaseCpi(currentRegion);
             }
             
             System.Console.Write(questionIndex+1);
             System.Console.WriteLine("/"+currentRegion.Questions.Count+" complete.");
 
-            TextAssets.EnterPrompt("continue to next answer");
+            TextAssets.EnterPrompt("Continue to next answer");
             
             System.Console.WriteLine("");
             
@@ -171,21 +164,21 @@ public class QuizScreen
             
             if (questionIndex >= currentRegion.Questions.Count)
             {
-                System.Console.WriteLine("quiz complete. total CPI change for "+currentRegion.RegionName+":");
+                System.Console.WriteLine("Quiz complete. total CPI change for " + currentRegion.RegionName+":");
                 
-                System.Console.WriteLine(totalCpi);
+                //System.Console.WriteLine(currentRegion.RegionCpi);
                 
                 System.Console.WriteLine("Starting CPI:");
                 
-                System.Console.WriteLine(currentRegion.RegionCpi);
+                System.Console.WriteLine(startCpi);
                 
-                gameScreen.cpiTracker.IncreaseCpi(currentRegion,totalCpi);
+                //gameScreen.cpiTracker.IncreaseCpi(currentRegion,currentRegion.RegionCpi - startCpi);
                 
-                System.Console.WriteLine("ending cpi: ");
+                System.Console.WriteLine("Ending cpi: ");
                 
-                System.Console.WriteLine(currentRegion.RegionCpi);//globalCpi now contains Starting cpi + totalCpi
+                System.Console.WriteLine(currentRegion.RegionCpi); //globalCpi now contains Starting cpi + totalCpi
 
-                TextAssets.EnterPrompt("return to the region menu");
+                TextAssets.EnterPrompt("Return to the region menu");
                 
                 gameScreen.currentTurn.IncrementTurn();
                 

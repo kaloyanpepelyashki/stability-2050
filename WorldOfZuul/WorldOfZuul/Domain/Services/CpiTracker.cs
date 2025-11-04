@@ -85,7 +85,7 @@ public class CpiTracker
     /// <param name="region">The region that will have its CPI increased.</param>
     /// <param name="points">The number of points that will be added.</param>
     /// </summary>
-    public void IncreaseCpi(Region region, int points)
+    public void IncreaseCpi(Region region, double points)
     {
         region.RegionCpi += points;
         CpiValues[region] = region.RegionCpi;
@@ -97,7 +97,7 @@ public class CpiTracker
     /// <param name="region">The region that will have its CPI subtracted.</param>
     /// <param name="points">The number of points that will be subtracted.</param>
     /// </summary>
-    public void DecreaseCpi(Region region, int points)
+    public void DecreaseCpi(Region region, double points)
     {
         region.RegionCpi -= points;
         CpiValues[region] = region.RegionCpi;
@@ -109,7 +109,7 @@ public class CpiTracker
     /// <returns>True if global is greater than 80.</returns>
     public bool CheckWinCondition()
     {
-        return true && GlobalCpi >= 80;
+        return GlobalCpi >= 80;
     }
 
     /// <summary>
@@ -118,6 +118,6 @@ public class CpiTracker
     /// <returns>True if global cpi is less than 20.</returns>
     public bool CheckCrisisCondition()
     {
-        return true && GlobalCpi <= 20;
+        return GlobalCpi <= 20;
     }
 }
