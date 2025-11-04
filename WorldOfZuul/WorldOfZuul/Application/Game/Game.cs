@@ -118,7 +118,7 @@ namespace WorldOfZuul
                             currentRegion = previousRegion;
                         break;
                     case "quiz":
-                        quizScreen.Start(currentRegion, turnCounter);
+                        quizScreen.Start(currentRegion,turnCounter, cpiTracker);
                         //turnCounter.IncrementTurn();
                         break;
 

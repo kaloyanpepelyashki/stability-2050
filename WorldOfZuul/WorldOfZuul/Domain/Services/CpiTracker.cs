@@ -31,7 +31,7 @@ public class CpiTracker
     /// <summary>
     /// A dictionary containing each region and their respective CPIs, used for the calculation of GlobalCpi.
     /// </summary>
-    private static Dictionary<Region, double> CpiValues { get; } = new();
+    private static Dictionary<string, double> CpiValues { get; } = new();
     /// <summary>
     /// Initialization of the CpiTracker instance.
     /// </summary>
@@ -39,7 +39,7 @@ public class CpiTracker
     {
         foreach (var region in regions)
         {
-            CpiValues.Add(region, region.RegionCpi);
+            CpiValues.Add(region.RegionName, region.RegionCpi);
         }
     }
 
@@ -65,7 +65,7 @@ public class CpiTracker
     public void IncreaseCpi(Region region)
     {
         region.RegionCpi += CorrectAnswer;
-        CpiValues[region] = region.RegionCpi;
+        CpiValues[region.RegionName] = region.RegionCpi;
     }
 
     /// <summary>
@@ -76,7 +76,7 @@ public class CpiTracker
     public void DecreaseCpi(Region region)
     {
         region.RegionCpi -= WrongAnswer;
-        CpiValues[region] = region.RegionCpi;
+        CpiValues[region.RegionName] = region.RegionCpi;
     }
     
     /// <summary>
@@ -88,7 +88,7 @@ public class CpiTracker
     public void IncreaseCpi(Region region, double points)
     {
         region.RegionCpi += points;
-        CpiValues[region] = region.RegionCpi;
+        CpiValues[region.RegionName] = region.RegionCpi;
     }
 
     /// <summary>
@@ -100,7 +100,7 @@ public class CpiTracker
     public void DecreaseCpi(Region region, double points)
     {
         region.RegionCpi -= points;
-        CpiValues[region] = region.RegionCpi;
+        CpiValues[region.RegionName] = region.RegionCpi;
     }
     
     /// <summary>

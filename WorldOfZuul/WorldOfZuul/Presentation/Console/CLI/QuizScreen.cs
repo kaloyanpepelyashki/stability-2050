@@ -14,9 +14,9 @@ public class QuizScreen
     private int[] available = {0,1,2,3,4,5,6};
     
     private Region currentRegion;
-    
-    private GameScreen gameScreen;
+    private CpiTracker cpiTracker;
     private TurnCounter turnCounter;
+    private GameScreen gameScreen;
     private double startCpi;
     public QuizScreen (Region currentRegion,GameScreen gameScreen)
     {
@@ -64,10 +64,9 @@ public class QuizScreen
         
     }
 
-    public void Start(Region currentRegion, TurnCounter turnCounter)
+    public void Start(Region currentRegion, TurnCounter turnCounter, CpiTracker cpiTracker)
     {
         this.currentRegion = currentRegion;
-        this.turnCounter = turnCounter;
 
         startCpi = currentRegion.RegionCpi;
         
@@ -144,13 +143,13 @@ public class QuizScreen
             {
                 System.Console.WriteLine("Good choice. You have helped "+currentRegion.RegionName+" become less corrupt.");
                 //logic to add cpi from totalCpi
-                gameScreen.cpiTracker.IncreaseCpi(currentRegion);
+                cpiTracker.IncreaseCpi(currentRegion);
             }
             else
             {
                 System.Console.WriteLine("Poor choice. You actions lowered "+currentRegion.RegionName+"'s CPI");
                 //logic to subtract cpi from totalCpi
-                gameScreen.cpiTracker.DecreaseCpi(currentRegion);
+                cpiTracker.DecreaseCpi(currentRegion);
             }
             
             System.Console.Write(questionIndex+1);
@@ -177,7 +176,9 @@ public class QuizScreen
                 System.Console.WriteLine("Ending cpi: ");
                 
                 System.Console.WriteLine(currentRegion.RegionCpi); //globalCpi now contains Starting cpi + totalCpi
-
+                
+                System.Console.WriteLine(gameScreen.cpiTracker.GlobalCpi);
+                
                 TextAssets.EnterPrompt("Return to the region menu");
                 
                 gameScreen.currentTurn.IncrementTurn();
