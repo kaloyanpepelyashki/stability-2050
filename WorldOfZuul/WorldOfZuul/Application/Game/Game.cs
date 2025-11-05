@@ -40,19 +40,19 @@ namespace WorldOfZuul
         private static GameScreen gameScreen;
         
         // Constructor - initializes the game world when a new Game object is created
-        public Game(ConsoleHandlerService consoleHandler, IRegionsService regionsService, TurnCounter turnCounter, CpiTracker cpiTracker,World world)
+        public Game(ConsoleHandlerService consoleHandler, IRegionsService regionsService, TurnCounter _turnCounter, CpiTracker _cpiTracker,World world)
         {   
             
             _regionService =  regionsService;
-            this._cpiTracker= cpiTracker;
-            this._turnCounter = turnCounter;
+            this._cpiTracker= _cpiTracker;
+            this._turnCounter = _turnCounter;
             _cli = consoleHandler;
             _world = world;
             
             
-            gameScreen = new GameScreen(this._turnCounter, this._cpiTracker, this._currentRegion,null, world);
             _turnCounter.AssignWorld(_world);
             CreateRegions(); // Builds all regions 
+            gameScreen = new GameScreen(this._turnCounter, this._cpiTracker, this._currentRegion,null, world);
 
         }
         
@@ -135,7 +135,7 @@ namespace WorldOfZuul
                 Console.WriteLine($"The global CPI is {_cpiTracker.GlobalCpi}");
                 
                 gameScreen.update(_currentRegion, _previousRegion);
-                gameScreen.display();
+                gameScreen.Display();
                 
                 // TODO: Uncomment after implemented crisis system
                 // cpiTracker.CheckCrisisCondition();
@@ -188,7 +188,7 @@ namespace WorldOfZuul
                         break;
                     
                     case "leave":
-                        gameScreen.update(currentRegion,previousRegion);
+                        gameScreen.update(_currentRegion,_previousRegion);
                         gameScreen.hasMoved = true;
                         gameScreen.left = true;
                         break;
@@ -240,7 +240,7 @@ namespace WorldOfZuul
         /// </remarks>
         private static void PrintWelcome()
         {
-            _cli.display("welcome");
+            _cli.Display("welcome");
         }
         
         /// <summary>
@@ -253,7 +253,7 @@ namespace WorldOfZuul
         /// </remarks>
         private static void PrintHelp()
         {
-            _cli.display("help");
+            _cli.Display("help");
         }
     }
 }

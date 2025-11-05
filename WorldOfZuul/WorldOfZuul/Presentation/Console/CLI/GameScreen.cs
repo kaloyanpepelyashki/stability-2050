@@ -19,6 +19,8 @@ public class GameScreen
     Region? currentRegion;
     
     Region? lastRegion;
+    public bool hasMoved;
+    public bool left;
 
     public GameScreen(TurnCounter turnCounter, CpiTracker? cpiTracker, Region? currentRegion, Region? lastRegion, World? world)
     {
@@ -51,7 +53,7 @@ public class GameScreen
 
 
 
-            movement = new Menutext("year: " + (_world.Year) + "   |   " + "turn: " +
+            movement = new MenuText("year: " + (_world.Year) + "   |   " + "turn: " +
                                     turnCounter.currentTurn + "/25\n" +
                                     "Global cpi:\n" + percentBar(cpiTracker.GlobalCpi) + "\n \n" +
                                     "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
@@ -62,14 +64,14 @@ public class GameScreen
             Console.WriteLine($"Error instantiating GameScreen: {e.Message}");
         }
 
-        region = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi),regionInfo(currentRegion),null,"region");
+        region = new MenuText(standardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi),regionInfo(currentRegion),null,"region");
         
-        main = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi),
-            "you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region",
+        main = new MenuText(standardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi),
+            "you are entering "+currentRegion.RegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region",
             null,
             "gameScreen");
         
-        movement = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi), exits(), null,"gameScreen");
+        movement = new MenuText(standardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi), exits(), null,"gameScreen");
     }
 
     private string standardHeader(TurnCounter turnCounter,string currentRegionName,double regionalCpi)
@@ -94,9 +96,8 @@ public class GameScreen
 
     }
 
-    public void display()
+    public void Display()
     {
-        
         if (hasMoved)
         {
             Console.Clear();
