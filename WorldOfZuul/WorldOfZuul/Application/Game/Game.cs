@@ -1,4 +1,5 @@
 ﻿using WorldOfZuul.Interfaces;
+using WorldOfZuul.Presentation.Console.CLI;
 
 namespace WorldOfZuul
 {
@@ -38,6 +39,7 @@ namespace WorldOfZuul
         private World? _world = null;
         
         private static GameScreen gameScreen;
+        private static QuizScreen quizScreen;
         
         // Constructor - initializes the game world when a new Game object is created
         public Game(ConsoleHandlerService consoleHandler, IRegionsService regionsService, TurnCounter _turnCounter, CpiTracker _cpiTracker,World world)
@@ -53,6 +55,7 @@ namespace WorldOfZuul
             _turnCounter.AssignWorld(_world);
             CreateRegions(); // Builds all regions 
             gameScreen = new GameScreen(this._turnCounter, this._cpiTracker, this._currentRegion,null, world);
+            quizScreen = new QuizScreen(_currentRegion!, gameScreen, this._cpiTracker, this._turnCounter);
 
         }
         
@@ -134,7 +137,7 @@ namespace WorldOfZuul
                 Console.Write("> ");
                 Console.WriteLine($"The global CPI is {_cpiTracker.GlobalCpi}");
                 
-                gameScreen.update(_currentRegion, _previousRegion);
+                gameScreen.Update(_currentRegion, _previousRegion);
                 gameScreen.Display();
                 
                 // TODO: Uncomment after implemented crisis system
@@ -171,7 +174,11 @@ namespace WorldOfZuul
                         else
                             _currentRegion = _previousRegion;
                         break;
-
+                    
+                    case "quiz":
+                        quizScreen.Start(_currentRegion);
+                        break;
+                    
                     case "north":
                     case "south":
                     case "east":
@@ -188,7 +195,7 @@ namespace WorldOfZuul
                         break;
                     
                     case "leave":
-                        gameScreen.update(_currentRegion,_previousRegion);
+                        gameScreen.Update(_currentRegion,_previousRegion);
                         gameScreen.hasMoved = true;
                         gameScreen.left = true;
                         break;

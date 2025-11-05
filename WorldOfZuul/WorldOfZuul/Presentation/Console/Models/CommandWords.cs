@@ -13,7 +13,8 @@ namespace WorldOfZuul
     /// </summary>
     public class CommandWords
     {
-        public List<string> ValidCommands { get; } = new List<string> { "north", "east", "south", "west", "look", "back", "quit","help","leave"};
+        public List<string> ValidCommands { get; } =
+            ["north", "east", "south", "west", "look", "back", "quit", "help", "leave", "quiz"];
         
         /// <summary>
         ///  Checks if the provided string is a valid command.

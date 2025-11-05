@@ -1,12 +1,14 @@
+using WorldOfZuul.Presentation.Console.CLI;
+
 namespace WorldOfZuul;
 
 public class GameScreen
 {
-    CpiTracker cpiTracker;
+    private CpiTracker cpiTracker;
 
     private World _world = null;
     
-    TurnCounter currentTurn;
+    private TurnCounter currentTurn;
     
     private int barPercent = 5; //how many percent one bar represents
     
@@ -55,42 +57,42 @@ public class GameScreen
 
             movement = new MenuText("year: " + (_world.Year) + "   |   " + "turn: " +
                                     turnCounter.currentTurn + "/25\n" +
-                                    "Global cpi:\n" + percentBar(cpiTracker.GlobalCpi) + "\n \n" +
+                                    "Global cpi:\n" + PercentBar(cpiTracker.GlobalCpi) + "\n \n" +
                                     "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
-                                    percentBar(regionalCpi), exits(), null, "gameScreen");
+                                    PercentBar(regionalCpi), Exits(), null, "gameScreen");
         }
         catch (Exception e)
         {
             Console.WriteLine($"Error instantiating GameScreen: {e.Message}");
         }
 
-        region = new MenuText(standardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi),regionInfo(currentRegion),null,"region");
+        region = new MenuText(StandardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi),RegionInfo(currentRegion),null,"region");
         
-        main = new MenuText(standardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi),
+        main = new MenuText(StandardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi),
             "you are entering "+currentRegion.RegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region",
             null,
             "gameScreen");
         
-        movement = new MenuText(standardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi), exits(), null,"gameScreen");
+        movement = new MenuText(StandardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi), Exits(), null,"gameScreen");
     }
 
-    private string standardHeader(TurnCounter turnCounter,string currentRegionName,double regionalCpi)
+    private string StandardHeader(TurnCounter turnCounter,string currentRegionName,double regionalCpi)
     {
-        return "year: " + (2025 + turnCounter.currentTurn - 1) + "   |   " + "turn: " + turnCounter.currentTurn +
+        return "Year: " + (2025 + turnCounter.currentTurn - 1) + "   |   " + "Turn: " + turnCounter.currentTurn +
                "/25\n" +
-               "Global cpi:\n" + percentBar(cpiTracker.GlobalCpi) + "\n \n" +
+               "Global cpi:\n" + PercentBar(cpiTracker.GlobalCpi) + "\n \n" +
 
                "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
-               percentBar(regionalCpi);
+               PercentBar(regionalCpi);
 
     }
 
-    private string regionInfo(Region region)
+    private string RegionInfo(Region region)
     {
         
-        string txt = "region description: "+region.RegionDescription;
+        string txt = "Region description: "+region.RegionDescription;
 
-        txt += "\nto acces the regions quiz type 'placeholder' ";
+        txt += "\nto access the regions quiz type 'quiz' ";
 
         return txt;
 
@@ -144,7 +146,7 @@ public class GameScreen
 
     }
 
-    public void update(Region currentRegion, Region lastRegion)
+    public void Update(Region currentRegion, Region lastRegion)
     {
         //updates all the menuScreens
         
@@ -158,30 +160,19 @@ public class GameScreen
         
         this.currentRegion = currentRegion;
         this.lastRegion = lastRegion;
-        
-        double regionalCpi;
 
-        string currentRegionName;
-        if (currentRegion == null)
-        {
-            currentRegionName = "region not found";
-            regionalCpi = -1;
-        }
-        else
-        {
-            currentRegionName = currentRegion.RegionName;
-            regionalCpi = currentRegion.RegionCpi;
-        }
+        var currentRegionName = currentRegion.RegionName;
+        var regionalCpi = currentRegion.RegionCpi;
+
+        region = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi),RegionInfo(currentRegion),null,"region");
         
-        region = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi),regionInfo(currentRegion),null,"region");
+        movement = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi), Exits(), null,"gameScreen");
         
-        movement = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi), exits(), null,"gameScreen");
-        
-        main = new MenuText(standardHeader(currentTurn,currentRegionName,regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,"gameScreen");
+        main = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,"gameScreen");
         
     }
 
-    private string exits()
+    private string Exits()
     {
         if (currentRegion == null)
         {
@@ -212,12 +203,12 @@ public class GameScreen
 
     }
 
-    private string percentBar(double cpi)
+    private string PercentBar(double cpi)
     {
         //errror handling
         if (cpi < 0)
         {
-            return "an error has occured";
+            return "An error has occured";
         }
         
         //find out how many '/' should be added
@@ -241,9 +232,5 @@ public class GameScreen
         percentBar += "  " + cpi +"%";
         
         return percentBar;
-
     }
-    
-
-    
 }

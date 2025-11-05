@@ -32,7 +32,11 @@
         /// </summary>
         public double RegionCpi { get; set; }
 
-        public List<Question> Questions { get; private set; } = new();
+        public List<Question> Questions { get; private set; }
+        /// <summary>
+        /// Tracks whether the quiz in the region has been completed
+        /// </summary>
+        public bool QuizCompleted { get; set; }
         
         /// <summary>
         /// Initializes a new instance of the <see cref="Region"/> class with the specified short and long descriptions.

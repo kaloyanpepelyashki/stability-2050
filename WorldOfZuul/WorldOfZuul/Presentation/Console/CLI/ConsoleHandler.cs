@@ -1,4 +1,6 @@
-﻿namespace WorldOfZuul;
+﻿using WorldOfZuul.Presentation.Console.CLI;
+
+namespace WorldOfZuul;
 
 public class ConsoleHandler
 {
@@ -24,11 +26,11 @@ public class ConsoleHandler
             "BASIC COMMANDS:\n- [number] -> choose your response to a dilemma.\n- 'north','west','east' or 'south' -> travel to another region.\n- help -> show this help menu.\n- quit -> exit the simulation. \n- leave -> shows possible exits out of a region",
             "return to help menu", "BasicCommands");
         
-        AddMenu("HELP MENU", null,null, "help",new String[]{"CPI","Goal","BasicCommands","GameStructure","ProTip"},"Choose a number to read more or press enter to exit the help menu");
+        AddMenu("HELP MENU", null,null, "help", ["CPI","Goal","BasicCommands","GameStructure","ProTip"],"Choose a number to read more or press enter to exit the help menu");
         
         AddMenu("STABILITY 2050",
             "Stabilty 2050 is a text based strategic game.\nYou are in a position of a diplomat,\nwho is trying to fight corruption.\nEvery action changes CPI - the measure of global trust.\nYour goal is to lead humanity to corruption-free world by 2050.\n",
-            null, "welcome",new String[] {"help"}, "Type '0' to learn how to play or press ENTER to continue.");
+            null, "welcome", ["help"], "Type '0' to learn how to play or press ENTER to continue.");
     }
 
     public void Display(string key)

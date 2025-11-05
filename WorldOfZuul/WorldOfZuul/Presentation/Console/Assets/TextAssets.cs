@@ -1,17 +1,21 @@
-﻿namespace WorldOfZuul;
+﻿
+using WorldOfZuul.Presentation.Console.CLI;
+namespace WorldOfZuul.Presentation.Console.Assets;
 
 public class TextAssets
 {
-    public static void EnterPrompt(string action)
+    public static string? EnterPrompt(string action)
     {
-        Console.WriteLine("--------------------------------------------");
-        Console.Write("Press ENTER to " + action+" ");
+        System.Console.WriteLine("--------------------------------------------");
+        System.Console.WriteLine("Press ENTER to " + action+" ");
+        System.Console.Write("> ");
         
-        Console.ReadLine();
-        Console.Clear();
+        string? input = System.Console.ReadLine();
+        System.Console.Clear();
+        return input;
     }
 
-    public static MenuText subMenuChooser(MenuText[] submenus, string description)
+    public static MenuText? SubMenuChooser(MenuText[] submenus, string description)
     {
         //parses input to return a submenu
         Boolean inputCorrect = false;
@@ -21,18 +25,16 @@ public class TextAssets
         {
             for (int i = 0; i < submenus.Length; i++)
             {
-                if (submenus[i] != null)
-                {
-                    Console.WriteLine("["+i+"]"+submenus[i]);
-                }
+                System.Console.WriteLine("["+i+"]"+submenus[i]);
             }
-            Console.WriteLine("--------------------------------------------");
-            Console.WriteLine(description);
-            string input = Console.ReadLine();
+            System.Console.WriteLine("--------------------------------------------");
+            System.Console.WriteLine(description);
+            System.Console.Write("> ");
+            string? input = System.Console.ReadLine();
 
             if (input == "")
             {
-                Console.Clear();
+                System.Console.Clear();
                 return null;
             }
             
@@ -41,24 +43,23 @@ public class TextAssets
             
             if (!inputCorrect)
             {
-                Console.WriteLine("Invalid input, input must be a number.");
+                System.Console.WriteLine("Invalid input, input must be a number.");
             }
             
             if (result < 0)
             {
                 inputCorrect = false;
-                Console.WriteLine("Invalid input, number cant be negative.");
+                System.Console.WriteLine("Invalid input, number cant be negative.");
                 
             }
             
-            if (result > submenus.Length)
+            if (result >= submenus.Length)
             {
                 inputCorrect = false;
-                Console.WriteLine("Invalid input, number doesnt correspond to any submenus");
-                
+                System.Console.WriteLine("Invalid input, number doesnt correspond to any submenus");
             }
-            
-            Console.Clear();
+
+            System.Console.Clear();
         }
 
         if (result == -1)
@@ -72,9 +73,9 @@ public class TextAssets
     
     public static void Header(string header)
     {
-        Console.WriteLine("============================================");
-        Console.WriteLine(header);
-        Console.WriteLine("===========================================");
+        System.Console.WriteLine("============================================");
+        System.Console.WriteLine(header);
+        System.Console.WriteLine("===========================================");
     }
     
     
