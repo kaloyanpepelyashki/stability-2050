@@ -73,7 +73,7 @@ public class QuizScreen
 
     public void Start(Region currentRegion)
     {
-        turnCounter.IncrementTurn();
+        
         if (currentRegion.QuizCompleted)
         {
             quizAnswered.Display();
@@ -105,6 +105,7 @@ public class QuizScreen
         
         if (userInput == "cancel")
         {
+            turnCounter.IncrementTurn();
             //exit out of the quiz and return to game class
             return;
         }
@@ -150,7 +151,7 @@ public class QuizScreen
             }
 
             userAnswer += "+"; //added so the userAnswer can match the right answer since the right answer for some reason has a plus added to the end
-            
+            turnCounter.IncrementTurn();
             if (question.Answers.RightAnswer == userAnswer)
             {
                 System.Console.WriteLine("Good choice. You have helped "+currentRegion.RegionName+" become less corrupt.");
