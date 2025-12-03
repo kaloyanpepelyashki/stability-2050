@@ -69,8 +69,7 @@ public class GameScreen
         region = new MenuText(StandardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi),RegionInfo(currentRegion),null,"region");
         
         main = new MenuText(StandardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi),
-            "you are entering "+currentRegion.RegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region",
-            null,
+            "You are entering "+currentRegion.RegionName +".\nWould you like to leave or stay?\n- to leave, type 'leave', or type 'stay' to stay in "+currentRegion.RegionName,".",
             "gameScreen");
         
         movement = new MenuText(StandardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi), Exits(), null,"gameScreen");
@@ -168,8 +167,8 @@ public class GameScreen
         
         movement = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi), Exits(), null,"gameScreen");
         
-        main = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,"gameScreen");
-        
+        main = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi),"You are entering "+currentRegion.RegionName +".\nWould you like to leave or stay?\n- to leave, type 'leave', or type 'stay' to stay in "+currentRegion.RegionName,".",
+        "gameScreen");
     }
 
     private string Exits()

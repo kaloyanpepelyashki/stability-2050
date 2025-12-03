@@ -1,66 +1,80 @@
 ﻿﻿using WorldOfZuul.Presentation.Console.Assets;
 
- namespace WorldOfZuul.Presentation.Console.CLI
+namespace WorldOfZuul;
+
+/// <summary>
+/// the MenuText class functions as a template that can be instantiated to make different menus by providing a header text, text body
+/// and the prompt displayed after 'press ENTER to'
+/// </summary>
+
+public class MenuText
 {
-    public class MenuText
+    private readonly string? enterPromptAction;
+    private readonly string header;
+    private readonly string? textBody;
+    private readonly string? menuName;
+    private readonly MenuText[] submenus = Array.Empty<MenuText>();
+    private readonly bool hasSubmenus;
+    private readonly string subMenuDesc = string.Empty;
+
+    public override string ToString()
     {
-        private string? enterPromptAction;
-        private string header;
-        private string? textBody;
-        private string? menuName;
-        private MenuText?[]? submenus;
-        private bool hasSubmenus = false;
-        private string? subMenuDesc;
+        return menuName ?? "this menu has no name";
+    }
 
-        public override string ToString()
+    public MenuText(string header, string textBody, string? enterPromptAction, string? menuName)
+    {
+        this.menuName = menuName;
+        this.header = header;
+        this.textBody = textBody;
+        this.enterPromptAction = enterPromptAction;
+        this.hasSubmenus = false;
+    }
+    
+    public MenuText(string header, string? textBody, string? enterPromptAction, string? menuName, MenuText[] submenus, string subMenuDescription)
+    {
+        ArgumentNullException.ThrowIfNull(submenus);
+        ArgumentNullException.ThrowIfNull(subMenuDescription);
+
+        this.subMenuDesc = subMenuDescription;
+        this.menuName = menuName;
+        this.header = header;
+        this.textBody = textBody;
+        this.enterPromptAction = enterPromptAction;
+        this.submenus = submenus;
+        this.hasSubmenus = true;
+    }
+
+    public void Display()
+    {
+        
+        if (!hasSubmenus)
         {
-            return menuName ?? "This menu has no name";
+            TextAssets.Header(header);
+            Console.WriteLine(textBody);
+            if (enterPromptAction != null)
+            {
+                TextAssets.EnterPrompt(enterPromptAction);
+            }
+            
         }
-
-        public MenuText(string header, string? textBody, string? enterPromptAction, string? menuName)
+        else
         {
-            this.menuName = menuName;
-            this.header = header;
-            this.textBody = textBody;
-            this.enterPromptAction = enterPromptAction;
-        }
-
-        public MenuText(string header, string? textBody, string? enterPromptAction, string? menuName, MenuText?[] submenus, string subMenuDesc)
-        {
-            this.subMenuDesc = subMenuDesc;
-            this.menuName = menuName;
-            this.header = header;
-            this.textBody = textBody;
-            this.enterPromptAction = enterPromptAction;
-            this.submenus = submenus;
-            hasSubmenus = true;
-        }
-
-        public string Display()
-        {
-            System.Console.Clear();
-            if (!hasSubmenus)
+            while (true)
             {
                 TextAssets.Header(header);
-                if (textBody != null) System.Console.WriteLine(textBody);
-                if (enterPromptAction != null)
+                if (textBody != null)
                 {
-                    return TextAssets.EnterPrompt(enterPromptAction);
+                    Console.WriteLine(textBody);
                 }
-            }
-            else
-            {
-                while (true)
+                MenuText? menu = TextAssets.SubMenuChooser(submenus, subMenuDesc);
+                if (menu == null)
                 {
-                    TextAssets.Header(header);
-                    if (textBody != null) System.Console.WriteLine(textBody);
-
-                    MenuText? menu = TextAssets.SubMenuChooser(submenus, subMenuDesc);
-                    if (menu == null) break;
-                    menu.Display();
+                    break;
                 }
+                menu.Display();
             }
-            return "";
+            
         }
         
     }

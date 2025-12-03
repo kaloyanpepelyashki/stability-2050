@@ -1,11 +1,11 @@
 ﻿[
   {
     "region_name": "North Africa",
-    "region_description": "",
+    "region_description": "Region affected by disaster-related corruption, weak oversight, and elite capture.",
     "cpi": 37.0,
     "state": {
       "state_name": "Egypt",
-      "state_description": ""
+      "state_description": "State facing weak institutional resilience, corruption during crises, and misuse of aid."
     },
     "exits": {
       "north": "",
@@ -15,36 +15,80 @@
     },
     "questions": [
       {
-        "question_text": "The text of the question",
-        "answers":  {
-          "possible_answers" : [
-            "Answer 1",
-            "Answer 2",
-            "Answer 3"
+        "question_text": "After a major flood, 56% of citizens report having to pay bribes for basic services. How do you respond?",
+        "answers": {
+          "possible_answers": [
+            "Create an anti-bribery hotline and dismiss responsible officials.",
+            "Ignore it and continue distribution as usual.",
+            "Tell citizens to report later when the crisis calms down."
           ],
-          "right_answer": "Answer 2+"
+          "right_answer": "Create an anti-bribery hotline and dismiss responsible officials."
         }
       },
       {
-        "question_text": "The text of the question",
-        "answers":  {
-          "possible_answers" : [
-            "Answer 1",
-            "Answer 2",
-            "Answer 3"
+        "question_text": "Reconstruction funds arriving after a disaster are at high risk of elite capture and rent-seeking. What do you implement?",
+        "answers": {
+          "possible_answers": [
+            "Set up public procurement audits and publish all spending.",
+            "Let ministries distribute funds internally.",
+            "Leave reconstruction decisions to local elites for speed."
           ],
-          "right_answer": "Answer 2+"
+          "right_answer": "Set up public procurement audits and publish all spending."
+        }
+      },
+      {
+        "question_text": "Reports show misappropriation of international aid during post-disaster recovery. What action do you take?",
+        "answers": {
+          "possible_answers": [
+            "Deploy independent monitors to oversee aid distribution.",
+            "Allow ministries to continue without interruption.",
+            "Reduce aid to prevent further misuse."
+          ],
+          "right_answer": "Deploy independent monitors to oversee aid distribution."
+        }
+      },
+      {
+        "question_text": "Disaster-related institutional breakdown increases petty corruption across local offices. How do you respond?",
+        "answers": {
+          "possible_answers": [
+            "Introduce emergency oversight teams to enforce rules.",
+            "Accept the situation as unavoidable during crises.",
+            "Postpone oversight until after stabilization."
+          ],
+          "right_answer": "Introduce emergency oversight teams to enforce rules."
+        }
+      },
+      {
+        "question_text": "Poor governance worsens disaster impact and reduces adaptive capacity. What reform do you propose?",
+        "answers": {
+          "possible_answers": [
+            "Strengthen local governance and create transparent reporting tools.",
+            "Keep current structures and hope for international intervention.",
+            "Let private actors lead crisis management without oversight."
+          ],
+          "right_answer": "Strengthen local governance and create transparent reporting tools."
+        }
+      },
+      {
+        "question_text": "Economic studies show corruption spikes in developing countries after disasters. What preventive step will you take?",
+        "answers": {
+          "possible_answers": [
+            "Introduce pre-disaster procurement rules and digital audits.",
+            "Wait to evaluate corruption after the disaster ends.",
+            "Allow flexible procurement with no extra controls."
+          ],
+          "right_answer": "Introduce pre-disaster procurement rules and digital audits."
         }
       }
     ]
   },
   {
     "region_name": "Middle East",
-    "region_description": "",
+    "region_description": "Region marked by authoritarian governance, severe corruption scandals and weak oversight.",
     "cpi": 38.0,
     "state": {
       "state_name": "Israel",
-      "state_description": ""
+      "state_description": "Democracy pressured by corruption scandals, procurement controversies and political fragmentation."
     },
     "exits": {
       "north": "",
@@ -54,36 +98,80 @@
     },
     "questions": [
       {
-        "question_text": "The text of the question",
-        "answers":  {
-          "possible_answers" : [
-            "Answer 1",
-            "Answer 2",
-            "Answer 3"
+        "question_text": "Israel’s Case 3000 revealed bribery and conflicts of interest in submarine procurement. How do you respond?",
+        "answers": {
+          "possible_answers": [
+            "Launch a full public investigation and suspend all implicated officials.",
+            "Protect the deal to avoid national security embarrassment.",
+            "Handle it quietly to avoid political fallout."
           ],
-          "right_answer": "Answer 2+"
+          "right_answer": "Launch a full public investigation and suspend all implicated officials."
         }
       },
       {
-        "question_text": "The text of the question",
-        "answers":  {
-          "possible_answers" : [
-            "Answer 1",
-            "Answer 2",
-            "Answer 3"
+        "question_text": "Benjamin Netanyahu faced charges of bribery, fraud, and breach of trust. What institutional reform do you support?",
+        "answers": {
+          "possible_answers": [
+            "Strengthen judicial independence and mandate transparent political-gift reporting.",
+            "Maintain current systems to avoid political destabilization.",
+            "Delay reforms until after elections."
           ],
-          "right_answer": "Answer 2+"
+          "right_answer": "Strengthen judicial independence and mandate transparent political-gift reporting."
+        }
+      },
+      {
+        "question_text": "Beirut’s 2020 port explosion was linked to years of negligence and corruption. What policy change do you push for regionally?",
+        "answers": {
+          "possible_answers": [
+            "Introduce strict hazardous-material oversight and anti-corruption inspections.",
+            "Allow local authorities to self-regulate cargo storage.",
+            "Focus only on rescue operations and skip governance reforms."
+          ],
+          "right_answer": "Introduce strict hazardous-material oversight and anti-corruption inspections."
+        }
+      },
+      {
+        "question_text": "Gaza reconstruction carries high risk of diversion and fraud. What system do you implement?",
+        "answers": {
+          "possible_answers": [
+            "Create joint international-local audit teams with full transparency.",
+            "Leave oversight entirely to donor flows.",
+            "Allow local authorities full control without audits."
+          ],
+          "right_answer": "Create joint international-local audit teams with full transparency."
+        }
+      },
+      {
+        "question_text": "Surveys show 69% of Palestinians believe their judiciary is corrupt. What is your solution?",
+        "answers": {
+          "possible_answers": [
+            "Install independent judicial review bodies and protect whistleblowers.",
+            "Ignore the survey and maintain existing structures.",
+            "Replace judges without structural reforms."
+          ],
+          "right_answer": "Install independent judicial review bodies and protect whistleblowers."
+        }
+      },
+      {
+        "question_text": "Aid to Gaza and West Bank suffers from weak oversight, raising risks of diversion. What action do you take?",
+        "answers": {
+          "possible_answers": [
+            "Introduce transparent procurement and digital tracking of all donor funds.",
+            "Let political actors compete for control of aid distribution.",
+            "Reduce external monitoring to avoid political tension."
+          ],
+          "right_answer": "Introduce transparent procurement and digital tracking of all donor funds."
         }
       }
     ]
   },
   {
     "region_name": "Eastern Asia",
-    "region_description": "",
+    "region_description": "Advanced region with strong institutions but ongoing political-finance scandals.",
     "cpi": 71.0,
     "state": {
       "state_name": "Japan",
-      "state_description": ""
+      "state_description": "High CPI score yet troubled by slush funds, opaque political donations, and revolving-door corruption."
     },
     "exits": {
       "north": "",
@@ -93,36 +181,80 @@
     },
     "questions": [
       {
-        "question_text": "The text of the question",
-        "answers":  {
-          "possible_answers" : [
-            "Answer 1",
-            "Answer 2",
-            "Answer 3"
+        "question_text": "The 2023–2024 LDP slush fund scandal hid over 600 million yen in unreported donations. What do you propose?",
+        "answers": {
+          "possible_answers": [
+            "Conduct a forensic audit and enforce strict donation reporting laws.",
+            "Let party leaders resolve the scandal internally.",
+            "Delay reforms until public attention fades."
           ],
-          "right_answer": "Answer 2+"
+          "right_answer": "Conduct a forensic audit and enforce strict donation reporting laws."
         }
       },
       {
-        "question_text": "The text of the question",
-        "answers":  {
-          "possible_answers" : [
-            "Answer 1",
-            "Answer 2",
-            "Answer 3"
+        "question_text": "Japan faces recurring amakudari cases—retired officials joining firms they once regulated. What measure do you adopt?",
+        "answers": {
+          "possible_answers": [
+            "Enforce multi-year cooling-off periods and mandatory disclosure.",
+            "Accept the practice as a cultural tradition.",
+            "Privately advise firms to keep appointments low-profile."
           ],
-          "right_answer": "Answer 2+"
+          "right_answer": "Enforce multi-year cooling-off periods and mandatory disclosure."
+        }
+      },
+      {
+        "question_text": "Corporate scandals in Japan show recurring accounting fraud and cover-ups. What is your response?",
+        "answers": {
+          "possible_answers": [
+            "Introduce criminal penalties for executives and regular third-party audits.",
+            "Ask companies to self-report only major incidents.",
+            "Avoid stricter rules to not harm competitiveness."
+          ],
+          "right_answer": "Introduce criminal penalties for executives and regular third-party audits."
+        }
+      },
+      {
+        "question_text": "Political factions in Japan maintain opaque fundraising structures. How do you proceed?",
+        "answers": {
+          "possible_answers": [
+            "Mandate real-time disclosure of all political donations.",
+            "Publish yearly summaries without full details.",
+            "Allow internal party reporting without public access."
+          ],
+          "right_answer": "Mandate real-time disclosure of all political donations."
+        }
+      },
+      {
+        "question_text": "Sports committee officials accepted undeclared luxury gifts. What is your policy?",
+        "answers": {
+          "possible_answers": [
+            "Refer all officials to prosecutors and publish all gift records.",
+            "Privately ask them to correct disclosures.",
+            "Ignore it to avoid embarrassment before events."
+          ],
+          "right_answer": "Refer all officials to prosecutors and publish all gift records."
+        }
+      },
+      {
+        "question_text": "Japan’s governance suffers from semi-informal faction financing. What do you propose?",
+        "answers": {
+          "possible_answers": [
+            "Ban unreported faction fundraising and create a public registry.",
+            "Allow factions to maintain their traditional fundraising networks.",
+            "Permit informal donations as long as they stay secret."
+          ],
+          "right_answer": "Ban unreported faction fundraising and create a public registry."
         }
       }
     ]
   },
   {
     "region_name": "North America",
-    "region_description": "",
+    "region_description": "Region with strong democratic institutions but growing polarization and corruption scandals.",
     "cpi": 54.0,
     "state": {
       "state_name": "United States",
-      "state_description": ""
+      "state_description": "A democracy facing institutional distrust, political corruption, and record-low CPI scores."
     },
     "exits": {
       "north": "",
@@ -132,25 +264,69 @@
     },
     "questions": [
       {
-        "question_text": "The text of the question",
-        "answers":  {
-          "possible_answers" : [
-            "Answer 1",
-            "Answer 2",
-            "Answer 3"
+        "question_text": "Supreme Court Justice Clarence Thomas accepted undeclared luxury gifts for years. What do you support?",
+        "answers": {
+          "possible_answers": [
+            "Impose mandatory disclosure and independent ethics audits.",
+            "Issue a mild warning.",
+            "Defend the justice as having a ‘right to privacy’."
           ],
-          "right_answer": "Answer 2+"
+          "right_answer": "Impose mandatory disclosure and independent ethics audits."
         }
       },
       {
-        "question_text": "The text of the question",
-        "answers":  {
-          "possible_answers" : [
-            "Answer 1",
-            "Answer 2",
-            "Answer 3"
+        "question_text": "Senator Bob Menendez was found with gold bars linked to bribery. What is your move?",
+        "answers": {
+          "possible_answers": [
+            "Support full prosecution and removal from office.",
+            "Ask him to resign quietly.",
+            "Claim the accusations are politically motivated."
           ],
-          "right_answer": "Answer 2+"
+          "right_answer": "Support full prosecution and removal from office."
+        }
+      },
+      {
+        "question_text": "The 2021 Capitol attack showed institutional vulnerability. What reform do you prioritize?",
+        "answers": {
+          "possible_answers": [
+            "Strengthen election certification safeguards and extremist monitoring.",
+            "Avoid major changes to maintain political stability.",
+            "Reduce transparency around election procedures."
+          ],
+          "right_answer": "Strengthen election certification safeguards and extremist monitoring."
+        }
+      },
+      {
+        "question_text": "The U.S. reached a record-low CPI score (65) due to political money influence. What action do you take?",
+        "answers": {
+          "possible_answers": [
+            "Introduce strict limits on corporate donations and super-PACs.",
+            "Delay reforms for future administrations.",
+            "Maintain the status quo to protect free-market politics."
+          ],
+          "right_answer": "Introduce strict limits on corporate donations and super-PACs."
+        }
+      },
+      {
+        "question_text": "BLM protests revealed police misconduct and lack of accountability. What do you propose?",
+        "answers": {
+          "possible_answers": [
+            "Create federal police oversight and transparency rules.",
+            "Suspend a few officers and close the case.",
+            "Dismiss misconduct footage as unreliable."
+          ],
+          "right_answer": "Create federal police oversight and transparency rules."
+        }
+      },
+      {
+        "question_text": "Press freedom declined to its lowest U.S. ranking ever due to financial crises and political hostility. What do you support?",
+        "answers": {
+          "possible_answers": [
+            "Fund independent journalism and protect media from political interference.",
+            "Let newspapers fail—market forces decide.",
+            "Reduce access for journalists to avoid conflicts."
+          ],
+          "right_answer": "Fund independent journalism and protect media from political interference."
         }
       }
     ]

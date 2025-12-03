@@ -36,16 +36,19 @@ public class QuizScreen
         questionScreen = new MenuText("", "", "", "");
         
         quizIntroduction = new MenuText("QUIZ OVERVIEW",
-            "this region contains 6 dilemmas(questions). each question has 4 options\n"+
-            "two options improve CPI and two damage CPI\n"+
-            "IMPORTANT: once a question is shown you MUST answer it.\n"+
-            "valid answers while a question is active: '1' ,'2', '3','4' \n"+
-            "while a question is active, you may type 'help' to view the help menu or 'status' to view current CPI values\n"+
-            "but you CANNOT cancel the active question.\n"+
-            "invalid inputs during an active question will re-prompt the same question.\n"+
-            "after each answer the game displays immediate feedback (cpi change and short narration) and proceeds to the next question\n"+
-            "at the end of the 6th question a short summary shows total CPI change and returns you to the regions menu"
-            ,"continue or type 'cancel' to leave","introduction");
+            "This region is suffering from 6 dilemmas (questions). Each dilemma has 3 possible solutions.\n"+
+            "One option improves CPI and two of them cause CPI to decrease.\n"+
+            "\n"+
+            "####### IMPORTANT #######:\n"+
+            "+ Once a question is shown, you MUST make a choice.\n"+
+            "+ Valid answers while a question is active: '1' ,'2', '3'.\n"+
+            "+ While question is active, you may type 'help' to view the help menu or 'status' to view current CPI value,\n"+
+            "  but you CANNOT cancel the active question.\n"+
+            "+ Invalid inputs during an active question will re-prompt the same question.\n"+
+            "+ After each answer, you will get immediate feedback and proceed to the next question.\n"+
+            "+ At the end of the 6th question, a short summary will pop up, showing total CPI change.\n",
+            null,
+            null);
     }
 
     private string CpiStatus()
@@ -100,7 +103,8 @@ public class QuizScreen
 
         question = currentRegion.Questions[questionNumber];
         
-        string userInput = quizIntroduction.Display() ?? "";
+        quizIntroduction.Display();
+        string userInput = System.Console.ReadLine() ?? "";
         userInput = userInput.Trim().ToLowerInvariant();
         
         if (userInput == "cancel")

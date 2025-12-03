@@ -26,7 +26,7 @@ public class ConsoleHandler
             "BASIC COMMANDS:\n- [number] -> choose your response to a dilemma.\n- 'north','west','east' or 'south' -> travel to another region.\n- help -> show this help menu.\n- quit -> exit the simulation. \n- leave -> shows possible exits out of a region",
             "return to help menu", "BasicCommands");
         
-        AddMenu("HELP MENU", null,null, "help", ["CPI","Goal","BasicCommands","GameStructure","ProTip"],"Choose a number to read more or press enter to exit the help menu");
+        AddMenu("HELP MENU", null,null, "help", ["CPI","Goal","BasicCommands","GameStructure","ProTip"],"Choose a number to read more or press ENTER to exit the help menu");
         
         AddMenu("STABILITY 2050",
             "Stabilty 2050 is a text based strategic game.\nYou are in a position of a diplomat,\nwho is trying to fight corruption.\nEvery action changes CPI - the measure of global trust.\nYour goal is to lead humanity to corruption-free world by 2050.\n",
@@ -60,7 +60,7 @@ public class ConsoleHandler
         }
         catch (KeyNotFoundException e)
         {
-            Console.WriteLine("key doesnt exist in menus, full error message: "+e.Message);
+            Console.WriteLine("Key doesnt exist in menu,\nFull error message: "+e.Message);
         }
         
         
