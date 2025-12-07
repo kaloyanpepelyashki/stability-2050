@@ -148,28 +148,42 @@ public class GameScreen
 
     public void Update(Region currentRegion, Region lastRegion)
     {
-        //updates all the menuScreens
-        
-        if (lastRegion == this.currentRegion||this.lastRegion == currentRegion)
+        try
         {
-            //if you have moved to a new region hasMoved is set to true to trigger the screen that prompt you to either stay or leave,
-            //as well as setting left to false to stop the movement menu to appear
-            hasMoved = true;
-            left = false;
+
+
+            //updates all the menuScreens
+
+            if (lastRegion == this.currentRegion || this.lastRegion == currentRegion)
+            {
+                //if you have moved to a new region hasMoved is set to true to trigger the screen that prompt you to either stay or leave,
+                //as well as setting left to false to stop the movement menu to appear
+                hasMoved = true;
+                left = false;
+            }
+
+            this.currentRegion = currentRegion;
+            this.lastRegion = lastRegion;
+
+            var currentRegionName = currentRegion.RegionName;
+            var regionalCpi = currentRegion.RegionCpi;
+
+            region = new MenuText(StandardHeader(currentTurn, currentRegionName, regionalCpi),
+                RegionInfo(currentRegion), null, "region");
+
+            movement = new MenuText(StandardHeader(currentTurn, currentRegionName, regionalCpi), Exits(), null,
+                "gameScreen");
+
+            main = new MenuText(StandardHeader(currentTurn, currentRegionName, regionalCpi),
+                "you are entering " + currentRegionName +
+                " would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,
+                "gameScreen");
         }
-        
-        this.currentRegion = currentRegion;
-        this.lastRegion = lastRegion;
-
-        var currentRegionName = currentRegion.RegionName;
-        var regionalCpi = currentRegion.RegionCpi;
-
-        region = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi),RegionInfo(currentRegion),null,"region");
-        
-        movement = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi), Exits(), null,"gameScreen");
-        
-        main = new MenuText(StandardHeader(currentTurn,currentRegionName,regionalCpi),"you are entering "+currentRegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,"gameScreen");
-        
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error updating GameScreen: {e.Message}");
+            throw;
+        }
     }
 
     private string Exits()
