@@ -16,46 +16,93 @@ public class CpiTracker
     /// The instance of the CpiTracker class.
     /// </summary>
     private static CpiTracker? _instance = null;
+
+    /// <summary>
+    /// The world instance. 
+    /// </summary>
+    private World _world;
+
     /// <summary>
     /// The number of points awarded for the right decision.
     /// </summary>
     private int CorrectAnswer = 6; // For the right decision +6 point to regional CPI.
+
     /// <summary>
     /// The number of points subtracted for the wrong decision.
     /// </summary>
     private int WrongAnswer = 9; // // For the wrong decision +6 point to regional CPI.
+
     /// <summary>
     /// The globalCPI calculated by getting an average of all the regional CPIs.
     /// </summary>
-    public double GlobalCpi => CpiValues.Values.Any() ? CpiValues.Values.Average() : 0.0 ;
+    public double GlobalCpi => CpiValues.Values.Any() ? CpiValues.Values.Average() : 0.0;
+
     /// <summary>
     /// A dictionary containing each region and their respective CPIs, used for the calculation of GlobalCpi.
     /// </summary>
     private static Dictionary<string, double> CpiValues { get; } = new();
+
+    /// <summary>
+    /// The cpi value needed for the player to cause a global crisis and activate the
+    /// </summary>
+    private int _cpiValueForCrisis = 20;
+
+    /// <summary>
+    /// The cpi value needed for the player to win the game
+    /// </summary>
+    private int _cpiValueForWin = 80;
+
+
     /// <summary>
     /// Initialization of the CpiTracker instance.
     /// </summary>
-    private CpiTracker(List<Region> regions)
+    private CpiTracker()
     {
-        foreach (var region in regions)
-        {
-            CpiValues.Add(region.RegionName, region.RegionCpi);
-        }
+
     }
 
     /// <summary>
     /// This method is used to get the instance of the singleton class CpiTracker.
-    /// <param name="regions">Receives the initial CPI values of the regions.</param>
     /// </summary>
-    /// <returns>CpiTracker</returns>
-    public static CpiTracker GetInstance(List<Region>? regions = null)
+    public static CpiTracker GetInstance()
     {
-        if (_instance != null) return _instance;
-        if (regions == null || regions.Count == 0) throw new CpiTrackerNotInitializedException();
-        _instance = new CpiTracker(regions);
+        if (_instance == null)
+        {
+            _instance = new CpiTracker();
+        }
+        
         return _instance;
     }
     
+    
+    /// <summary>
+    /// Initialises the CpiTracker class. The method is required, as it encapsulates the logic for properly initialising the class
+    /// the method populates the internal fields with he required object instances. 
+    /// </summary>
+    /// <param name="regions">The list of available regions in the game</param>
+    /// <param name="world">The world instance needed for the game</param>
+    /// <exception cref="CpiTrackerNotInitializedException"></exception>
+    public void Initialize(List<Region> regions, World world)
+    {
+        try
+        {
+            _world = world ?? throw new CpiTrackerNotInitializedException(
+                "Error initializing CpiTracker. World must be provided for correct CpiTracker initialisation.");
+            var regs = regions.Count() != 0
+                ? new List<Region>()
+                : throw new CpiTrackerNotInitializedException(
+                    "Error initializing CpiTracker. Regions must be provided for initialization");
+
+            foreach (var region in regions)
+            {
+                CpiValues.Add(region.RegionName, region.RegionCpi);
+            }
+        }
+        catch (CpiTrackerNotInitializedException e) 
+        {
+            Console.WriteLine($" Error initializing CPI tracker. {e.Message}");
+        }
+    }
 
     /// <summary>
     /// The method is used to increase the CPI of a certain region.
@@ -109,15 +156,41 @@ public class CpiTracker
     /// <returns>True if global is greater than 80.</returns>
     public bool CheckWinCondition()
     {
-        return GlobalCpi >= 80;
+        return GlobalCpi >= _cpiValueForWin;
     }
 
     /// <summary>
     /// This method to check if the player has reached crisis condition.
+    /// In case a global crisis is already initialised and GlobalCrisis is set to true, the method checks if
+    /// the CPI is still below 20, in case it's not, negates the crisis, by setting the GlobalCrisis to false, and returns
+    /// false.
     /// </summary>
     /// <returns>True if global cpi is less than 20.</returns>
     public bool CheckCrisisCondition()
     {
-        return GlobalCpi <= 20;
+        try
+        {
+
+            if (!_world.GlobalCrisis)
+            {
+                _world.SetGlobalCrisis(GlobalCpi <= _cpiValueForCrisis);
+                return _world.GlobalCrisis;
+            }
+            else
+            {
+                if (GlobalCpi >= _cpiValueForCrisis)
+                {
+                    _world.SetGlobalCrisis(false);
+                    return _world.GlobalCrisis;
+                }
+
+                return true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error in CpiTracker. Error checking crisis condition: {e.Message}");
+            throw;
+        }
     }
 }

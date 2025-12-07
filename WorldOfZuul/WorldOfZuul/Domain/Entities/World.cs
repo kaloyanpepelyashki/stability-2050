@@ -26,6 +26,12 @@ public class World
 
     public int Year { get; private set; } = 2025;
     
+    /// <summary>
+    /// Tracks if a global crisis has occured in the game
+    /// Tracks if a global crisis has begun. A global crisis is GlobalCpi <= 20.  
+    /// </summary>
+    public bool GlobalCrisis { get; private set; } = false;
+    
     private World() {}
 
     public static World GetInstance()
@@ -41,5 +47,14 @@ public class World
     public void IncrementYear()
     {
         Year++;
+    }
+    
+    /// <summary>
+    /// Sets the state of the GlobalCrisis
+    /// </summary>
+    /// <param name="value">True or False</param>
+    public void SetGlobalCrisis(bool value)
+    {
+        GlobalCrisis = value;
     }
 }
