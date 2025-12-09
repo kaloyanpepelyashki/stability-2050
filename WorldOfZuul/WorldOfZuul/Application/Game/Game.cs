@@ -196,6 +196,29 @@ namespace WorldOfZuul
             _turnCounter.IncrementTurn();
         }
         
+        
+        //This method is to be used, to finalise the logic for turn increment
+        private void HandleTurnIncrement()
+        {
+            bool playerOutOfTurns = _turnCounter.CheckOutOfTurns();
+
+            if (!playerOutOfTurns)
+            {
+                _turnCounter.IncrementTurn();
+            }
+
+            _gameState = GameState.PlayerOutOfTurns;
+        }
+
+        private void DisplayStandardRoomOutput()
+        {
+            // Display current room's short description - the description associated with each of the rooms
+            Console.WriteLine(_currentRegion?.RegionName);
+            Console.Write("> ");
+            Console.WriteLine($"The global CPI is {_cpiTracker.GlobalCpi}");
+
+        }
+        
         // Main method that runs the gameplay loop
         public void Play()
         {
@@ -213,10 +236,7 @@ namespace WorldOfZuul
                 CheckEndGame();
                
                 
-                // Display current room's short description - the description associated with each of the rooms
-                Console.WriteLine(_currentRegion?.RegionName);
-                Console.Write("> ");
-                Console.WriteLine($"The global CPI is {_cpiTracker.GlobalCpi}");
+                DisplayStandardRoomOutput();
                 
                 gameScreen.Update(_currentRegion, _previousRegion);
                 gameScreen.Display();
