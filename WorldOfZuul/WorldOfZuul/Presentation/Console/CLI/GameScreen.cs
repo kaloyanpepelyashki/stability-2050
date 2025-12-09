@@ -8,7 +8,7 @@ public class GameScreen
 
     private World _world = null;
     
-    private TurnCounter currentTurn;
+    private TurnCounter _turnCounter;
     
     private int barPercent = 5; //how many percent one bar represents
     
@@ -35,7 +35,7 @@ public class GameScreen
 
             this.cpiTracker = cpiTracker;
             this._world = world;
-            this.currentTurn = turnCounter;
+            this._turnCounter = turnCounter;
 
             this.currentRegion = currentRegion;
             this.lastRegion = lastRegion;
@@ -66,24 +66,65 @@ public class GameScreen
             Console.WriteLine($"Error instantiating GameScreen: {e.Message}");
         }
 
-        region = new MenuText(StandardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi),RegionInfo(currentRegion),null,"region");
+        region = new MenuText(StandardHeader(_turnCounter, currentRegion.RegionName, currentRegion.RegionCpi),RegionInfo(currentRegion),null,"region");
         
-        main = new MenuText(StandardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi),
-            "you are entering "+currentRegion.RegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region",
+        main = new MenuText(StandardHeader(_turnCounter,currentRegion.RegionName,currentRegion.RegionCpi),
+            "you are entering "+ currentRegion.RegionName +" would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region",
             null,
             "gameScreen");
         
-        movement = new MenuText(StandardHeader(currentTurn,currentRegion.RegionName,currentRegion.RegionCpi), Exits(), null,"gameScreen");
+        movement = new MenuText(StandardHeader(_turnCounter, currentRegion.RegionName, currentRegion.RegionCpi), Exits(), null,"gameScreen");
     }
 
     private string StandardHeader(TurnCounter turnCounter,string currentRegionName,double regionalCpi)
     {
-        return "Year: " + (2025 + turnCounter.currentTurn - 1) + "   |   " + "Turn: " + turnCounter.currentTurn +
-               "/25\n" +
-               "Global cpi:\n" + PercentBar(cpiTracker.GlobalCpi) + "\n \n" +
+        bool lastChanceInitated = _turnCounter.LastChanceInitiated;
 
-               "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
-               PercentBar(regionalCpi);
+        string standardHeaderTemplate;
+        string crisisBanner = CrisisBanner();
+
+        
+        if (lastChanceInitated)
+        {
+            standardHeaderTemplate = "Year: " + (2025 + turnCounter.currentTurn - 1) + "   |   " + "Turn: " +
+                                            turnCounter.currentTurn +
+                                            "/25\n" +
+                                            "Global cpi:\n" + PercentBar(cpiTracker.GlobalCpi) + "\n \n" +
+                                            CrisisBanner() + "\n" +
+                                            "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
+                                            PercentBar(regionalCpi);
+
+            return standardHeaderTemplate;
+        }
+        
+        
+        standardHeaderTemplate = "Year: " + (2025 + turnCounter.currentTurn - 1) + "   |   " + "Turn: " +
+                                        turnCounter.currentTurn +
+                                        "/25\n" +
+                                        "Global cpi:\n" + PercentBar(cpiTracker.GlobalCpi) + "\n \n" +
+
+                                        "Region: " + currentRegionName + "\n" + "Regional cpi: \n" +
+                                        PercentBar(regionalCpi);
+        return standardHeaderTemplate; 
+    }
+    
+    //TODO Design a method that returns the crisis banner. The method needs to let the user know a crisis has occured, and what is the current global CPI, the banner should also urge the player to change the situation, as they have last two turns, before the game ends. 
+    private string CrisisBanner()
+    {
+        double globalCpi = cpiTracker.GlobalCpi;
+        int? turnsRemaining = _turnCounter.LastChanceTurnsLeft;
+        
+        return $@"
+
+    =========================================================
+    >>>      GLOBAL CRISIS TRIGGERED      <<<
+     >>> You have a last chance to make it right <<<
+    CPI LEVEL: {globalCpi}
+    TURNS REMAINING: {turnsRemaining}
+    Solve it or the game is over.
+    ========================================================= 
+
+              ";
 
     }
 
@@ -150,8 +191,6 @@ public class GameScreen
     {
         try
         {
-
-
             //updates all the menuScreens
 
             if (lastRegion == this.currentRegion || this.lastRegion == currentRegion)
@@ -168,13 +207,13 @@ public class GameScreen
             var currentRegionName = currentRegion.RegionName;
             var regionalCpi = currentRegion.RegionCpi;
 
-            region = new MenuText(StandardHeader(currentTurn, currentRegionName, regionalCpi),
+            region = new MenuText(StandardHeader(_turnCounter, currentRegionName, regionalCpi),
                 RegionInfo(currentRegion), null, "region");
 
-            movement = new MenuText(StandardHeader(currentTurn, currentRegionName, regionalCpi), Exits(), null,
+            movement = new MenuText(StandardHeader(_turnCounter, currentRegionName, regionalCpi), Exits(), null,
                 "gameScreen");
 
-            main = new MenuText(StandardHeader(currentTurn, currentRegionName, regionalCpi),
+            main = new MenuText(StandardHeader(_turnCounter, currentRegionName, regionalCpi),
                 "you are entering " + currentRegionName +
                 " would you like to leave or stay, to leave type 'leave' or type 'stay' to stay in the region.", null,
                 "gameScreen");

@@ -22,6 +22,7 @@ public class TurnCounter : ITurnCounter
     /// Tracks at which turn the player got their last two turns chance to fix the game stats
     /// </summary>
     public int? LastChanceTurnsStartedOn = null;
+    public int? LastChanceTurnsLeft = null;
     public bool LastChanceInitiated = false;
     
     /// <summary>
@@ -76,6 +77,13 @@ public class TurnCounter : ITurnCounter
                 currentTurn++;
                 _world.IncrementYear();
             }
+
+            if (LastChanceInitiated)
+            {
+                LastChanceTurnsLeft--;
+                currentTurn++;
+                _world.IncrementYear();
+            }
         }
         catch (Exception e)
         {
@@ -125,6 +133,7 @@ public class TurnCounter : ITurnCounter
                 if (LastChanceTurnsStartedOn == null)
                 {
                     LastChanceTurnsStartedOn = currentTurn;
+                    LastChanceTurnsLeft = 2;
                     LastChanceInitiated = true;
                     HadLastChance = true;
 
