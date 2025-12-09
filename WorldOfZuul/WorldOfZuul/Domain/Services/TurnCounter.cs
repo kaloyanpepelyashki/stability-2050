@@ -18,6 +18,19 @@ public class TurnCounter : ITurnCounter
     public bool OutOfTurns = false;
     private World? _world = null;
 
+    /// <summary>
+    /// Tracks at which turn the player got their last two turns chance to fix the game stats
+    /// </summary>
+    public int? LastChanceTurnsStartedOn = null;
+    public int? LastChanceTurnsLeft = null;
+    public bool LastChanceInitiated = false;
+    
+    /// <summary>
+    /// Checks if the player has already been given a last chance to solve a global crisis.
+    /// A player is given a last chance once, if they drop below 20 cpi again, game ends. 
+    /// </summary>
+    public bool HadLastChance = false; 
+    
     private TurnCounter()
     {
 
@@ -37,7 +50,11 @@ public class TurnCounter : ITurnCounter
         
         return _instance;
     }
-
+    
+    /// <summary>
+    /// Assigns (sets-up) the world
+    /// </summary>
+    /// <param name="world">The world class instance that is to be used throughout the gamef</param>
     public void AssignWorld(World world)
     {
         _world = world;
@@ -60,6 +77,13 @@ public class TurnCounter : ITurnCounter
                 currentTurn++;
                 _world.IncrementYear();
             }
+
+            if (LastChanceInitiated)
+            {
+                LastChanceTurnsLeft--;
+                currentTurn++;
+                _world.IncrementYear();
+            }
         }
         catch (Exception e)
         {
@@ -67,11 +91,83 @@ public class TurnCounter : ITurnCounter
         }
     }
 
-    public void CheckOutOfTurns()
+    /// <summary>
+    /// Checks if the player is out of turns.
+    /// Used for both checking if the player is out of turns generally and checking if the player is out of their last two turns
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckOutOfTurns()
     {
-        if(currentTurn == maxTurn)
+        if (LastChanceInitiated)
         {
-            OutOfTurns = true; 
+            if (currentTurn >= LastChanceTurnsStartedOn + 2)
+            {
+                OutOfTurns = true;
+                return true;
+            }
+
+            return false;
+        }
+
+        if (currentTurn == maxTurn)
+        {
+                OutOfTurns = true;
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Initiates the last two turns a player has to solve a global crisis
+    /// The method checks if the player already had last two chance given before, if yes, the player cannot get them again
+    /// The method returns true, if the last two chances were given and false if they were not given.
+    /// </summary>
+    /// <returns>Тrue if the last chance was granted. False if last chance was not granted</returns>
+    public bool InitLastTwoTurns()
+    {
+        try
+        {
+            if (!HadLastChance)
+            {
+                if (LastChanceTurnsStartedOn == null)
+                {
+                    LastChanceTurnsStartedOn = currentTurn;
+                    LastChanceTurnsLeft = 2;
+                    LastChanceInitiated = true;
+                    HadLastChance = true;
+
+                    return true;
+                }
+
+                throw new Exception("Error! LastChanceTurnStartedOn is not null");
+            }
+
+            return false;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error initing last two turns: {e.Message}");
+            throw;
+        }
+    }
+
+    public void ResetLastTwoTurns()
+    {
+        try
+        {
+            if (LastChanceInitiated)
+            {
+                LastChanceTurnsStartedOn = null;
+                LastChanceInitiated = false;
+                return;
+            }
+
+            return;
+            
+        } catch (Exception e)
+        {
+            Console.WriteLine($"Error reseting last two turns: {e.Message}");
         }
     }
 }

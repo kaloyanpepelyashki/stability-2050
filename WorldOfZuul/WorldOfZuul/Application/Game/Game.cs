@@ -6,6 +6,7 @@ namespace WorldOfZuul
     public class Game
     {
         private GameState _gameState = GameState.None;
+
         /// <summary>
         /// Tracks if the player has requested end of the game
         /// </summary>
@@ -13,13 +14,15 @@ namespace WorldOfZuul
         /// Loop control variable
         /// </remarks>
         bool _continuePlaying = true;
-        
+
         private RegionDataParser regionDataParser;
+
         // Tracks the room the player is currently in
         private Region? _currentRegion;
+
         // Stores the previous room, used when the player types 'back'
         private Region? _previousRegion;
-        
+
         /// <summary>
         /// The turn counter instance. The turn counter is responsible for keeping up with how many turns the user has taken and how many turns are left, until the game is over.
         /// </summary>
@@ -29,7 +32,7 @@ namespace WorldOfZuul
         private readonly TurnCounter _turnCounter;
 
         private IRegionsService _regionService;
-        
+
         private CpiTracker _cpiTracker;
 
         private Dictionary<string, Region> _regions;
@@ -37,28 +40,43 @@ namespace WorldOfZuul
         private static ConsoleHandlerService _cli;
 
         private World? _world = null;
-        
+
         private static GameScreen gameScreen;
         private static QuizScreen quizScreen;
-        
-        // Constructor - initializes the game world when a new Game object is created
-        public Game(ConsoleHandlerService consoleHandler, IRegionsService regionsService, TurnCounter _turnCounter, CpiTracker _cpiTracker,World world)
-        {   
-            
-            _regionService =  regionsService;
-            this._cpiTracker= _cpiTracker;
-            this._turnCounter = _turnCounter;
-            _cli = consoleHandler;
-            _world = world;
-            
-            
-            _turnCounter.AssignWorld(_world);
-            CreateRegions(); // Builds all regions 
-            gameScreen = new GameScreen(this._turnCounter, this._cpiTracker, this._currentRegion,null, world);
-            quizScreen = new QuizScreen(_currentRegion!, gameScreen, this._cpiTracker, this._turnCounter);
 
+
+
+        // Constructor - initializes the game world when a new Game object is created
+        public Game(ConsoleHandlerService consoleHandler, IRegionsService regionsService, TurnCounter turnCounter,
+            CpiTracker cpiTracker, World world)
+        {
+            try
+            {
+
+                _regionService = regionsService ?? throw new ArgumentNullException(nameof(regionsService));
+                this._cpiTracker = cpiTracker ?? throw new ArgumentNullException(nameof(_cpiTracker));
+                this._turnCounter = turnCounter ?? throw new ArgumentNullException(nameof(_turnCounter));
+                _cli = consoleHandler ?? throw new ArgumentNullException(nameof(consoleHandler));
+                _world = world ?? throw new ArgumentNullException(nameof(world));
+
+                
+                CreateRegions(); // Builds all regions 
+                
+                _turnCounter.AssignWorld(_world);
+                gameScreen = new GameScreen(turnCounter, cpiTracker, this._currentRegion, null, world);
+                quizScreen = new QuizScreen(_currentRegion!, gameScreen, this._cpiTracker, this._turnCounter);
+                
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine($"Error. Couldn't construct game. {e.Message}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error constructing Game. {e.Message}");
+            }
         }
-        
+
         /// <summary>
         /// The method is in charge of initialising all regions in the game, handles internally (with the use of another method), the read from JSON file, the object instantiation of each region and assignment of exits.
         /// The method also sets the initial region, where the player stars their journey
@@ -69,12 +87,12 @@ namespace WorldOfZuul
             {
                 _regions = _regionService.InitialiseRegions();
 
-                foreach (KeyValuePair<string, Region> region in _regions )
+                foreach (KeyValuePair<string, Region> region in _regions)
                 {
                     Console.WriteLine(region.Key);
                 }
-                
-                
+
+
                 //Sets the initial region to "North Africa"
                 // Player starts the game in North Africa
                 _currentRegion = _regions["North Africa"];
@@ -84,26 +102,89 @@ namespace WorldOfZuul
                 Console.WriteLine(e.Message);
             }
         }
-        
+
         /// <summary>
         /// The method is in charge of checking if the conditions for finalising the game are present
         /// The method checks if the player is out of turns. 
         /// </summary>
         private void CheckEndGame()
         {
+            CheckPlayerTurnState();
+            
             if (_cpiTracker.CheckWinCondition())
             {
                 _gameState = GameState.PlayerWon;
             }
 
-            if (_cpiTracker.CheckCrisisCondition())
-            {
-                _gameState = GameState.PlayerCausedGlobalCrisis;
-            }
-
             if (!_continuePlaying)
             {
                 _gameState = GameState.PlayerQuitGame;
+            }
+        }
+
+        private void CheckPlayerTurnState()
+        {
+            
+            bool crisisHasOccured = _cpiTracker.CheckCrisisCondition();
+            _turnCounter.CheckOutOfTurns();
+
+            if (_turnCounter.OutOfTurns)
+            {
+                _gameState = GameState.PlayerOutOfTurns;
+            }
+
+            if (_turnCounter.OutOfTurns && crisisHasOccured)
+            {
+                _gameState = GameState.PlayerCausedGlobalCrisis;
+            }
+        }
+
+        
+        /// <summary>
+        /// In charge of checking if a global crisis has occured, and follows the necessary steps to handle the process
+        /// around a global crisis.
+        /// The method is intended to be called on the top of the Play loop. So it checks the global crisis state, after each re-run of the loop
+        /// The method handles both the occurance of a crisis and the end of a such. The method checks if a global crisis is present, if yes, checks if last chance has not been initiated, and in case, it hasn't
+        /// attempts to see if a last chance will be granted. In case a last chance is not granted, ends the game, by setting the game state.
+        /// If a global crisis is not currently happening, checks if last chance is initiated, and in case it is, resets it.
+        /// </summary>
+        private void CheckCrisisState()
+        {
+            try
+            {
+                
+                _cpiTracker.CheckCrisisCondition();
+                bool globalCrisis = _world.GlobalCrisis;
+                bool lastChanceInitiated = _turnCounter.LastChanceInitiated;
+
+                if (globalCrisis)
+                {
+
+                    if (!lastChanceInitiated)
+                    {
+                        bool lastTurnGranted = _turnCounter.InitLastTwoTurns();
+
+                        if (!lastTurnGranted)
+                        {
+                            _gameState = GameState.PlayerCausedGlobalCrisis;
+                        }
+
+                        _gameState = GameState.PlayerHasLastChance;
+                    }
+                }
+                if (!globalCrisis)
+                {
+                    if (lastChanceInitiated)
+                    {
+                       _turnCounter.ResetLastTwoTurns();
+                       _gameState = GameState.Running;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error checking crisis state: {e.Message}");
+                throw;
             }
         }
         
@@ -113,6 +194,29 @@ namespace WorldOfZuul
         private void HandleMove()
         {
             _turnCounter.IncrementTurn();
+        }
+        
+        
+        //This method is to be used, to finalise the logic for turn increment
+        private void HandleTurnIncrement()
+        {
+            bool playerOutOfTurns = _turnCounter.CheckOutOfTurns();
+
+            if (!playerOutOfTurns)
+            {
+                _turnCounter.IncrementTurn();
+            }
+
+            _gameState = GameState.PlayerOutOfTurns;
+        }
+
+        private void DisplayStandardRoomOutput()
+        {
+            // Display current room's short description - the description associated with each of the rooms
+            Console.WriteLine(_currentRegion?.RegionName);
+            Console.Write("> ");
+            Console.WriteLine($"The global CPI is {_cpiTracker.GlobalCpi}");
+
         }
         
         // Main method that runs the gameplay loop
@@ -128,20 +232,14 @@ namespace WorldOfZuul
             // Main game loop - runs until player quits. 
             while (_gameState == GameState.Running || _gameState == GameState.PlayerHasLastChance)
             { 
-                
+                CheckCrisisState();
                 CheckEndGame();
                
                 
-                // Display current room's short description - the description associated with each of the rooms
-                Console.WriteLine(_currentRegion?.RegionName);
-                Console.Write("> ");
-                Console.WriteLine($"The global CPI is {_cpiTracker.GlobalCpi}");
+                DisplayStandardRoomOutput();
                 
                 gameScreen.Update(_currentRegion, _previousRegion);
                 gameScreen.Display();
-                
-                // TODO: Uncomment after implemented crisis system
-                // cpiTracker.CheckCrisisCondition();
                 
                 //Gets the user command line input
                 string? input = Console.ReadLine();

@@ -70,7 +70,9 @@ public class QuizScreen
         return text;
         
     }
-
+    
+    
+    //TODO The quiz logic should be seprated from the Quiz UI. Preferably, the quizes should be implemented through an interface, as all quizzes follow the same structure, no matter of the answers/questions. Also, it will be easier to track if the player is currently in a quiz, if the player left the quiz, the player started the quiz or gave up on the quiz.
     public void Start(Region currentRegion)
     {
         
