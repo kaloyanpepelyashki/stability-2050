@@ -64,7 +64,7 @@ namespace WorldOfZuul
                 
                 _turnCounter.AssignWorld(_world);
                 gameScreen = new GameScreen(turnCounter, cpiTracker, this._currentRegion, null, world);
-                quizScreen = new QuizScreen(_currentRegion!, gameScreen, this._cpiTracker, this._turnCounter);
+               
                 
             }
             catch (ArgumentException e)
@@ -274,7 +274,8 @@ namespace WorldOfZuul
                         break;
                     
                     case "quiz":
-                        quizScreen.Start(_currentRegion);
+                        QuizSession currentRegionQuizSession = _currentRegion.TakeRegionalQuiz();
+                        currentRegionQuizSession.LoadQuiz();
                         break;
                     
                     case "north":

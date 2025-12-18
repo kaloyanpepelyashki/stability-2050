@@ -1,6 +1,9 @@
-﻿namespace WorldOfZuul
+﻿using WorldOfZuul.Domain.Interfaces;
+using WorldOfZuul.Presentation.Console.CLI;
+
+namespace WorldOfZuul
 {
-    public class RegionExits
+    public class RegionExits 
     {
         
     }
@@ -8,7 +11,7 @@
     /// Represents a location (region) within the game.
     /// Each room has a short and long description, and can connect to other rooms through exits.
     /// </summary>
-    public class Region
+    public class Region: IQuizzable
     {   
         /// <summary>
         /// The name (title) of the region
@@ -38,6 +41,8 @@
         /// </summary>
         public bool QuizCompleted { get; set; }
         
+        private QuizScreen _quizScreen;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="Region"/> class with the specified short and long descriptions.
         /// </summary>
@@ -53,6 +58,7 @@
             RegionCpi = regionCpi;
             RegionState = new State(stateName, stateDescription);
             Questions = questions;
+            _quizScreen = new QuizScreen();
         }
         
         /// <summary>
@@ -87,5 +93,26 @@
             if (neighbor != null)
                 Exits[direction] = neighbor;
         }
+        
+        /// <summary>
+        /// Decreases the Cpi of the region, the decreaseWith parameter, sets with how much the Cpi should be decreased/
+        /// </summary>
+        /// <param name="decreaseWith"></param>
+        public void DecreaseCpi(double decreaseWith)
+        {
+            RegionCpi -= decreaseWith;
+        }
+
+        public void IncreaseCpi(double increaseWith)
+        {
+            RegionCpi += increaseWith;
+        }
+
+        public QuizSession TakeRegionalQuiz()
+        {
+
+            return new QuizSession(this);
+        }
+        
     }
 }
