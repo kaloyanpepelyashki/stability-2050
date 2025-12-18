@@ -40,6 +40,8 @@ public class CpiTracker
     /// <summary>
     /// A dictionary containing each region and their respective CPIs, used for the calculation of GlobalCpi.
     /// </summary>
+    //TODO Refactor, track Region, not a value, because Region is reference based and any changes there, will reflect here too.
+    //TODO Remove the dictionary all together, re-implement to make use of a list. 
     private static Dictionary<string, double> CpiValues { get; } = new();
 
     /// <summary>
@@ -103,7 +105,8 @@ public class CpiTracker
             Console.WriteLine($" Error initializing CPI tracker. {e.Message}");
         }
     }
-
+    
+    //TODO Remove the method or change the method so it uses the Region IncreaseCpi method. 
     /// <summary>
     /// The method is used to increase the CPI of a certain region.
     /// Increases the global CPI by 1.5%(for 4 regions).
@@ -114,7 +117,8 @@ public class CpiTracker
         region.RegionCpi += CorrectAnswer;
         CpiValues[region.RegionName] = region.RegionCpi;
     }
-
+    
+    //TODO Remove the method or change the method so it uses the Region DecreaseCpi method for CPI decrease. 
     /// <summary>
     /// This method is used to decrease the CPI of a certain region.
     /// Decreases the global CPI by 2.25%(for 4 regions).
