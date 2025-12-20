@@ -275,10 +275,22 @@ public class QuizScreen
         return userInput;
     }
 
-    public void DisplayCorrectAnswer()
+    public void DisplayCorrectAnswer(string regionName)
     {
-        MenuText correctAnswerScreen = new MenuText("Question ", "You answered correctly", null, "correctAnswer");
+        MenuText correctAnswerScreen = new MenuText("Question ", $"You answered correctly. Good choice. You have helped {regionName} become less corrupt The cpi of {regionName} increased", null, "correctAnswer");
         correctAnswerScreen.Display();
+    }
+
+    public void DisplayWrongAnswer(string regionName)
+    {
+        MenuText wrongAnswerScreen = new MenuText("Question ", $"You answered incorrectly. The cpi of {regionName} decreased.", null, "wrongAnswer");
+        wrongAnswerScreen.Display();
+    }
+
+    public void DisplayQuizEnd()
+    {
+        MenuText displayQuizEndScreen = new MenuText("Quiz End", "Thank you for taking this quiz", "leave", "quizEnd");
+        displayQuizEndScreen.Display();
     }
     
 }

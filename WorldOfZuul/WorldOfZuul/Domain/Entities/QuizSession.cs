@@ -15,7 +15,12 @@ public class QuizSession
    private Region _region;
    private double _startCpi;
    private QuizScreen _quizScreen;
-   private bool _quizActive = true; 
+   private bool _quizActive = true;
+   /// <summary>
+   /// Holds the results of the quiz, the key of the dictionary is the question number, the value is a bool, the result of the question - if true, the question was answered correctly, if false, the question was answered incorrectly. 
+   /// </summary>
+   public Dictionary<int, bool> QuizResults = new Dictionary<int, bool>();
+   public bool QuizSessionCompleted = false; 
 
    public QuizSession(Region region)
    {
@@ -130,18 +135,23 @@ public class QuizSession
 
          if (isAnswerCorrect)
          {
-            _quizScreen.DisplayCorrectAnswer();
+            _quizScreen.DisplayCorrectAnswer(_region.RegionName);
             Console.ReadKey();
          }
          else
          {
-            Console.WriteLine("Wrong Answer"); 
+           _quizScreen.DisplayWrongAnswer(_region.RegionName); 
             Console.ReadKey();
          }
          
+         // Adds the result of the current question to the dictionary with results
+         QuizResults.Add(currentQuizQuestionIndex, isAnswerCorrect);
          currentQuizQuestionIndex++; 
       }
-
+      
+      _region.QuizCompleted = true;
+      QuizSessionCompleted = true;
+      _quizScreen.DisplayQuizEnd();
       return; 
    }
 }
