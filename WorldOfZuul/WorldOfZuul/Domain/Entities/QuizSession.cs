@@ -131,12 +131,17 @@ public class QuizSession
          if (isAnswerCorrect)
          {
             _quizScreen.DisplayCorrectAnswer();
+            Console.ReadKey();
          }
-
-         Console.WriteLine("Wrong Answer");
+         else
+         {
+            Console.WriteLine("Wrong Answer"); 
+            Console.ReadKey();
+         }
+         
+         currentQuizQuestionIndex++; 
       }
 
+      return; 
    }
-
-
 }
