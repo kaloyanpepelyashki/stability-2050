@@ -35,11 +35,9 @@ public class QuizSession
    /// <param name="answeIndex"></param>
    /// <returns></returns>
    //TODO Figure out how to effectively integrate the logic with increasing and decreasing CPI of the region. That should happen through the CPI tracker. There must be an access point, where the quiz result accesses the CPI tracker. 
-   public bool Answer(string answer, Question question)
+   public bool Answer(int answer, Question question)
    {
-      int answerIndex = Convert.ToInt32(answer);
-
-      bool isAnswerCorrect = question.Answer(answerIndex);
+      bool isAnswerCorrect = question.Answer(answer);
       
       return isAnswerCorrect;
    }
@@ -112,12 +110,21 @@ public class QuizSession
    //TODO Implement the logic for handling each of the quiz questions (each question of the region). The method should handle question display, and handle answer. Should return true, if the answer was answered correctly and false if the answer was not. 
    private bool HandleQuizQuestion(int questionNumber, Question question)
    {
-      string userAnswer  = _quizScreen.DisplayQuizQuestion(questionNumber, question);
-      
-      Console.WriteLine($"User answer is {userAnswer}");
-      bool isAnswerCorrect = Answer(userAnswer, question);
+      while (true)
+      {
+         string userAnswer = _quizScreen.DisplayQuizQuestion(questionNumber, question);
+        
+         // Check that input between 1 and 4 and that it is a number
+         if (int.TryParse(userAnswer, out int choice) && choice >= 1 && choice <= 4)
+         {
+            return Answer(choice, question);
+         }
 
-      return isAnswerCorrect;
+         // 4. Invalid Input: Show error and Loop again
+         Console.WriteLine("Invalid input. Please enter a number between 1 and 4.");
+         Console.WriteLine("Press any key to try again...");
+         Console.ReadKey();
+      }
    }
 
    
