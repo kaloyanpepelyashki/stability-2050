@@ -114,7 +114,8 @@ public class CpiTracker
     /// </summary>
     public void IncreaseCpi(Region region)
     {
-        region.RegionCpi += CorrectAnswer;
+        region.IncreaseCpi(CorrectAnswer);
+        //region.RegionCpi += CorrectAnswer;
         CpiValues[region.RegionName] = region.RegionCpi;
     }
     
@@ -126,7 +127,8 @@ public class CpiTracker
     /// </summary>
     public void DecreaseCpi(Region region)
     {
-        region.RegionCpi -= WrongAnswer;
+        region.DecreaseCpi(WrongAnswer);
+        //region.RegionCpi -= WrongAnswer;
         CpiValues[region.RegionName] = region.RegionCpi;
     }
     
@@ -138,7 +140,8 @@ public class CpiTracker
     /// </summary>
     public void IncreaseCpi(Region region, double points)
     {
-        region.RegionCpi += points;
+        region.IncreaseCpi(points);
+        //region.RegionCpi += points;
         CpiValues[region.RegionName] = region.RegionCpi;
     }
 
@@ -150,7 +153,8 @@ public class CpiTracker
     /// </summary>
     public void DecreaseCpi(Region region, double points)
     {
-        region.RegionCpi -= points;
+        region.DecreaseCpi(points);
+        //region.RegionCpi -= points;
         CpiValues[region.RegionName] = region.RegionCpi;
     }
     

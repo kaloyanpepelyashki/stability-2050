@@ -13,33 +13,9 @@ public class Question
         Answers = new Answer(possibleAnswers, rightAnswer);
     }
 
-    public bool Answer(int answerIndex)
+    public bool Answer(int choice)
     {
-        try
-        {
-            if (answerIndex < 0 | answerIndex > 4)
-            {
-                throw new QuizAnswerException("The answer is out of bounds.");
-            }
-          
-            string answer = Answers.PossibleAnswers[answerIndex - 1];
-
-            if (answer == Answers.RightAnswer)
-            {
-                return true;
-            }
-
-            return false; 
-        }
-        catch (QuizAnswerException e)
-        {
-            Console.WriteLine(e.Message);
-            throw;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error answering question: {e.Message}");
-            throw;
-        } 
+        return Answers.PossibleAnswers[choice - 1] == Answers.RightAnswer;
     }
+
 }
