@@ -15,25 +15,26 @@
     },
     "questions": [
       {
-        "question_text": "The text of question 1 is here",
+        "question_text": "The text of question 1 for North Africa",
         "answers":  {
           "possible_answers" : [
-            "Answer 1 to question 1",
-            "Answer 2",
-            "Answer 3 to question 3"
+            "wrong answer",
+            "wrong answer",
+            "wrong answer",
+            "right answer"
           ],
-          "right_answer": "Answer 2"
+          "right_answer": "right answer"
         }
       },
       {
-        "question_text": "The text of question 2 is here",
+        "question_text": "The text of question 2 for North Africa",
         "answers":  {
           "possible_answers" : [
-            "Answer 1",
-            "Answer 2",
-            "Answer 3"
+            "wrong answer",
+            "wrong answer",
+            "right answer"
           ],
-          "right_answer": "Answer 2"
+          "right_answer": "right answer"
         }
       }
     ]
@@ -54,25 +55,25 @@
     },
     "questions": [
       {
-        "question_text": "The text of the question",
+        "question_text": "The text of question 1 for Middle East",
         "answers":  {
           "possible_answers" : [
-            "Answer 1",
-            "Answer 2",
-            "Answer 3"
+            "wrong answer",
+            "right answer",
+            "wrong answer"
           ],
-          "right_answer": "Answer 2"
+          "right_answer": "right answer"
         }
       },
       {
-        "question_text": "The text of the question",
+        "question_text": "The text of question 2 for Middle East",
         "answers":  {
           "possible_answers" : [
-            "Answer 1",
-            "Answer 2",
-            "Answer 3"
+            "right answer",
+            "wrong answer",
+            "wrong answer"
           ],
-          "right_answer": "Answer 2"
+          "right_answer": "right answer"
         }
       }
     ]
@@ -96,11 +97,11 @@
         "question_text": "The text of the question",
         "answers":  {
           "possible_answers" : [
-            "Answer 1",
-            "Answer 2",
-            "Answer 3"
+            "wrong answer",
+            "right answer",
+            "wrong answer"
           ],
-          "right_answer": "Answer 2+"
+          "right_answer": "right answer"
         }
       },
       {
