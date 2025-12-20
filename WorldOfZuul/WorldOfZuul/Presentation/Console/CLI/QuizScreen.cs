@@ -280,4 +280,5 @@ public class QuizScreen
         MenuText correctAnswerScreen = new MenuText("Question ", "You answered correctly", null, "correctAnswer");
         correctAnswerScreen.Display();
     }
+    
 }
