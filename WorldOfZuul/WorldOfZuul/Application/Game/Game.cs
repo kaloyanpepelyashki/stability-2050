@@ -64,7 +64,7 @@ namespace WorldOfZuul
                 
                 _turnCounter.AssignWorld(_world);
                 gameScreen = new GameScreen(turnCounter, cpiTracker, this._currentRegion, null, world);
-                quizScreen = new QuizScreen(_currentRegion!, gameScreen, this._cpiTracker, this._turnCounter);
+               
                 
             }
             catch (ArgumentException e)
@@ -187,6 +187,39 @@ namespace WorldOfZuul
                 throw;
             }
         }
+
+        private void HandleQuiz()
+        {
+            QuizSession currentRegionQuizSession = _currentRegion.TakeRegionalQuiz();
+            currentRegionQuizSession.LoadQuiz();
+            double regionCpiBeforeQuiz = _currentRegion.RegionCpi;
+            
+            if (currentRegionQuizSession.QuizSessionCompleted)
+            {
+                //Gets the result of the quiz, after the quiz has been completed
+                Dictionary<int, bool> quizResults = currentRegionQuizSession.QuizResults;
+
+                foreach (KeyValuePair<int, bool> quizResult in quizResults)
+                {
+                    
+                    //Handles the increase or decrease of CPI, based on the validity of the answer. If the answer is correct, it increases CPI, if the answer is incorrect, decreases CPI
+                    if (quizResult.Value)
+                    {
+                        _cpiTracker.IncreaseCpi(_currentRegion);
+                        
+                    } else if (!quizResult.Value)
+                    {
+                        _cpiTracker.DecreaseCpi(_currentRegion);
+                    }
+                    
+                }
+                
+                Console.WriteLine($"Cpi for {_currentRegion.RegionName} changed from {regionCpiBeforeQuiz}% to {_currentRegion.RegionCpi}%"); 
+                Console.WriteLine("Press Enter to continue...");
+                Console.ReadKey();
+            }
+            
+        }
         
         /// <summary>
         /// A method encapsulating the logic for incrementing a turn and a year after a move has been made
@@ -274,7 +307,7 @@ namespace WorldOfZuul
                         break;
                     
                     case "quiz":
-                        quizScreen.Start(_currentRegion);
+                        HandleQuiz();
                         break;
                     
                     case "north":

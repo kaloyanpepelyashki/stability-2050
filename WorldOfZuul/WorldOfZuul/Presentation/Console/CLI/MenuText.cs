@@ -22,7 +22,7 @@
             this.menuName = menuName;
             this.header = header;
             this.textBody = textBody;
-            this.enterPromptAction = enterPromptAction;
+            this.enterPromptAction = enterPromptAction ?? null;
         }
 
         public MenuText(string header, string? textBody, string? enterPromptAction, string? menuName, MenuText?[] submenus, string subMenuDesc)
