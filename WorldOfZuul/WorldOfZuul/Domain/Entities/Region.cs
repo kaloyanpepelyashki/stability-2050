@@ -100,7 +100,8 @@ namespace WorldOfZuul
         /// <param name="decreaseWith"></param>
         public void DecreaseCpi(double decreaseWith)
         {
-            RegionCpi -= decreaseWith;
+            if (decreaseWith < 0) throw new ArgumentOutOfRangeException(nameof(decreaseWith), "decreaseWith must be >= 0");
+            RegionCpi = Math.Max(RegionCpi - decreaseWith, 0);
         }
 
         public void IncreaseCpi(double increaseWith)
