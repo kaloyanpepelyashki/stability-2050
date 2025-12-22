@@ -87,12 +87,6 @@ namespace WorldOfZuul
             {
                 _regions = _regionService.InitialiseRegions();
 
-                foreach (KeyValuePair<string, Region> region in _regions)
-                {
-                    Console.WriteLine(region.Key);
-                }
-
-
                 //Sets the initial region to "North Africa"
                 // Player starts the game in North Africa
                 _currentRegion = _regions["North Africa"];
