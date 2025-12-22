@@ -1,6 +1,11 @@
-**/.idea/
-**/.vs/
+# Build output
+**/bin/
 **/obj/
-**/WorldOfZuul/WorldOfZuul/bin/
-**/UnitTests/bin/
+
+# IDE settings
+.vscode/
 **/.vscode/
+.idea/
+**/.idea/
+.vs/
+**/.vs/
