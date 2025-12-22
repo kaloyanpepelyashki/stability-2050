@@ -1,213 +1,92 @@
 ﻿using WorldOfZuul.Presentation.Console.Assets;
+using System;
 
 namespace WorldOfZuul.Presentation.Console.CLI;
 
 public class QuizScreen
 {
-    Question question; // the current question;
-    private int questionIndex; //which question are you currently on;
-    
-    private MenuText questionScreen;
-    private MenuText quizIntroduction;
-    private MenuText status;
-    private MenuText quizAnswered;
-
-    private bool quizActive;
-
-    private int[] available = {0,1,2,3,4,5,6};
-    
-    private Region currentRegion;
-    private CpiTracker cpiTracker;
-    private TurnCounter turnCounter;
-    private readonly GameScreen gameScreen;
-    private double startCpi;
-    public QuizScreen (Region currentRegion,GameScreen gameScreen, CpiTracker cpiTracker, TurnCounter turnCounter)
+    public QuizScreen()
     {
-        this.gameScreen = gameScreen;//included so the header from there can be fetched
-        this.cpiTracker = cpiTracker;
-        this.turnCounter = turnCounter;
-
-        this.currentRegion = currentRegion;
-
-        quizAnswered = new MenuText("       QUIZ", "\nsorry you have done the quiz.\n", "return to continue", "quizDone");
-        
-        status = new MenuText("status",CpiStatus(),"return to the quiz","status");
-
-        questionScreen = new MenuText("", "", "", "");
-        
-        quizIntroduction = new MenuText("QUIZ OVERVIEW",
-            "This region is suffering from 6 dilemmas (questions). Each dilemma has 3 possible solutions.\n"+
-            "One option improves CPI and two of them cause CPI to decrease.\n"+
-            "\n"+
-            "####### IMPORTANT #######:\n"+
-            "+ Once a question is shown, you MUST make a choice.\n"+
-            "+ Valid answers while a question is active: '1' ,'2', '3'.\n"+
-            "+ While question is active, you may type 'help' to view the help menu or 'status' to view current CPI value,\n"+
-            "  but you CANNOT cancel the active question.\n"+
-            "+ Invalid inputs during an active question will re-prompt the same question.\n"+
-            "+ After each answer, you will get immediate feedback and proceed to the next question.\n"+
-            "+ At the end of the 6th question, a short summary will pop up, showing total CPI change.\n",
-            null,
-            null);
-    }
-
-    private string CpiStatus()
-    {
-        string text = "Regional cpi for " + currentRegion.RegionName+": ";
-        text += currentRegion.RegionCpi+"\n";
-        text += "\nTotalCpi: " + cpiTracker.GlobalCpi;
-        
-        return text;
         
     }
-
-    private string PossibleAnswers()
+    
+    /// <summary>
+    /// Writes the possible answers for a question to the console with colored indexes.
+    /// </summary>
+    /// <param name="question">The question which answers are to be extracted and formatted for display</param>
+    private void PrintPossibleAnswers(Question question)
     {
-        string text = question.QuestionText + "\n" + "possible answers:\n";
-        
+        System.Console.WriteLine(question.QuestionText);
+        System.Console.WriteLine("possible answers:");
         for (int i = 0; i < question.Answers.PossibleAnswers.Count; i++)
         {
-            text += "["+(i+1)+"] "+ question.Answers.PossibleAnswers[i]+"\n";
+            System.Console.ForegroundColor = ConsoleColor.Cyan;
+            System.Console.Write("[");
+            System.Console.Write(i + 1);
+            System.Console.Write("] ");
+            System.Console.ResetColor();
+            System.Console.WriteLine(question.Answers.PossibleAnswers[i]);
         }
-        
-        return text;
-        
     }
-
-    public void Start(Region currentRegion)
-    {
-        
-        if (currentRegion.QuizCompleted)
-        {
-            quizAnswered.Display();
-            return;
-        }
-        
-        this.currentRegion = currentRegion;
-
-        startCpi = currentRegion.RegionCpi;
-        
-        questionIndex = 0;
-        available = new int[currentRegion.Questions.Count];
-        for (int i = 0; i < currentRegion.Questions.Count; i++)
-        {
-            available[i] = i;
-        }
-        
-        
-        //shuffle the available list so the numbers 0-currentRegion.Questions.Count appear in random order
-        Random rand =  new Random();
-        rand.Shuffle(available);
-
-        int questionNumber = available[questionIndex];
-
-        question = currentRegion.Questions[questionNumber];
-        
-        quizIntroduction.Display();
-        string userInput = System.Console.ReadLine() ?? "";
-        userInput = userInput.Trim().ToLowerInvariant();
-        
-        if (userInput == "cancel")
-        {
-            turnCounter.IncrementTurn();
-            //exit out of the quiz and return to game class
-            return;
-        }
-        while (!quizActive)
-        {
-            questionScreen = new MenuText("Question "+(questionNumber+1),PossibleAnswers(),null,"question");
-            questionScreen.Display();
-            
-            string? input = System.Console.ReadLine();
-            
-            if (input == null) return;
-            
-            String userAnswer = "";
-            
-            
-            switch (input)
-            {
-                case "1":
-                    userAnswer = question.Answers.PossibleAnswers[0];
-                    break;
-                case "2":
-                    userAnswer = question.Answers.PossibleAnswers[1];
-                    break;
-                case "3":
-                    userAnswer = question.Answers.PossibleAnswers[2];
-                    break;
-                case "4":
-                    userAnswer = question.Answers.PossibleAnswers[3];
-                    break;
-                case "status":
-                    status.Display();
-                    continue;
-                default:
-                    System.Console.WriteLine("Input doesnt match the given answers");
-                    System.Console.ReadKey();
-                    continue;
-            }
-            
-            if (!question.Answers.PossibleAnswers.Contains(userAnswer))
-            {
-                System.Console.WriteLine("Input doesnt match the given answers");
-                continue;
-            }
-
-            userAnswer += "+"; //added so the userAnswer can match the right answer since the right answer for some reason has a plus added to the end
-            turnCounter.IncrementTurn();
-            if (question.Answers.RightAnswer == userAnswer)
-            {
-                System.Console.WriteLine("Good choice. You have helped "+currentRegion.RegionName+" become less corrupt.");
-                //logic to add cpi from totalCpi
-                cpiTracker.IncreaseCpi(currentRegion);
-            }
-            else
-            {
-                System.Console.WriteLine("Poor choice. You actions lowered "+currentRegion.RegionName+"'s CPI");
-                //logic to subtract cpi from totalCpi
-                cpiTracker.DecreaseCpi(currentRegion);
-            }
-            
-            System.Console.Write(questionIndex+1);
-            System.Console.WriteLine("/"+currentRegion.Questions.Count+" complete.");
-
-            TextAssets.EnterPrompt("Continue to next answer");
-            
-            System.Console.WriteLine("");
-            
-            questionIndex++;
-            
-            if (questionIndex >= currentRegion.Questions.Count)
-            {
-                System.Console.WriteLine("Quiz complete. Total CPI change for " + currentRegion.RegionName+":");
-
-                System.Console.WriteLine(currentRegion.RegionCpi-startCpi);
-                
-                System.Console.WriteLine("Starting CPI:");
-                
-                System.Console.WriteLine(startCpi);
-                
-                System.Console.WriteLine("Ending cpi: ");
-                
-                System.Console.WriteLine(currentRegion.RegionCpi);
-                
-                TextAssets.EnterPrompt("Return to the region menu");
-
-                currentRegion.QuizCompleted = true;
-                
-                
-                
-                //end the quiz
-                return;
-            }
-            questionNumber = available[questionIndex];
-            question = currentRegion.Questions[questionNumber];
-            System.Console.WriteLine();
-
-        }
-        
-    }
-
     
+    /// <summary>
+    /// Displays the general quiz info. Additionally prompts the user to select an action
+    /// </summary>
+    /// <returns>String - the user response to the console prompt</returns>
+    public string DisplayQuizInfo()
+    {
+        MenuText quizInfo = new MenuText("QUIZ OVERVIEW",
+            "This region contains 6 dilemmas (questions). Each question has 4 possible option.\n"+
+            "Some options improve the CPI, and two decrease CPI.\n"+
+            "\n"+
+            "!!!! IMPORTANT: once a question is shown you MUST answer it !!!!\n"+
+            "- Valid answers while a question is active: '1' ,'2', '3','4' \n"+
+            "- You need to answer with a number range 1 to 4\n"+
+            "- While a question is active, you may type 'help' to view the help menu or 'status' to view current CPI values\n"+
+            "- You CANNOT cancel the active question\n"+
+            "- After each answer, the game will give you immediate feedback (cpi change and short narration)\n"+
+            "- After answering all questions, a short summary shows total CPI change and returns you to the Region menu"
+            ,"continue or type 'cancel' to leave","introduction");
+        
+        return quizInfo.Display();
+    }
+
+    public void DisplayQuizTaken()
+    {
+        MenuText quizTaken = new MenuText("       QUIZ", "\n You have done this quiz.\n", "return to continue", "quizDone");
+        quizTaken.Display();
+    }
+    
+    /// <summary>
+    /// Displays a question associated with the quiz. 
+    /// </summary>
+    /// <param name="questionNumber">The index of the question in the queue of questions associated with the region</param>
+    /// <param name="question">The question object, that holds data both about the question itself and about the answers</param>
+    public string DisplayQuizQuestion(int questionNumber, Question question)
+    {
+        System.Console.Clear();
+        TextAssets.Header("Question " + questionNumber.ToString());
+        PrintPossibleAnswers(question);
+        
+        string userInput = System.Console.ReadLine();
+        return userInput;
+    }
+
+    public void DisplayCorrectAnswer(string regionName)
+    {
+        MenuText correctAnswerScreen = new MenuText("Question ", $"Good choice! You have helped {regionName} become less corrupt. The CPI of {regionName} increased", null, "correctAnswer");
+        correctAnswerScreen.Display();
+    }
+
+    public void DisplayWrongAnswer(string regionName)
+    {
+        MenuText wrongAnswerScreen = new MenuText("Question ", $"You answered incorrectly. The CPI of {regionName} decreased.", null, "wrongAnswer");
+        wrongAnswerScreen.Display();
+    }
+
+    public void DisplayQuizEnd()
+    {
+        MenuText displayQuizEndScreen = new MenuText("Quiz End", "Thank you for taking this quiz", "leave", "quizEnd");
+        displayQuizEndScreen.Display();
+    }
 }

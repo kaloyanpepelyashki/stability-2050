@@ -7,7 +7,9 @@ public class TextAssets
     public static string? EnterPrompt(string action)
     {
         System.Console.WriteLine("--------------------------------------------");
+        System.Console.ForegroundColor = System.ConsoleColor.Yellow;
         System.Console.WriteLine("Press ENTER to " + action+" ");
+        System.Console.ResetColor();
         System.Console.Write("> ");
         
         string? input = System.Console.ReadLine();
@@ -23,10 +25,12 @@ public class TextAssets
 
         while (!inputCorrect)
         {
+            System.Console.ForegroundColor = System.ConsoleColor.Green;
             for (int i = 0; i < submenus.Length; i++)
             {
                 System.Console.WriteLine("["+i+"]"+submenus[i]);
             }
+            System.Console.ResetColor();
             System.Console.WriteLine("--------------------------------------------");
             System.Console.WriteLine(description);
             System.Console.Write("> ");
@@ -43,20 +47,25 @@ public class TextAssets
             
             if (!inputCorrect)
             {
+                System.Console.ForegroundColor = System.ConsoleColor.Red;
                 System.Console.WriteLine("Invalid input, input must be a number.");
+                System.Console.ResetColor();
             }
             
             if (result < 0)
             {
                 inputCorrect = false;
+                System.Console.ForegroundColor = System.ConsoleColor.Red;
                 System.Console.WriteLine("Invalid input, number cant be negative.");
-                
+                System.Console.ResetColor();
             }
             
             if (result >= submenus.Length)
             {
                 inputCorrect = false;
+                System.Console.ForegroundColor = System.ConsoleColor.Red;
                 System.Console.WriteLine("Invalid input, number doesnt correspond to any submenus");
+                System.Console.ResetColor();
             }
 
             System.Console.Clear();
@@ -73,9 +82,11 @@ public class TextAssets
     
     public static void Header(string header)
     {
+        System.Console.ForegroundColor = System.ConsoleColor.Cyan;
         System.Console.WriteLine("============================================");
         System.Console.WriteLine(header);
-        System.Console.WriteLine("===========================================");
+        System.Console.WriteLine("============================================");
+        System.Console.ResetColor();
     }
     
     
