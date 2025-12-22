@@ -35,7 +35,7 @@ public class CpiTracker
     /// <summary>
     /// The globalCPI calculated by getting an average of all the regional CPIs.
     /// </summary>
-    public double GlobalCpi => CpiValues.Values.Any() ? CpiValues.Values.Average() : 0.0;
+    public double GlobalCpi => CpiValues.Any() ? CpiValues.Values.Average() : 0.0;
 
     /// <summary>
     /// A dictionary containing each region and their respective CPIs, used for the calculation of GlobalCpi.
@@ -114,9 +114,7 @@ public class CpiTracker
     /// </summary>
     public void IncreaseCpi(Region region)
     {
-        region.IncreaseCpi(CorrectAnswer);
-        //region.RegionCpi += CorrectAnswer;
-        CpiValues[region.RegionName] = region.RegionCpi;
+        IncreaseCpi(region, CorrectAnswer);
     }
     
     //TODO Remove the method or change the method so it uses the Region DecreaseCpi method for CPI decrease. 
@@ -127,9 +125,7 @@ public class CpiTracker
     /// </summary>
     public void DecreaseCpi(Region region)
     {
-        region.DecreaseCpi(WrongAnswer);
-        //region.RegionCpi -= WrongAnswer;
-        CpiValues[region.RegionName] = region.RegionCpi;
+        DecreaseCpi(region, WrongAnswer);
     }
     
     /// <summary>
@@ -141,7 +137,6 @@ public class CpiTracker
     public void IncreaseCpi(Region region, double points)
     {
         region.IncreaseCpi(points);
-        //region.RegionCpi += points;
         CpiValues[region.RegionName] = region.RegionCpi;
     }
 
@@ -154,7 +149,6 @@ public class CpiTracker
     public void DecreaseCpi(Region region, double points)
     {
         region.DecreaseCpi(points);
-        //region.RegionCpi -= points;
         CpiValues[region.RegionName] = region.RegionCpi;
     }
     
