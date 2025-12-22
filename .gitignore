@@ -1,8 +1,5 @@
-# Build output
 **/bin/
 **/obj/
-
-# IDE settings
 .vscode/
 **/.vscode/
 .idea/
