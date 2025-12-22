@@ -1,4 +1,8 @@
-**/.idea/**
-**/.vs/**
-**/obj/**
-**/WorldOfZuul/WorldOfZuul/bin/**
+**/bin/
+**/obj/
+.vscode/
+**/.vscode/
+.idea/
+**/.idea/
+.vs/
+**/.vs/
