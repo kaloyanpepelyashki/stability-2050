@@ -11,22 +11,22 @@ public class QuizScreen
     }
     
     /// <summary>
-    /// Returns the possible answers associated with a question, as a parameter gets the question, and extracts the possible answer and concatinates them in a string.
-    /// The method formats the possible answers, preparing the for display in the console. 
+    /// Writes the possible answers for a question to the console with colored indexes.
     /// </summary>
     /// <param name="question">The question which answers are to be extracted and formatted for display</param>
-    /// <returns></returns>
-    private string PossibleAnswers(Question question)
+    private void PrintPossibleAnswers(Question question)
     {
-        string text = question.QuestionText + "\n" + "possible answers:\n";
-        
+        System.Console.WriteLine(question.QuestionText);
+        System.Console.WriteLine("possible answers:");
         for (int i = 0; i < question.Answers.PossibleAnswers.Count; i++)
         {
-            text += "["+(i+1)+"] "+ question.Answers.PossibleAnswers[i]+"\n";
+            System.Console.ForegroundColor = ConsoleColor.Cyan;
+            System.Console.Write("[");
+            System.Console.Write(i + 1);
+            System.Console.Write("] ");
+            System.Console.ResetColor();
+            System.Console.WriteLine(question.Answers.PossibleAnswers[i]);
         }
-        
-        return text;
-        
     }
     
     /// <summary>
@@ -36,15 +36,16 @@ public class QuizScreen
     public string DisplayQuizInfo()
     {
         MenuText quizInfo = new MenuText("QUIZ OVERVIEW",
-            "this region contains 6 dilemmas(questions). each question has 4 options\n"+
-            "two options improve CPI and two damage CPI\n"+
-            "IMPORTANT: once a question is shown you MUST answer it.\n"+
-            "valid answers while a question is active: '1' ,'2', '3','4' \n You need to answer with a question from 1 to 4"+
-            "while a question is active, you may type 'help' to view the help menu or 'status' to view current CPI values\n"+
-            "but you CANNOT cancel the active question.\n"+
-            "invalid inputs during an active question will re-prompt the same question.\n"+
-            "after each answer the game displays immediate feedback (cpi change and short narration) and proceeds to the next question\n"+
-            "at the end of the 6th question a short summary shows total CPI change and returns you to the regions menu"
+            "This region contains 6 dilemmas (questions). Each question has 4 possible option.\n"+
+            "Some options improve the CPI, and two decrease CPI.\n"+
+            "\n"+
+            "!!!! IMPORTANT: once a question is shown you MUST answer it !!!!\n"+
+            "- Valid answers while a question is active: '1' ,'2', '3','4' \n"+
+            "- You need to answer with a number range 1 to 4\n"+
+            "- While a question is active, you may type 'help' to view the help menu or 'status' to view current CPI values\n"+
+            "- You CANNOT cancel the active question\n"+
+            "- After each answer, the game will give you immediate feedback (cpi change and short narration)\n"+
+            "- After answering all questions, a short summary shows total CPI change and returns you to the Region menu"
             ,"continue or type 'cancel' to leave","introduction");
         
         return quizInfo.Display();
@@ -52,7 +53,7 @@ public class QuizScreen
 
     public void DisplayQuizTaken()
     {
-        MenuText quizTaken = new MenuText("       QUIZ", "\n sorry you have done the quiz.\n", "return to continue", "quizDone");
+        MenuText quizTaken = new MenuText("       QUIZ", "\n You have done this quiz.\n", "return to continue", "quizDone");
         quizTaken.Display();
     }
     
@@ -63,9 +64,9 @@ public class QuizScreen
     /// <param name="question">The question object, that holds data both about the question itself and about the answers</param>
     public string DisplayQuizQuestion(int questionNumber, Question question)
     {
-        string possibleAnswers = PossibleAnswers(question);
-        MenuText questionInfo = new MenuText("Question " + questionNumber.ToString(), possibleAnswers, null, "question");
-        questionInfo.Display();
+        System.Console.Clear();
+        TextAssets.Header("Question " + questionNumber.ToString());
+        PrintPossibleAnswers(question);
         
         string userInput = System.Console.ReadLine();
         return userInput;
@@ -73,13 +74,13 @@ public class QuizScreen
 
     public void DisplayCorrectAnswer(string regionName)
     {
-        MenuText correctAnswerScreen = new MenuText("Question ", $"You answered correctly. Good choice. You have helped {regionName} become less corrupt The cpi of {regionName} increased", null, "correctAnswer");
+        MenuText correctAnswerScreen = new MenuText("Question ", $"Good choice! You have helped {regionName} become less corrupt. The CPI of {regionName} increased", null, "correctAnswer");
         correctAnswerScreen.Display();
     }
 
     public void DisplayWrongAnswer(string regionName)
     {
-        MenuText wrongAnswerScreen = new MenuText("Question ", $"You answered incorrectly. The cpi of {regionName} decreased.", null, "wrongAnswer");
+        MenuText wrongAnswerScreen = new MenuText("Question ", $"You answered incorrectly. The CPI of {regionName} decreased.", null, "wrongAnswer");
         wrongAnswerScreen.Display();
     }
 
@@ -88,5 +89,4 @@ public class QuizScreen
         MenuText displayQuizEndScreen = new MenuText("Quiz End", "Thank you for taking this quiz", "leave", "quizEnd");
         displayQuizEndScreen.Display();
     }
-    
 }
