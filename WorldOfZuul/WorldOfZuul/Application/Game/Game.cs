@@ -13,7 +13,6 @@ namespace WorldOfZuul
         /// <remarks>
         /// Loop control variable
         /// </remarks>
-        bool _continuePlaying = true;
 
         private RegionDataParser regionDataParser;
 
@@ -110,10 +109,6 @@ namespace WorldOfZuul
                 _gameState = GameState.PlayerWon;
             }
 
-            if (!_continuePlaying)
-            {
-                _gameState = GameState.PlayerQuitGame;
-            }
         }
 
         private void CheckPlayerTurnState()
@@ -312,7 +307,7 @@ namespace WorldOfZuul
                         break;
 
                     case "quit":
-                        _continuePlaying = false;
+                        _gameState = GameState.PlayerQuitGame;
                         break;
 
                     case "help":
