@@ -11,7 +11,8 @@ public class ItemDataParser
     private string _fileName;
 
     public ItemDataParser()
-    {
+    {   
+        _fileName = "var/item-data.json";
         fileReader = new FileReader();
         
     }

@@ -11,7 +11,7 @@ public class RegionDataParser : IRegionDataParser
 
     public RegionDataParser()
     {   
-        this.fileName = "region-data-limited.json";
+        this.fileName = "var/region-data.json";
         this.fileReader = new FileReader();
     }
     

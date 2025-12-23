@@ -7,15 +7,15 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Update="region-data-limited.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="region-data.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <PackageReference Include="NUnit" Version="4.4.0" />
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="NUnit" Version="4.4.0" />
+    <None Update="var\region-data.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+      <None Update="var\item-data.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None> 
   </ItemGroup>
 </Project>
