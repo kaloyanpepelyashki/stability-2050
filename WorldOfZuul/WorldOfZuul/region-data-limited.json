@@ -1,11 +1,11 @@
 ﻿[
   {
     "region_name": "North Africa",
-    "region_description": "",
+    "region_description": "The region of North Africa has weak institutions, corruption risk is high and there are also strong climate problems. Aid money from abroad often goes through state elites and people do not trust where the money ends.",
     "cpi": 37.0,
     "state": {
       "state_name": "Egypt",
-      "state_description": ""
+      "state_description": "Egypt has strong, centralised power and weak transparency. There are many problems with corruption in public spending."
     },
     "exits": {
       "north": "",
@@ -15,81 +15,86 @@
     },
     "questions": [
       {
-        "question_text": "After big floods in Egypt, international aid money arrives. NGOs warn that part of the money can go to elites and not people. What do you do?",
+        "question_text": "After big floods in Egypt, international aid money arrives. NGOs warn that part of the money can go to elites and not people in need. What do you do?",
         "answers": {
           "possible_answers": [
-            "  Send money fast and trust the goverment",
-            "  Ignore NGOs and avoid conflict",
-            "  Make small team to watch the money",
-            "  Let local power groups decide alone"
+            "Send money fast and trust the government",
+            "Ignore NGOs and avoid conflict",
+            "Make a small team to watch the money",
+            "Let local power groups decide alone"
           ],
-          "right_answer": "  Make small team to watch the money"
+          "right_answer": "Make a small team to watch the money"
         }
       },
       {
-        "question_text": "Reports say people must pay bribe to get food and water after disaster. This happens in local offices. What is your move?",
+        "question_text": "Reports say people must pay bribe to get access to food and water after a disaster. This happens in local offices, what is your move?",
         "answers": {
           "possible_answers": [
-            "  Say it is normal in crisis time",
-            "  Open simple way to report bribes",
-            "  Tell people to wait and be calm"
+            "Say it is normal in crisis time",
+            "Open simple way to report bribes",
+            "Tell people to wait and be calm",
+            "Blame low paid workers"
           ],
-          "right_answer": "  Open simple way to report bribes"
+          "right_answer": "Open simple way to report bribes"
         }
       },
       {
-        "question_text": "One company close to the state wins rebuild contract after floods. No real competition happens. What now?",
+        "question_text": "One company close to the state wins rebuild contract after floods ended. There was basically no real competition. What do you do now?",
         "answers": {
           "possible_answers": [
-            "  Stop contract and check the deal",
-            "  Let it go to save time",
-            "  Say nothing and move on"
+            "Stop contract and check the deal details",
+            "Let it go just once to save time",
+            "Say nothing and move on",
+            "Ask company to donate money later"
           ],
-          "right_answer": "  Stop contract and check the deal"
+          "right_answer": "Stop contract and check the deal details"
         }
       },
       {
-        "question_text": "Journalists ask for data about public spending on flood recovery. Officials refuse to share numbers. What do you say?",
+        "question_text": "Journalists ask for gained data about public spending on the flood recovery. Officials refused. What do you say?",
         "answers": {
           "possible_answers": [
-            "  Hide all data",
-            "  Force simple public reports",
-            "  Punish the journalists"
+            "Hide all data",
+            "Force simple public reports",
+            "Punish the journalists",
+            "Delay answer for months"
           ],
-          "right_answer": "  Force simple public reports"
+          "right_answer": "Force simple public reports"
         }
       },
       {
-        "question_text": "Young people protest against corruption in local offices after crisis. Police ask how to act. What you tell them?",
+        "question_text": "Young people protest against corruption in local offices after crisis. Police ask how to act towards protesters. What you tell them?",
         "answers": {
           "possible_answers": [
-            "  Break protest fast",
-            "  Allow peacefull protest",
-            "  Arrest protest leaders"
+            "Break protest fast",
+            "Allow peaceful protest",
+            "Arrest protest leaders",
+            "Cut internet access"
           ],
-          "right_answer": "  Allow peacefull protest"
+          "right_answer": "Allow peaceful protest"
         }
       },
       {
-        "question_text": "Foreign donors ask how aid money really helps people in Egypt. Goverment feels insulted by this. What do you do?",
+        "question_text": "Foreign donors ask how aid money really helps people in Egypt, but the government feels insulted by this move. What do you do?",
         "answers": {
           "possible_answers": [
-            "  Ignore donors",
-            "  Share basic results and numbers",
-            "  Stop working with donors"
+            "Ignore the donor's request",
+            "Share some basic results and numbers with them",
+            "Stop working with the donors since it was not respectful",
+            "Send only vague reports to avoid embarrassment"
           ],
-          "right_answer": "  Share basic results and numbers"
+          "right_answer": "Share some basic results and numbers with them"
         }
       }
     ]
   },
   {
     "region_name": "Middle East",
-    "region_description": "",
+    "region_description": "Middle East has had long ongoing conflicts and strong corruption risks in some areas. Politics, security and public money are often mixed together too much.",
     "cpi": 38.0,
     "state": {
       "state_name": "Israel",
-      "state_description": ""
+      "state_description": "Israel has strong institutions but faces huge corruption scandals, political tension and trust problems."
     },
     "exits": {
       "north": "",
@@ -99,80 +104,86 @@
     },
     "questions": [
       {
-        "question_text": "A military equipment deal costs much more than expected and media talk about corruption links. What do you do?",
+        "question_text": "A military equipment deal costs much more than it was originally expected and media talk about corruption links. What do you do?",
         "answers": {
           "possible_answers": [
-            "  Approve deal to avoid drama",
-            "  Pause deal and investigate",
-            "  Hide details from public"
+            "Approve deal to avoid drama",
+            "Pause deal and investigate",
+            "Hide details from public",
+            "Rush deal before media reacts"
           ],
-          "right_answer": "  Pause deal and investigate"
+          "right_answer": "Pause deal and investigate"
         }
       },
       {
-        "question_text": "Money for rebuilding damaged areas goes through many hands and control is weak. What is your move?",
+        "question_text": "Money for rebuilding damaged areas goes through many hands and the control is pretty weak. What is your move on this?",
         "answers": {
           "possible_answers": [
-            "  Send money fast",
-            "  Add rules and checks",
-            "  Delay rebuild forever"
+            "Send money fast",
+            "Add rules and checks",
+            "Delay rebuild forever",
+            "Trust local leaders fully"
           ],
-          "right_answer": "  Add rules and checks"
+          "right_answer": "Add rules and checks"
         }
       },
       {
-        "question_text": "Several corruption scandals hit top politicians and public trust drops. What helps most now?",
+        "question_text": "Several corruption scandals hit top politicians and public trust drops significantly. What is going to help the most now?",
         "answers": {
           "possible_answers": [
-            "  Ignore people",
-            "  Show investigation results",
-            "  Blame the media"
+            "Ignore people",
+            "Show investigation results",
+            "Blame the media",
+            "Change the topic"
           ],
-          "right_answer": "  Show investigation results"
+          "right_answer": "Show investigation results"
         }
       },
       {
-        "question_text": "Aid groups warn that corruption helps armed groups gain support from locals. What you focus on?",
+        "question_text": "Aid groups warn that corruption helps armed groups gain support from local people. What will you focus on?",
         "answers": {
           "possible_answers": [
-            "  Only military power",
-            "  Better local services and control",
-            "  Do nothing new"
+            "Only military power",
+            "Better local services and control",
+            "Do nothing new",
+            "Increase secret operations"
           ],
-          "right_answer": "  Better local services and control"
+          "right_answer": "Better local services and control"
         }
       },
       {
-        "question_text": "Public contracts are signed without transparency and citizens cannot see them. What change you push?",
+        "question_text": "Public contracts are signed without transparency and citizens cannot access them. What change do you push?",
         "answers": {
           "possible_answers": [
-            "  Keep system same",
-            "  Publish contracts online",
-            "  Block access to data"
+            "Keep system same",
+            "Publish contracts online",
+            "Block access to data",
+            "Share info only with elites"
           ],
-          "right_answer": "  Publish contracts online"
+          "right_answer": "Publish contracts online"
         }
       },
       {
-        "question_text": "People protest corruption during tense situation. Police ask how react. What you say?",
+        "question_text": "People protest corruption during tense situation. Police ask how to react. What do you say?",
         "answers": {
           "possible_answers": [
-            "  Use force early",
-            "  Allow peacefull protest",
-            "  Ban protests"
+            "Use force early",
+            "Allow peaceful protest",
+            "Ban protests",
+            "Track protest leaders"
           ],
-          "right_answer": "  Allow peacefull protest"
+          "right_answer": "Allow peaceful protest"
         }
       }
     ]
   },
   {
     "region_name": "Eastern Asia",
-    "region_description": "",
+    "region_description": "Eastern Asia has generally fairly strong systems but faces problems with political funding, lobbying and close state business ties.",
     "cpi": 71.0,
     "state": {
       "state_name": "Japan",
-      "state_description": ""
+      "state_description": "Japan has high trust, but struggles with political finance scandals and weird practices."
     },
     "exits": {
       "north": "",
@@ -182,80 +193,86 @@
     },
     "questions": [
       {
-        "question_text": "Political group in Japan hides campaign money and does not report it. Media finds out. What should happend?",
+        "question_text": "Political group in Japan hides campaign money and does not report it. Media finds out. What should happen?",
         "answers": {
           "possible_answers": [
-            "  Ignore to keep calm",
-            "  Start official audit",
-            "  Call it small error"
+            "Ignore to keep calm",
+            "Start official audit",
+            "Call it small error",
+            "Ask group to fix quietly"
           ],
-          "right_answer": "  Start official audit"
+          "right_answer": "Start official audit"
         }
       },
       {
         "question_text": "Senior officials leave public jobs and quickly join companies they controlled before. People talk about unfair ties. What do you do?",
         "answers": {
           "possible_answers": [
-            "  Accept it as normal",
-            "  Add waiting time before job",
-            "  Push faster business ties"
+            "Accept it as normal",
+            "Add waiting time before job",
+            "Push faster business ties",
+            "Let companies decide"
           ],
-          "right_answer": "  Add waiting time before job"
+          "right_answer": "Add waiting time before job"
         }
       },
       {
-        "question_text": "Big company pushes politicians when new law is written. This happens behind closed doors. What you suggest?",
+        "question_text": "Big company pushes politicians when new law is written, all behind closed doors. What do you suggest?",
         "answers": {
           "possible_answers": [
-            "  Support company",
-            "  Ignore pressure",
-            "  Make lobbying public"
+            "Support company",
+            "Ignore pressure",
+            "Make lobbying public",
+            "Allow private meetings"
           ],
-          "right_answer": "  Make lobbying public"
+          "right_answer": "Make lobbying public"
         }
       },
       {
-        "question_text": "Corruption news in Japan lowers trust even if level is low. What helps people trust again?",
+        "question_text": "Corruption news in Japan lowers trust even if the current trust level is low. What will help people trust again?",
         "answers": {
           "possible_answers": [
-            "  Say nothing",
-            "  Share facts and actions",
-            "  Blame outsiders"
+            "Say nothing",
+            "Share facts and actions",
+            "Blame outsiders",
+            "Delay response"
           ],
-          "right_answer": "  Share facts and actions"
+          "right_answer": "Share facts and actions"
         }
       },
       {
         "question_text": "One ministry does not want share spending data with public. What now?",
         "answers": {
           "possible_answers": [
-            "  Force basic reports",
-            "  Let them decide",
-            "  Cancel all audits"
+            "Force basic reports",
+            "Let them decide",
+            "Cancel all audits",
+            "Ignore the issue"
           ],
-          "right_answer": "  Force basic reports"
+          "right_answer": "Force basic reports"
         }
       },
       {
-        "question_text": "Whistleblowers fear punishment if they speak. This stops reports. What is best step?",
+        "question_text": "Whistleblowers fear punishment if they speak up. This stops reports, what is the best step?",
         "answers": {
           "possible_answers": [
-            "  Ignore them",
-            "  Protect them by law",
-            "  Stop leaks"
+            "Ignore them",
+            "Protect them by law",
+            "Stop leaks",
+            "Punish false reports"
           ],
-          "right_answer": "  Protect them by law"
+          "right_answer": "Protect them by law"
         }
       }
     ]
   },
   {
     "region_name": "North America",
-    "region_description": "",
+    "region_description": "North America has strong democratic institutions but it faces trust problems, money in politics and media pressure.",
     "cpi": 54.0,
     "state": {
       "state_name": "United States",
-      "state_description": ""
+      "state_description": "The US has strong laws but struggles with political funding, lobbying power and declining public trust."
     },
     "exits": {
       "north": "",
@@ -265,69 +282,75 @@
     },
     "questions": [
       {
-        "question_text": "Large companies use big money to influence laws and elections. This causes trust problems. What you support?",
+        "question_text": "Large companies use big money to influence laws and elections. This causes significant trust problems. What you support?",
         "answers": {
           "possible_answers": [
-            "  Allow unlimited donations",
-            "  Limit donations and show them",
-            "  Delay reform again"
+            "Allow unlimited donations",
+            "Limit donations and show them",
+            "Delay reform again",
+            "Trust companies to self control"
           ],
-          "right_answer": "  Limit donations and show them"
+          "right_answer": "Limit donations and show them"
         }
       },
       {
-        "question_text": "Reports show foreign money may affect US elections. People worry about democracy. What help most?",
+        "question_text": "Reports show foreign money may affect US elections. People worry about democracy. What will help the most?",
         "answers": {
           "possible_answers": [
-            "  Ignore the problem",
-            "  Stronger checks on funding",
-            "  Leave it to states"
+            "Ignore the problem",
+            "Stronger checks on funding",
+            "Leave it to states",
+            "Downplay the reports"
           ],
-          "right_answer": "  Stronger checks on funding"
+          "right_answer": "Stronger checks on funding"
         }
       },
       {
-        "question_text": "Public trust in goverment is low after many scandals. What you focus on?",
+        "question_text": "Public trust in the government is low after several scandals. What do you focus on?",
         "answers": {
           "possible_answers": [
-            "  Nice speeches",
-            "  Clear actions and results",
-            "  Blame other party"
+            "Nice speeches",
+            "Clear actions and results",
+            "Blame other party",
+            "Wait for time to pass"
           ],
-          "right_answer": "  Clear actions and results"
+          "right_answer": "Clear actions and results"
         }
       },
       {
         "question_text": "A judge has ethics problems and media talk about corruption. What should happen?",
         "answers": {
           "possible_answers": [
-            "  Ignore the case",
-            "  Investigate openly",
-            "  Protect the judge"
+            "Ignore the case",
+            "Investigate openly",
+            "Protect the judge",
+            "Close media access"
           ],
-          "right_answer": "  Investigate openly"
+          "right_answer": "Investigate openly"
         }
       },
       {
         "question_text": "Local media lose money and close down. This hurts control over power. What do you do?",
         "answers": {
           "possible_answers": [
-            "  Let market decide",
-            "  Support independent media",
-            "  Cut media funds"
+            "Let market decide",
+            "Support independent media",
+            "Cut media funds",
+            "Merge media outlets"
           ],
-          "right_answer": "  Support independent media"
+          "right_answer": "Support independent media"
         }
       },
       {
-        "question_text": "After corruption news, protests start in many cities. Police ask what to do. What you say?",
+        "question_text": "After corruption news, protests start in many cities. Police ask what to do. What do you say?",
         "answers": {
           "possible_answers": [
-            "  Use force fast",
-            "  Allow peacefull protest",
-            "  Ban all protests"
+            "Use force fast",
+            "Allow peaceful protest",
+            "Ban all protests",
+            "Monitor crowds only"
           ],
-          "right_answer": "  Allow peacefull protest"
+          "right_answer": "Allow peaceful protest"
         }
       }
     ]
