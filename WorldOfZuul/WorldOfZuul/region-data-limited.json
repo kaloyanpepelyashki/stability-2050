@@ -187,9 +187,9 @@
     },
     "exits": {
       "north": "",
-      "east": "Middle East",
+      "east": "",
       "south": "",
-      "west": ""
+      "west": "Middle East"
     },
     "questions": [
       {

@@ -33,13 +33,6 @@ public class ConsoleHandler
             null, "welcome", ["help"], "Type '0' to learn how to play or press ENTER to continue.");
     }
 
-    public void Display(string key)
-    {
-        Console.Clear();
-        MenuText menu = menus[key];
-        menu.Display();
-    }
-
     public void AddMenu(string header, string textBody, string enterPromptAction, string? menuName)
     {
         MenuText menu = new MenuText(header,textBody,enterPromptAction,menuName);
