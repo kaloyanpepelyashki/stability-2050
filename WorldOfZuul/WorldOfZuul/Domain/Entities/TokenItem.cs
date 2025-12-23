@@ -7,7 +7,20 @@ namespace WorldOfZuul;
 /// </summary>
 public class TokenItem: Item, IUsable
 {
-    public TokenItem(string itemName, string itemDesctription) : base(itemName, itemDesctription) {}
+    
+    public int Id { get; set; }
+    public string ItemName { get; set; }
+    public string ItemDescription { get; set; }
+    public string ItemEffect { get; set; }
+
+    public TokenItem(int id, string itemName, string itemDesctription, string itemEffect) : base(itemName,
+        itemDesctription)
+    {
+        Id = id;
+        ItemName = itemName;
+        ItemDescription = itemDesctription;
+        ItemEffect = itemEffect;
+    }
     
     /// <summary>
     /// Calls the token item

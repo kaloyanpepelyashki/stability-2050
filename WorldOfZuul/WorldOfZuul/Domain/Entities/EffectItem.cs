@@ -7,9 +7,21 @@ namespace WorldOfZuul;
 /// </summary>
 public class EffectItem: Item, IUsable
 {
-    public EffectItem(string itemName, string itemDescription) : base(itemName, itemDescription)
+    
+    public int Id { get; set; }
+    public string ItemName { get; set; }
+    public string ItemDescription { get; set; }
+    public string ItemEffect { get; set; }
+    public double Value { get; set; }
+    
+    
+    public EffectItem(int id, string itemName, string itemDescription, string effect, double value) : base(itemName, itemDescription)
     {
-        
+        Id = id; 
+        ItemName = itemName;
+        ItemDescription = itemDescription;
+        ItemEffect = effect;
+        Value = value;
         
     }
     

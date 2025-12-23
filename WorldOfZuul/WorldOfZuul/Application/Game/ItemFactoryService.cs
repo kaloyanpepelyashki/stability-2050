@@ -17,8 +17,8 @@ public static class ItemFactoryService
 
         return randomNumber switch
         {
-            0 => new EffectItem("", ""),
-            1 => new TokenItem("", "")
+            0 => new EffectItem(0, "", "", "", 0.0),
+            1 => new TokenItem(0, "", "", "")
         }; 
     }
 }
