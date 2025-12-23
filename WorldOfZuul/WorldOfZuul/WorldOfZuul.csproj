@@ -16,6 +16,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="Domain\Services\" />
+    <PackageReference Include="NUnit" Version="4.4.0" />
   </ItemGroup>
 </Project>

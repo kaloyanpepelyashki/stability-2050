@@ -11,13 +11,16 @@ public class QuizScreen
     }
     
     /// <summary>
-    /// Writes the possible answers for a question to the console with colored indexes.
+    /// Returns the possible answers associated with a question, as a parameter gets the question, and extracts the possible answer and concatinates them in a string.
+    /// The method formats the possible answers, preparing the for display in the console. 
     /// </summary>
     /// <param name="question">The question which answers are to be extracted and formatted for display</param>
+    /// <returns></returns>
     private void PrintPossibleAnswers(Question question)
     {
         System.Console.WriteLine(question.QuestionText);
         System.Console.WriteLine("possible answers:");
+        
         for (int i = 0; i < question.Answers.PossibleAnswers.Count; i++)
         {
             System.Console.ForegroundColor = ConsoleColor.Cyan;
@@ -27,6 +30,7 @@ public class QuizScreen
             System.Console.ResetColor();
             System.Console.WriteLine(question.Answers.PossibleAnswers[i]);
         }
+        
     }
     
     /// <summary>
@@ -89,4 +93,5 @@ public class QuizScreen
         MenuText displayQuizEndScreen = new MenuText("Quiz End", "Thank you for taking this quiz", "leave", "quizEnd");
         displayQuizEndScreen.Display();
     }
+    
 }
