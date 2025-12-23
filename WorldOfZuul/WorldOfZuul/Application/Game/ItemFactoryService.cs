@@ -10,15 +10,26 @@ public static class ItemFactoryService
     /// The method decided what type of item to create, the decision is randomised
     /// </summary>
     /// <returns></returns>
-    public static Item CreateRandomItem()
+    public static Item CreateRandomItem(List<EffectItem> effectItems, List<TokenItem> tokenItems)
     {
+    
         Random random = new Random();
+        
+        
         int randomNumber = random.Next(1, 2);
-
-        return randomNumber switch
+        
+        
+        
+        switch (randomNumber)
         {
-            0 => new EffectItem(0, "", "", "", 0.0),
-            1 => new TokenItem(0, "", "", "")
-        }; 
+            case 1:
+                int randomItemSelector = random.Next(0, effectItems.Count);
+                return effectItems[randomItemSelector];
+            case 2:
+                int randomTokenSelector = random.Next(0, tokenItems.Count);
+                return tokenItems[randomTokenSelector];
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 }
