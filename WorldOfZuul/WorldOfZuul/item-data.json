@@ -1,0 +1,45 @@
+{
+  "EffectItems": [
+    {
+      "id": 1,
+      "name": "Transparency Accord",
+      "effect": "AddCPI",
+      "value": 2.5,
+      "description": "Boosts integrity through open governance."
+    },
+    {
+      "id": 2,
+      "name": "Anti-Corruption Taskforce",
+      "effect": "ExtraTurns",
+      "value": 3,
+      "description": "Grants time to dismantle corrupt systems."
+    },
+    {
+      "id": 3,
+      "name": "Global Ethics Charter",
+      "effect": "AddCPI",
+      "value": 2.5,
+      "description": "Raises global trust and accountability."
+    }
+  ],
+  "TokenItems": [
+    {
+      "id": 1,
+      "name": "Whistleblower Evidence",
+      "effect": "RemoveQuizQuestion",
+      "description": "Eliminates a false lead from the quiz."
+    },
+    {
+      "id": 2,
+      "name": "Peacekeeping Mandate",
+      "effect": "RemoveQuizQuestion",
+      "description": "Prevents conflict-driven misinformation."
+    },
+    {
+      "id": 3,
+      "name": "Independent Media Report",
+      "effect": "RemoveQuizQuestion",
+      "description": "Cuts through propaganda instantly."
+    }
+  ]
+}

@@ -12,7 +12,8 @@ public class Inventory
     private static Inventory _instance = null;
     
     //Should be changed later, both type and the way it is initialised
-    public List<int> InventoryItems { get; private set; }  = new List<int>();
+    private int CurrentItemCount = 0;
+    private Dictionary<int, Item> InventoryItems = new Dictionary<int, Item>();
     
     private Inventory(){}
 
@@ -25,4 +26,24 @@ public class Inventory
         
         return _instance;
     }
+    
+    
+    /// <summary>
+    /// Responsible for adding an item to the list of Invetory Items
+    /// </summary>
+    /// <returns>True if the item was added and returns false if the item was not added</returns>
+    public bool AddItem()
+    {
+        return true;
+    }
+    
+    /// <summary>
+    /// Responsible for removing an item for the list of Inventory Items
+    /// </summary>
+    /// <returns>Returns true if the item weas removed and returns false if the item was not removed</returns>
+    public bool RemoveItem()
+    {
+        return true;
+    }
+    
 }
