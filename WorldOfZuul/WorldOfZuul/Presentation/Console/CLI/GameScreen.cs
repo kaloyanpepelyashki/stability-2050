@@ -132,6 +132,7 @@ public class GameScreen
     {
         
         string txt = "Region description: "+region.RegionDescription;
+        txt += $"\n\n{region.RegionState.StateName} description: {region.RegionState.StateDescription}";
 
         txt += "\nto access the regions quiz type 'quiz' ";
 
